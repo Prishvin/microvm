@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1619885095 source:/home/misha/source/VirtualMachine/common/opcodes.c
+	"opcodes.h"
+
+1619937368 /home/misha/source/VirtualMachine/common/opcodes.h
+	"global.h"
+
+1619937330 /home/misha/source/VirtualMachine/common/global.h
+

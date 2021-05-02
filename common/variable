@@ -1,0 +1,8 @@
+#ifndef VARIABLE_INCLUDED
+#define VARIABLE_INCLUDED
+
+#define MAX_VARIABLE_LINKS 128
+
+typedef
+
+#endif // VARIABLE_INCLUDED
