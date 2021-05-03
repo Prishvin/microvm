@@ -31,3 +31,16 @@ void initialize_opcodes()
     *ptr++= (Opcode){.opcode = 24, .txt = "DEC"};
     *ptr++= (Opcode){.opcode = 25, .txt = "BP"};
 }
+
+DWORD opcodes_find(char* txt)
+{
+     BYTE result = 0;
+     BYTE i;
+     for(i = 0; i < MAX_OPCODES; i++)
+     {
+        if(strcmp(txt, opcodes[i].txt) == 0)
+            result = opcodes[i].opcode;
+     }
+
+     return result;
+}

@@ -105,5 +105,8 @@ void str_to_upper(char * temp) {
 
 }
 
+BOOL is_numeric(char* name, DWORD* number){
+return TRUE;
+}
 
 #endif // AUXILLARY_H_INCLUDED

@@ -2,7 +2,10 @@
 #define VARIABLE_H_INCLUDED
 
 #define MAX_VARIABLE_LINKS 128
-#include "../StackCompiler/src/token.h"
+#include "token.h"
+#include "machine.h"
+#define VARIABLE_NOT_FOUND 0xFFFF
+#define VARIABLE_MEMORY_SIZE 512
 
 typedef struct {
 
@@ -12,6 +15,12 @@ DWORD  sz;
 char name[MAX_OPCODE_STR_LENGTH];
 
 } variable;
+
+
+
+variable progam_variables[VARIABLE_MEMORY_SIZE];
+variable* variable_ptr;
+
 
 void var_init(variable* v, char* name)
 {
@@ -27,4 +36,15 @@ void var_allocate_space(variable* v, DWORD* code)
 {
 }
 
+variable* variable_find(char* name)
+{
+       variable* ptr = progam_variables;
+       variable* result = VARIABLE_NOT_FOUND;
+       while(ptr++<variable_ptr)
+       {
+            if(strcmp(ptr->name, name) == 0)
+               result = ptr;
+       }
+    return result;
+}
 #endif // VARIABLE_H_INCLUDED

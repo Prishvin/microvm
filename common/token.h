@@ -1,6 +1,6 @@
 #ifndef TOKEN_H_INCLUDED
 #define TOKEN_H_INCLUDED
-#include "../../common/global.h"
+#include "global.h"
 
 #define COMMENT_CHAR '#'
 #define LABEL_CHAR ':'
@@ -23,7 +23,10 @@ BOOL string_in_array(char** arr, char* str)
 
     return FALSE;
 }
-
+BOOL token_is_dup(char* token)
+{
+    return strcmp(token, "DUP");
+}
 BOOL    token_is_comment(char* token)
 {
     return *token == COMMENT_CHAR;

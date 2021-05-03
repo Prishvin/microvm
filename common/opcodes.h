@@ -16,5 +16,5 @@ typedef struct
 Opcode opcodes[MAX_OPCODES];
 
 void initialize_opcodes();
-
+DWORD opcodes_find(char* txt);
 #endif // OPCODES_H_INCLUDED

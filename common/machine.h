@@ -1,13 +1,13 @@
 #ifndef MACHINE_H_INCLUDED
 #define MACHINE_H_INCLUDED
 
-#include "../../common/global.h"
-#include "../../common/variable.h"
-#include "../../common/label.h"
+#include "global.h"
+#include "variable.h"
+#include "label.h"
 
 
 #define DEVICE_MEMORY_SIZE  4096
-#define VARIABLE_MEMORY_SIZE 512
+
 #define LABEL_MEMORY_SIZE 512
 #define STACK_SIZE 2048
 
@@ -15,10 +15,8 @@
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
 
-DWORD progam_labels[LABEL_MEMORY_SIZE];
-variable progam_variables[VARIABLE_MEMORY_SIZE];
-label progam_labels[MAX_LABELS];
-label* label_ptr;
+
+
 
 DWORD machine_memory[DEVICE_MEMORY_SIZE];
 DWORD* memory_end;
@@ -32,7 +30,7 @@ DWORD machine_stack[STACK_SIZE]; //first value will always be 0 and treated as e
 
 DWORD progam_cursor_mask = 0xFFF;
 DWORD* program_ptr;
-variable* variable_ptr;
+
 
 DWORD* stack_ptr;
 DWORD* call_ptr;
