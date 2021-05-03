@@ -36,7 +36,7 @@ int main( int argc, char *argv[] )
     program_ptr = machine_memory; //now pointer is at first instruction
     variable_ptr = progam_variables;
     label_ptr = progam_labels;
-
+    var_number = 0;
     while (fgets(line, MAX_LEN - 1, fp))
     {
         // Remove trailing newline
@@ -65,6 +65,7 @@ int main( int argc, char *argv[] )
                         char* argument = *(tokens + i + 1);
                         var_init(variable_ptr, token);
                         variable_ptr++;
+                        var_number++;
                         continue;
                     }
                     if(ntokens == 3)
@@ -80,13 +81,13 @@ int main( int argc, char *argv[] )
                 }
                 else if(token_is_label(token))
                 {
-                            if(!label_exists(token))
-                            {
-                                label_init(label_ptr++, token,  machine_memory-program_ptr);
-                            }
-                            label* lb = label_find(token);
-                            program_ptr++;
-                            continue;
+                    if(!label_exists(token))
+                    {
+                        label_init(label_ptr++, token,  machine_memory-program_ptr);
+                    }
+                    label* lb = label_find(token);
+                    program_ptr++;
+                    continue;
                 }
 
                 *program_ptr++ = opcodes_find(token); //add opcode if opcode is not var and label
@@ -100,51 +101,53 @@ int main( int argc, char *argv[] )
 
                 if(token_is_control(token))
                 {
-                        if(ntokens == 2)
+                    if(ntokens == 2)
+                    {
+                        char* argument = *(tokens + i + 1);
+                        str_to_upper(argument);
+                        if(!label_exists(argument))
                         {
-                            char* argument = *(tokens + i + 1);
-                            str_to_upper(argument);
-                            if(!label_exists(argument))
-                            {
-                                label_init(label_ptr++, argument, 0);
-                            }
-                            label* lb = label_find(argument);
-                            *(lb->jump_ptr++) = machine_memory-program_ptr;
-                            lb->jump_number++;
-                            *program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
+                            label_init(label_ptr++, argument, 0);
                         }
-                        else{
-                            perror("FATAL: no argument supplied");
-                        }
+                        label* lb = label_find(argument);
+                        *(lb->jump_ptr++) = machine_memory-program_ptr;
+                        lb->jump_number++;
+                        *program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
+                    }
+                    else
+                    {
+                        perror("FATAL: no argument supplied");
+                    }
                 }
                 else if(token_is_mem(token))
                 {
-                     if(ntokens == 2)
+                    if(ntokens == 2)
+                    {
+                        char* argument = *(tokens + i + 1);
+                        DWORD number;
+                        if(is_numeric(argument, &number))
                         {
-                            char* argument = *(tokens + i + 1);
-                            DWORD number;
-                            if(is_numeric(argument, &number))
+                            *program_ptr++=number;
+                        }
+                        else
+                        {
+                            variable* var = variable_find(argument);
+                            if(var == VARIABLE_NOT_FOUND)
                             {
-                                    *program_ptr++=number;
+                                perror("FATAL: variable not found");
                             }
                             else
                             {
-                                 variable* var = variable_find(argument);
-                                 if(var == VARIABLE_NOT_FOUND)
-                                 {
-                                    perror("FATAL: variable not found");
-                                 }
-                                 else
-                                 {
-                                    *(var->link_ptr++) =machine_memory-program_ptr;
-                                    *program_ptr++ = 0;
-                                 }
-
+                                *(var->link_ptr++) =machine_memory-program_ptr;
+                                *program_ptr++ = 0;
                             }
+
                         }
-                        else{
-                            perror("FATAL: no argument supplied");
-                        }
+                    }
+                    else
+                    {
+                        perror("FATAL: no argument supplied");
+                    }
                 }
 
                 else if(token_is_dup(token))
@@ -152,14 +155,14 @@ int main( int argc, char *argv[] )
                     if(ntokens == 1)
                         *program_ptr++ = 1;
                     if(ntokens == 2)
+                    {
+                        char* argument = *(tokens + i + 1);
+                        DWORD number;
+                        if(is_numeric(argument, &number))
                         {
-                            char* argument = *(tokens + i + 1);
-                            DWORD number;
-                            if(is_numeric(argument, &number))
-                            {
-                                 *program_ptr++ = number;
-                            }
+                            *program_ptr++ = number;
                         }
+                    }
 
                 }
 
@@ -173,6 +176,16 @@ int main( int argc, char *argv[] )
         }
     }
 
+    BYTE i;
+    for(i = 0; i < lablel_number; i++)
+        label_set_jumps(&progam_labels[i]);
+
+    for(i = 0; i < var_number; i++)
+    {
+        var_set_links(&progam_variables[i],(DWORD) (program_ptr - machine_memory), machine_memory);
+        *program_ptr++ = 0;
+    }
+
     fclose(fp);
-    return 0;
-}
+     return 0;
+    }

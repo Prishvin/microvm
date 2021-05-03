@@ -51,12 +51,12 @@ label* label_find(char* name)
        }
     return result;
 }
-void label_set_jumps(label* lb, DWORD* code)
+void label_set_jumps(label* lb)
 {
     BYTE i;
     for(i = 0; i < lb->jump_number; i++)
     {
-        code[lb->jumps[i]] = lb->address;
+        lb->jumps[i] = lb->address;
     }
 }
 
