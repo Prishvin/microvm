@@ -38,6 +38,8 @@ int main( int argc, char *argv[] )
     label_ptr = progam_labels;
     var_number = 0;
     initialize_opcodes();
+ program_ptr = machine_memory;
+
     while (fgets(line, MAX_LEN - 1, fp))
     {
         // Remove trailing newline

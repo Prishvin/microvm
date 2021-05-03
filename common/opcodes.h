@@ -1,7 +1,7 @@
 #ifndef OPCODES_H_INCLUDED
 #define OPCODES_H_INCLUDED
 
-#define MAX_OPCODES 20
+#define MAX_OPCODES 100
 #include "global.h"
 #include <string.h>
 

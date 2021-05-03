@@ -37,6 +37,7 @@ void label_init(label* lb, char* name, DWORD addr)
     lb->address = addr;
     lb->jump_ptr = lb->jumps;
     lb->jump_number = 0;
+    lablel_number++;
 }
 label* label_find(char* name, label* labels, label* last)
 {

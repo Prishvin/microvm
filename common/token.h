@@ -26,7 +26,7 @@ BOOL string_in_array(char** arr, char* str)
 }
 BOOL token_is_dup(char* token)
 {
-    return strcmp(token, "DUP");
+    return strcmp(token, "DUP") == 0;
 }
 BOOL    token_is_comment(char* token)
 {
