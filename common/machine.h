@@ -15,8 +15,11 @@
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
 
+variable progam_variables[VARIABLE_MEMORY_SIZE];
+variable* variable_ptr;
 
-
+label progam_labels[MAX_LABELS];
+label* label_ptr;
 
 DWORD machine_memory[DEVICE_MEMORY_SIZE];
 DWORD* memory_end;
@@ -236,11 +239,11 @@ static inline void jge()
     if (flag_eq && flag_gr)
     {
         program_ptr = *program_ptr;
-           increment_program_ptr();
-#ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
-                          halt("Segmentation fault after jle");
-#endif // MEMORY_CHECKS_ENABLED
+        increment_program_ptr();
+        #ifdef MEMORY_CHECKS_ENABLED
+                              if (program_ptr >= memory_end)
+                                  halt("Segmentation fault after jle");
+        #endif // MEMORY_CHECKS_ENABLED
     }
 
 }
@@ -346,8 +349,7 @@ static inline void dup()
 
 static inline void randint()
 {
-    inc_st_cur();
-//    stack[st_cur] = (rand() << 16) + rand() + rand() + rand() % 2;
+
 }
 
 static inline void swap()

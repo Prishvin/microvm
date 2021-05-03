@@ -1,6 +1,7 @@
 #ifndef TOKEN_H_INCLUDED
 #define TOKEN_H_INCLUDED
 #include "global.h"
+#include <string.h>
 
 #define COMMENT_CHAR '#'
 #define LABEL_CHAR ':'

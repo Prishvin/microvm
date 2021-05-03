@@ -19,8 +19,7 @@ char name[MAX_OPCODE_STR_LENGTH];
 
 
 
-variable progam_variables[VARIABLE_MEMORY_SIZE];
-variable* variable_ptr;
+
 DWORD var_number;
 
 void var_init(variable* v, char* name)
@@ -30,8 +29,7 @@ void var_init(variable* v, char* name)
 }
 void var_set_links(variable* v, DWORD address, DWORD* code)
 {
-    BYTE i;
-    i = 1;
+
     DWORD* ptr = v->links;
     while(ptr++ < v->link_ptr)
     {
@@ -43,11 +41,11 @@ void var_allocate_space(variable* v, DWORD* code)
 {
 }
 
-variable* variable_find(char* name)
+variable* variable_find(char* name, variable* variables, variable* last)
 {
-       variable* ptr = progam_variables;
+       variable* ptr = variables;
        variable* result = VARIABLE_NOT_FOUND;
-       while(ptr++<variable_ptr)
+       while(ptr++<last)
        {
             if(strcmp(ptr->name, name) == 0)
                result = ptr;

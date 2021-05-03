@@ -1,9 +1,53 @@
 # depslib dependency file v1.0
-1619885095 source:/home/misha/source/VirtualMachine/common/opcodes.c
+1620063743 source:/home/misha/source/VirtualMachine/common/opcodes.c
 	"opcodes.h"
 
-1619937368 /home/misha/source/VirtualMachine/common/opcodes.h
+1620045329 /home/misha/source/VirtualMachine/common/opcodes.h
 	"global.h"
+	<string.h>
 
-1619937330 /home/misha/source/VirtualMachine/common/global.h
+1620045371 /home/misha/source/VirtualMachine/common/global.h
+	<string.h>
+	<ctype.h>
+
+1620066177 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
+	<stdio.h>
+	<stdlib.h>
+	"../common/global.h"
+	"../common/auxillary.h"
+	"../common/opcodes.h"
+	"../common/token.h"
+	"../common//machine.h"
+
+1620044987 /home/misha/source/VirtualMachine/common/auxillary.h
+	"global.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1620045309 /home/misha/source/VirtualMachine/common/token.h
+	"global.h"
+	<string.h>
+
+1620054323 /home/misha/source/VirtualMachine/common//machine.h
+	"global.h"
+	"variable.h"
+	"label.h"
+
+1620045371 /home/misha/source/VirtualMachine/common//global.h
+	<string.h>
+	<ctype.h>
+
+1620045449 /home/misha/source/VirtualMachine/common//variable.h
+	"token.h"
+	"machine.h"
+
+1620045309 /home/misha/source/VirtualMachine/common//token.h
+	"global.h"
+	<string.h>
+
+1620054389 /home/misha/source/VirtualMachine/common//label.h
+	<string.h>
+	"../common/token.h"
+	"../common/machine.h"
 

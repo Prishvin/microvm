@@ -6,11 +6,11 @@
 #define MAX_LABELS 128
 #define MAX_LABEL_TRANSITIONS 128
 
-
+#include <string.h>
 #include "../common/token.h"
 #include "../common/machine.h"
 
-#define LABEL_NOT_FOUND 0xFFFF
+#define LABEL_NOT_FOUND (label*) 0xFFFF
 
 typedef struct
 {
@@ -25,8 +25,6 @@ typedef struct
 } label;
 
 
-label progam_labels[MAX_LABELS];
-label* label_ptr;
 
 
 
@@ -40,11 +38,11 @@ void label_init(label* lb, char* name, DWORD addr)
     lb->jump_ptr = lb->jumps;
     lb->jump_number = 0;
 }
-label* label_find(char* name)
+label* label_find(char* name, label* labels, label* last)
 {
-       label* ptr = progam_labels;
+       label* ptr = labels;
        label* result = LABEL_NOT_FOUND;
-       while(ptr++<label_ptr)
+       while(ptr++<last)
        {
             if(strcmp(ptr->name, name) == 0)
                result = ptr;
@@ -60,10 +58,10 @@ void label_set_jumps(label* lb)
     }
 }
 
-BOOL label_exists(char* name)
+BOOL label_exists(char* name, label* labels, label* last)
 {
     BOOL result = FALSE;
-    result = label_find(name)!= LABEL_NOT_FOUND;
+    result = label_find(name, labels, last)!=(label*) LABEL_NOT_FOUND;
     return result;
 }
 #endif // LABEL_H_INCLUDED

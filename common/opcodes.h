@@ -3,7 +3,7 @@
 
 #define MAX_OPCODES 20
 #include "global.h"
-
+#include <string.h>
 
 
 

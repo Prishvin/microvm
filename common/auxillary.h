@@ -109,4 +109,26 @@ BOOL is_numeric(char* name, DWORD* number){
 return TRUE;
 }
 
+
+void str_shift_left(char myarray[], int size, int shiftBy)
+{
+    if(shiftBy > size){
+        shiftBy = shiftBy - size;
+    }
+
+    if(size == 1){
+        //do nothing
+    }
+    else{
+        char temp;
+        //for loop to print the array with indexes moved up (to the left) <-- by 2
+        for (int i=0; i < size-shiftBy; i++)
+        {//EXAMPLE shift by 3  for a c-string of 5
+            temp = myarray[i];//temp = myarray[0]
+            myarray[i] = myarray[i + shiftBy];//myarray[0] == myarray[2]
+            myarray[i + shiftBy] = temp;//myarray[2] = temp(value previously at index i)
+        }
+
+    }
+}
 #endif // AUXILLARY_H_INCLUDED

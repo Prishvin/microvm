@@ -3,7 +3,8 @@
 
 #define MAX_REFERENCES 64
 #define MAX_OPCODE_STR_LENGTH 10
-
+#include <string.h>
+#include <ctype.h>
 
 typedef  unsigned char BYTE;
 typedef  unsigned int DWORD;

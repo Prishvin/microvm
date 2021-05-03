@@ -37,13 +37,14 @@ int main( int argc, char *argv[] )
     variable_ptr = progam_variables;
     label_ptr = progam_labels;
     var_number = 0;
+    initialize_opcodes();
     while (fgets(line, MAX_LEN - 1, fp))
     {
         // Remove trailing newline
         //buffer[strcspn(buffer, "\n")] = 0;
         printf("%s\n", line);
         BYTE ntokens;
-        tokens = str_split(&ntokens, line, ',');
+        tokens = str_split(&ntokens, line, ' ');
 
         if (tokens)
         {
@@ -81,16 +82,17 @@ int main( int argc, char *argv[] )
                 }
                 else if(token_is_label(token))
                 {
-                    if(!label_exists(token))
+                str_shift_left(token, sizeof(token), 1);
+                    if(!label_exists(token, progam_labels, label_ptr))
                     {
                         label_init(label_ptr++, token,  machine_memory-program_ptr);
                     }
-                    label* lb = label_find(token);
+                    label* lb = label_find(token, progam_labels, label_ptr);
                     program_ptr++;
                     continue;
                 }
-
-                *program_ptr++ = opcodes_find(token); //add opcode if opcode is not var and label
+                DWORD op =  opcodes_find(token);
+                *program_ptr++ = op;//add opcode if opcode is not var and label
 
                 if(token_unknown(token))
                 {
@@ -105,11 +107,11 @@ int main( int argc, char *argv[] )
                     {
                         char* argument = *(tokens + i + 1);
                         str_to_upper(argument);
-                        if(!label_exists(argument))
+                        if(!label_exists(argument, progam_labels, label_ptr))
                         {
                             label_init(label_ptr++, argument, 0);
                         }
-                        label* lb = label_find(argument);
+                        label* lb = label_find(argument, progam_labels, label_ptr);
                         *(lb->jump_ptr++) = machine_memory-program_ptr;
                         lb->jump_number++;
                         *program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
@@ -131,8 +133,8 @@ int main( int argc, char *argv[] )
                         }
                         else
                         {
-                            variable* var = variable_find(argument);
-                            if(var == VARIABLE_NOT_FOUND)
+                            variable* var = variable_find(argument, progam_variables, variable_ptr);
+                            if((DWORD) var == VARIABLE_NOT_FOUND)
                             {
                                 perror("FATAL: variable not found");
                             }

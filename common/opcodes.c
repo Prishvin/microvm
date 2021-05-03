@@ -34,7 +34,7 @@ void initialize_opcodes()
 
 DWORD opcodes_find(char* txt)
 {
-     BYTE result = 0;
+     DWORD result = 0;
      BYTE i;
      for(i = 0; i < MAX_OPCODES; i++)
      {
