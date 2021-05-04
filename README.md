@@ -2,6 +2,14 @@
 This project consists of a virtual machine and a compiler for a simple Forth like stack based language.
 current command set is
 
+Simple.p is a demo program counting from 20 to 1 by step 2
+
+machine functions defined by machine.h
+
+compiler is in StackCompuler folder.
+
+project files yet to be organized.
+
     *ptr++= (Opcode){.opcode = 0, .txt = "NOP"};    // no operation
     *ptr++= (Opcode){.opcode = 1, .txt = "PUSH"};   // push to stack
     *ptr++= (Opcode){.opcode = 2, .txt = "POP"};    // pop from stack
