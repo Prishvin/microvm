@@ -44,7 +44,8 @@ char** str_split(BYTE* ntokens, char* a_str, const char a_delim)
     char delim[2];
     delim[0] = a_delim;
     delim[1] = 0;
-
+    char len = strlen(a_str);
+    *(a_str + len - 1) = 0;
     /* Count how many elements will be extracted. */
     while (*tmp)
     {

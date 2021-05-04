@@ -8,7 +8,7 @@
 #define VAR_STR "VAR"
 
 char token_control[9][MAX_OPCODE_STR_LENGTH] = {"CALL", "JGE", "JLE", "JG", "JL", "JNE", "JE", "JMP","",};
-char token_memory[6][MAX_OPCODE_STR_LENGTH] =  {"PUSH", "FROMMEM", "TOMEM", "AFROM", "ATOM", "",};
+char token_memory[6][MAX_OPCODE_STR_LENGTH] =  {"PUSH", "FRMM", "TOMM","AFROM", "ATOM", "",};
 
 
 BOOL token_unknown(char* token)

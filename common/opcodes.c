@@ -29,7 +29,9 @@ void initialize_opcodes()
     *ptr++= (Opcode){.opcode = 22, .txt = "SWAP"};
     *ptr++= (Opcode){.opcode = 23, .txt = "INC"};
     *ptr++= (Opcode){.opcode = 24, .txt = "DEC"};
-    *ptr++= (Opcode){.opcode = 25, .txt = "BP"};
+    *ptr++= (Opcode){.opcode = 25, .txt = "AFRMM"};
+    *ptr++= (Opcode){.opcode = 26, .txt = "ATOMM"};
+    *ptr++= (Opcode){.opcode = 27, .txt = "BP"};
 }
 
 DWORD opcodes_find(char* txt)

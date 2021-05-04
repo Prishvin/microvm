@@ -43,11 +43,12 @@ label* label_find(char* name, label* labels, label* last)
 {
        label* ptr = labels;
        label* result = LABEL_NOT_FOUND;
-       while(ptr++<last)
+       do
        {
             if(strcmp(ptr->name, name) == 0)
                result = ptr;
-       }
+       }while(ptr++<last)
+       ;
     return result;
 }
 void label_set_jumps(label* lb)

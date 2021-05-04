@@ -90,6 +90,7 @@ int main( int argc, char *argv[] )
                         label_init(label_ptr++, token,  machine_memory-program_ptr);
                     }
                     label* lb = label_find(token, progam_labels, label_ptr);
+                    lb->address = program_ptr-machine_memory;
                     program_ptr++;
                     continue;
                 }
@@ -170,7 +171,6 @@ int main( int argc, char *argv[] )
 
                 }
 
-                *program_ptr++ = opcodes_find("QUIT");
 
 
                 free(token);
@@ -180,6 +180,7 @@ int main( int argc, char *argv[] )
         }
     }
 
+    *program_ptr++ = opcodes_find("QUIT");
     BYTE i;
     for(i = 0; i < lablel_number; i++)
         label_set_jumps(&progam_labels[i]);
