@@ -8,6 +8,8 @@
 
 #define MAX_LEN 256
 
+Machine machine;
+
 int main( int argc, char *argv[] )
 {
     if( argc == 3 )
@@ -33,12 +35,12 @@ int main( int argc, char *argv[] )
     }
     char line[MAX_LEN];
     // -1 to allow room for NULL terminator for really long string
-    program_ptr = machine_memory; //now pointer is at first instruction
-    variable_ptr = progam_variables;
-    label_ptr = progam_labels;
-    var_number = 0;
+    machine.program_ptr = machine.machine_memory; //now pointer is at first instruction
+    machine.variable_ptr = machine.variables;
+    machine.label_ptr = machine.progam_labels;
+
     initialize_opcodes();
- program_ptr = machine_memory;
+ machine.program_ptr = machine.machine_memory;
 
     while (fgets(line, MAX_LEN - 1, fp))
     {
@@ -66,9 +68,9 @@ int main( int argc, char *argv[] )
                     if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
-                        var_init(variable_ptr, argument);
-                        variable_ptr++;
-                        var_number++;
+                        var_init(machine.variable_ptr, argument);
+                        machine.variable_ptr++;
+                        machine.var_number++;
                         continue;
                     }
                     if(ntokens == 3)
@@ -85,17 +87,17 @@ int main( int argc, char *argv[] )
                 else if(token_is_label(token))
                 {
                 str_shift_left(token, sizeof(token), 1);
-                    if(!label_exists(token, progam_labels, label_ptr))
+                    if(!label_exists(token, machine.progam_labels, machine.label_ptr))
                     {
-                        label_init(label_ptr++, token,  machine_memory-program_ptr);
+                        label_init(machine.label_ptr++, token,  machine.machine_memory-machine.program_ptr);
                     }
-                    label* lb = label_find(token, progam_labels, label_ptr);
-                    lb->address = program_ptr-machine_memory;
-                    program_ptr++;
+                    label* lb = label_find(token, machine.progam_labels, machine.label_ptr);
+                    lb->address = machine.program_ptr-machine.machine_memory;
+                    machine.program_ptr++;
                     continue;
                 }
                 DWORD op =  opcodes_find(token);
-                *program_ptr++ = op;//add opcode if opcode is not var and label
+                *machine.program_ptr++ = op;//add opcode if opcode is not var and label
 
                 if(token_unknown(token))
                 {
@@ -110,14 +112,14 @@ int main( int argc, char *argv[] )
                     {
                         char* argument = *(tokens + i + 1);
                         str_to_upper(argument);
-                        if(!label_exists(argument, progam_labels, label_ptr))
+                        if(!label_exists(argument, machine.progam_labels, machine.label_ptr))
                         {
-                            label_init(label_ptr++, argument, 0);
+                            label_init(machine.label_ptr++, argument, 0);
                         }
-                        label* lb = label_find(argument, progam_labels, label_ptr);
-                        *(lb->jump_ptr++) = machine_memory-program_ptr;
+                        label* lb = label_find(argument, machine.progam_labels, machine.label_ptr);
+                        *(lb->jump_ptr++) = machine.machine_memory-machine.program_ptr;
                         lb->jump_number++;
-                        *program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
+                        *machine.program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
                     }
                     else
                     {
@@ -132,19 +134,19 @@ int main( int argc, char *argv[] )
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
-                            *program_ptr++=number;
+                            *machine.program_ptr++=number;
                         }
                         else
                         {
-                            variable* var = variable_find(argument, progam_variables, variable_ptr);
+                            variable* var = variable_find(argument, machine.variables,  machine.variable_ptr);
                             if((DWORD) var == VARIABLE_NOT_FOUND)
                             {
                                 perror("FATAL: variable not found");
                             }
                             else
                             {
-                                *(var->link_ptr++) =machine_memory-program_ptr;
-                                *program_ptr++ = 0;
+                                *(var->link_ptr++) =machine.machine_memory-machine.program_ptr;
+                                *machine.program_ptr++ = 0;
                             }
 
                         }
@@ -158,14 +160,14 @@ int main( int argc, char *argv[] )
                 else if(token_is_dup(token))
                 {
                     if(ntokens == 1)
-                        *program_ptr++ = 1;
+                        *machine.program_ptr++ = 1;
                     if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
-                            *program_ptr++ = number;
+                            *machine.program_ptr++ = number;
                         }
                     }
 
@@ -180,15 +182,15 @@ int main( int argc, char *argv[] )
         }
     }
 
-    *program_ptr++ = opcodes_find("QUIT");
+    *machine.program_ptr++ = opcodes_find("QUIT");
     BYTE i;
     for(i = 0; i < lablel_number; i++)
-        label_set_jumps(&progam_labels[i]);
+        label_set_jumps(&machine.progam_labels[i]);
 
-    for(i = 0; i < var_number; i++)
+    for(i = 0; i < machine.var_number; i++)
     {
-        var_set_links(&progam_variables[i],(DWORD) (program_ptr - machine_memory), machine_memory);
-        *program_ptr++ = 0;
+        var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
+        *machine.program_ptr++ = 0;
     }
 
     fclose(fp);

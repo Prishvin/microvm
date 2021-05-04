@@ -14,8 +14,8 @@
 
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
-
-variable progam_variables[VARIABLE_MEMORY_SIZE];
+typedef struct{
+variable variables[VARIABLE_MEMORY_SIZE];
 variable* variable_ptr;
 
 label progam_labels[MAX_LABELS];
@@ -31,7 +31,7 @@ DWORD* call_first;
 DWORD machine_call_stack[STACK_SIZE];
 DWORD machine_stack[STACK_SIZE]; //first value will always be 0 and treated as empty stack
 
-DWORD progam_cursor_mask = 0xFFF;
+DWORD progam_cursor_mask;
 DWORD* program_ptr;
 
 
@@ -41,15 +41,21 @@ DWORD* call_ptr;
 
 BOOL flag_eq;
 BOOL flag_gr;
+DWORD var_number;
 
 long long ticks;
+} Machine;
+
+Machine machine;
 
 void machine_initialize()
 {
-    memory_end = machine_memory + DEVICE_MEMORY_SIZE;
-    stack_end = machine_stack + STACK_SIZE;
-    stack_first = machine_stack+1;
-    call_first = machine_stack+1;
+    machine.memory_end = machine.machine_memory + DEVICE_MEMORY_SIZE;
+    machine.stack_end = machine.machine_stack + STACK_SIZE;
+    machine.stack_first = machine.machine_stack+1;
+    machine.call_first = machine.machine_stack+1;
+    machine.var_number = 0;
+    machine.progam_cursor_mask = 0xFFF;
 }
 
 void read_inputs();
@@ -60,26 +66,26 @@ void halt() {}
 
 static inline void increment_program_ptr()
 {
-    program_ptr++;
+    machine.program_ptr++;
 #ifdef MEMORY_CHECKS_ENABLED
-    if(program_ptr>=memory_end)
+    if(machine.program_ptr>=machine.memory_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
 }
 
 static inline void increment_stack_cursor() //+
 {
-    stack_ptr++;
+    machine.stack_ptr++;
 #ifdef MEMORY_CHECKS_ENABLED
-    if(stack_ptr>=stack_end)
+    if(machine.stack_ptr>=machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
 }
 static inline void decrement_stack_cursor() //+
 {
-    if(stack_ptr==machine_stack)
+    if(machine.stack_ptr==machine.machine_stack)
         halt();
-    stack_ptr--;
+    machine.stack_ptr--;
 #ifdef MEMORY_CHECKS_ENABLED
 
 #endif
@@ -89,7 +95,7 @@ static inline void push() //+
 {
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
     increment_stack_cursor();
-    *machine_stack = *machine_memory;
+    *machine.machine_stack = *machine.machine_memory;
 }
 static inline void pop()
 {
@@ -99,63 +105,63 @@ static inline void pop()
 static inline void add() //+
 {
 #ifdef MEMORY_CHECKS_ENABLED
-    if(stack_ptr < stack_second || stack_ptr >= stack_end)
+    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
-    *(stack_ptr-1) = *(stack_ptr-1) + *stack_ptr;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
 }
 static inline void sub() //+
 
 {
 #ifdef MEMORY_CHECKS_ENABLED
-    if(stack_ptr < stack_second || stack_ptr >= stack_end)
+    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
-    *(stack_ptr-1) = *(stack_ptr-1) - *stack_ptr;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) - *machine.stack_ptr;
 }
 static inline void mult() //+
 {
 
 #ifdef MEMORY_CHECKS_ENABLED
-    if(stack_ptr < stack_second || stack_ptr >= stack_end)
+    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
-    *(stack_ptr-1) = *(stack_ptr-1) * (*stack_ptr);
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) * (*machine.stack_ptr);
 
 }
 static inline void divide()
 
 {
 #ifdef MEMORY_CHECKS_ENABLED
-    if(stack_ptr < stack_second || stack_ptr >= stack_end)
+    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
-    if(!*stack_ptr)
+    if(!*machine.stack_ptr)
     halt();
-    *(stack_ptr-1) = *(stack_ptr-1) / *stack_ptr;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) / *machine.stack_ptr;
 }
 static inline void jmp() //+
 {
     increment_program_ptr(); //increment because argument byte
-    program_ptr = *program_ptr;
+    machine.program_ptr = *machine.program_ptr;
 }
 
 static inline void cmp() // lower is grater
 {
-    if(stack_ptr> stack_first && stack_ptr < stack_end)
+    if(machine.stack_ptr> machine.stack_first && machine.stack_ptr < machine.stack_end)
     {
-        if (*(stack_ptr-1) == *stack_ptr)
+        if (*(machine.stack_ptr-1) == *machine.stack_ptr)
         {
-            flag_eq = 1;
-            flag_gr = 0;
+            machine.flag_eq = 1;
+            machine.flag_gr = 0;
         }
         else
         {
-            flag_eq = 0;
-            if (*(stack_ptr-1) > *stack_ptr)
-                flag_gr = 1;
+            machine.flag_eq = 0;
+            if (*(machine.stack_ptr-1) > *machine.stack_ptr)
+                machine.flag_gr = 1;
             else
-                flag_gr = 0;
+                machine.flag_gr = 0;
         }
     }
     else
@@ -166,12 +172,12 @@ static inline void cmp() // lower is grater
 static inline void je() /// jump if equal, 8byte (skip one byte)
 {
 
-    if (flag_eq == 1)
+    if (machine.flag_eq == 1)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
+                      if (machine.program_ptr >= machine.memory_end)
                           halt("Segmentation fault after je");
 #endif // MEMORY_CHECKS_ENABLED
     }
@@ -180,12 +186,12 @@ static inline void je() /// jump if equal, 8byte (skip one byte)
 
 static inline void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
 {
-    if (flag_eq == 0)
+    if (machine.flag_eq == 0)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
+                      if (machine.program_ptr >= machine.memory_end)
                           halt("Segmentation fault after jne");
 #endif // MEMORY_CHECKS_ENABLED
     }
@@ -195,12 +201,12 @@ static inline void jl()
 {
 
 
-    if (flag_eq == 0 && flag_gr == 0)
+    if (machine.flag_eq == 0 && machine.flag_gr == 0)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
           increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
+                      if (machine.program_ptr >= machine.memory_end)
                           halt("Segmentation fault after jl");
 #endif // MEMORY_CHECKS_ENABLED
     }
@@ -208,12 +214,12 @@ static inline void jl()
 static inline void jg()
 {
 
-    if (flag_gr)
+    if (machine.flag_gr)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
            increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
+                      if (machine.program_ptr >= machine.memory_end)
                           halt("Segmentation fault after jg");
 #endif // MEMORY_CHECKS_ENABLED
     }
@@ -222,12 +228,12 @@ static inline void jg()
 static inline void jle()
 {
 
-    if (!flag_gr)
+    if (!machine.flag_gr)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
          increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (program_ptr >= memory_end)
+                      if (machine.program_ptr >= machine.memory_end)
                           halt("Segmentation fault after jle");
 #endif // MEMORY_CHECKS_ENABLED
     }
@@ -236,12 +242,12 @@ static inline void jle()
 static inline void jge()
 {
 
-    if (flag_eq && flag_gr)
+    if (machine.flag_eq && machine.flag_gr)
     {
-        program_ptr = *program_ptr;
+        machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
         #ifdef MEMORY_CHECKS_ENABLED
-                              if (program_ptr >= memory_end)
+                              if (machine.program_ptr >= machine.memory_end)
                                   halt("Segmentation fault after jle");
         #endif // MEMORY_CHECKS_ENABLED
     }
@@ -252,44 +258,44 @@ static inline void frmm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-    if (program_ptr >= memory_end)
+    if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
 
     increment_stack_cursor();
-    *stack_ptr = *(program_ptr + *program_ptr);
+    *machine.stack_ptr = *(machine.program_ptr + *machine.program_ptr);
 }
 
 static inline void tomm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-    if (program_ptr >= memory_end)
+    if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
-    *(machine_memory + *program_ptr) = *stack_ptr;
+    *(machine.machine_memory + *machine.program_ptr) = *machine.stack_ptr;
 }
 
 static inline void sfrommem() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-    if (program_ptr >= memory_end)
+    if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
 
     increment_stack_cursor();
-    *stack_ptr = *(program_ptr + *program_ptr - 1);
+    *machine.stack_ptr = *(machine.program_ptr + *machine.program_ptr - 1);
 }
 
 static inline void stomem() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-    if (program_ptr >= memory_end)
+    if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
-    *(program_ptr + *stack_ptr - 1) = *stack_ptr;
+    *(machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
 }
 
 static inline void afrom() //8
@@ -297,36 +303,36 @@ static inline void afrom() //8
     //TODO aserts here
     increment_program_ptr();
     increment_stack_cursor();
-    *stack_ptr = *(machine_memory + *(stack_ptr -1 ) + *program_ptr);
+    *machine.stack_ptr = *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
 }
 
 static inline void atom() //8
 {
   //TODO aserts here
    increment_program_ptr();
-   *(machine_memory + *(stack_ptr -1 ) + *program_ptr) = *stack_ptr;
+   *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr) = *machine.stack_ptr;
 }
 
 
 static inline void call()
 {
-    call_ptr++;
-    if (call_ptr >= call_stack_end)
+    machine.call_ptr++;
+    if (machine.call_ptr >= machine.call_stack_end)
         halt("call stack overflow");
-    *call_ptr = program_ptr+2;
+    *machine.call_ptr = machine.program_ptr+2;
     increment_program_ptr();
-    if (program_ptr >= memory_end)
+    if (machine.program_ptr >= machine.memory_end)
         halt("segmentation fault in call");
-    program_ptr = *program_ptr;
+    machine.program_ptr = *machine.program_ptr;
 }
 
 static inline void ret()
 {
-    if (call_ptr < call_first)
+    if (machine.call_ptr < machine.call_first)
         halt("cannot ret: call stack is empty");
-    if (call_ptr < call_first || call_ptr >= call_stack_end)
+    if (machine.call_ptr < machine.call_first || machine.call_ptr >= machine.call_stack_end)
         halt("segmentation fault in ret");
-    *program_ptr = *call_ptr--;
+    *machine.program_ptr = *machine.call_ptr--;
 
 }
 
@@ -354,31 +360,31 @@ static inline void randint()
 
 static inline void swap()
 {
-    if (stack_ptr < stack_second)
+    if (machine.stack_ptr < machine.stack_second)
         halt("not enough elements in stack to swap");
-    DWORD temp = *stack_ptr;
-    *stack_ptr = *(stack_ptr-1);
-    *(stack_ptr-1) = temp;
+    DWORD temp = *machine.stack_ptr;
+    *machine.stack_ptr = *(machine.stack_ptr-1);
+    *(machine.stack_ptr-1) = temp;
 }
 
 static inline void stinc()
 {
-    if (stack_ptr >= stack_end)
+    if (machine.stack_ptr >= machine.stack_end)
         halt("cannot inc because stack is empty");
-    stack_ptr++;
+    machine.stack_ptr++;
 }
 
 static inline void stdec()
 {
-    if (stack_ptr < stack_first)
+    if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
-    stack_ptr--;
+    machine.stack_ptr--;
 }
 
 static inline void sttoar()
 {
 /*
-    if (stack_ptr < stack_first)
+    if (machine.stack_ptr < machine.stack_first)
         halt("stack is empty, cannot afrommem");
     increment_program_ptr();
     if (stack[st_cur] + mem[c_cur] < 0 || stack[st_cur] + mem[c_cur] >= MEM_SIZE)
@@ -394,7 +400,7 @@ static inline void artost()
     increment_program_ptr();
     //if (stack[st_cur - 1] + mem[c_cur] < 0 || stack[st_cur - 1] + mem[c_cur] >= MEM_SIZE)
     //    halt("segmentation fault in atomem");
-    *(machine_memory + *program_ptr + *stack_ptr - 1) = *stack_ptr;
+    *(machine.machine_memory + *machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
 }
 
 static inline void nop()

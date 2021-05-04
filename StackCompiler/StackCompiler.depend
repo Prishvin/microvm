@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1620141878 source:/home/misha/source/VirtualMachine/common/opcodes.c
+1620151063 source:/home/misha/source/VirtualMachine/common/opcodes.c
 	"opcodes.h"
 
 1620070430 /home/misha/source/VirtualMachine/common/opcodes.h
@@ -10,7 +10,7 @@
 	<string.h>
 	<ctype.h>
 
-1620149775 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
+1620156694 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -31,7 +31,7 @@
 	"global.h"
 	<string.h>
 
-1620054323 /home/misha/source/VirtualMachine/common//machine.h
+1620156683 /home/misha/source/VirtualMachine/common//machine.h
 	"global.h"
 	"variable.h"
 	"label.h"

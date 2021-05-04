@@ -20,7 +20,6 @@ char name[MAX_OPCODE_STR_LENGTH];
 
 
 
-DWORD var_number;
 
 void var_init(variable* v, char* name)
 {
