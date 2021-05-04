@@ -10,3 +10,4 @@ FRMM dcr
 sub
 cmp
 jle label
+quit
