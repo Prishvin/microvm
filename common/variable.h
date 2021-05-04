@@ -45,11 +45,12 @@ variable* variable_find(char* name, variable* variables, variable* last)
 {
        variable* ptr = variables;
        variable* result = VARIABLE_NOT_FOUND;
-       while(ptr++<last)
+       do
        {
             if(strcmp(ptr->name, name) == 0)
                result = ptr;
-       }
+       }while(ptr++<last)
+       ;
     return result;
 }
 #endif // VARIABLE_H_INCLUDED

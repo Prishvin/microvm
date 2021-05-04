@@ -22,7 +22,7 @@ void initialize_opcodes()
     *ptr++= (Opcode){.opcode = 15, .txt = "FRMM"};
     *ptr++= (Opcode){.opcode = 16, .txt = "TOMM"};
     *ptr++= (Opcode){.opcode = 17, .txt = "RFRMM"};
-    *ptr++= (Opcode){.opcode = 18, .txt = "ROMM"};
+    *ptr++= (Opcode){.opcode = 18, .txt = "RTOMM"};
     *ptr++= (Opcode){.opcode = 19, .txt = "CALL"};
     *ptr++= (Opcode){.opcode = 20, .txt = "RET"};
     *ptr++= (Opcode){.opcode = 21, .txt = "DUP"};

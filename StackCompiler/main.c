@@ -66,7 +66,7 @@ int main( int argc, char *argv[] )
                     if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
-                        var_init(variable_ptr, token);
+                        var_init(variable_ptr, argument);
                         variable_ptr++;
                         var_number++;
                         continue;

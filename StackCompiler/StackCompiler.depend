@@ -10,7 +10,7 @@
 	<string.h>
 	<ctype.h>
 
-1620138905 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
+1620149775 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -40,7 +40,7 @@
 	<string.h>
 	<ctype.h>
 
-1620045449 /home/misha/source/VirtualMachine/common//variable.h
+1620149907 /home/misha/source/VirtualMachine/common//variable.h
 	"token.h"
 	"machine.h"
 

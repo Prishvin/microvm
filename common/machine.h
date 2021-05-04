@@ -248,7 +248,7 @@ static inline void jge()
 
 }
 
-static inline void frommem() //8
+static inline void frmm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
@@ -260,7 +260,7 @@ static inline void frommem() //8
     *stack_ptr = *(program_ptr + *program_ptr);
 }
 
-static inline void tomem() //8
+static inline void tomm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED

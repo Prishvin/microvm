@@ -2,7 +2,7 @@ push 1
 push 20
 var dcr
 push 2
-tomem dcr
+TOMM dcr
 pop
 :label
 print
