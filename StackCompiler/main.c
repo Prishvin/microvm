@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
     {
         // Remove trailing newline
         //buffer[strcspn(buffer, "\n")] = 0;
-        printf("%s\n", line);
+        printf("[Processing line]\n %s", line);
         BYTE ntokens;
         tokens = str_split(&ntokens, line, ' ');
 
@@ -90,13 +90,19 @@ int main( int argc, char *argv[] )
                     if(!label_exists(token, machine.progam_labels, machine.label_ptr))
                     {
                         label_init(machine.label_ptr++, token,  machine.machine_memory-machine.program_ptr);
+                        machine.lablel_number++;
                     }
                     label* lb = label_find(token, machine.progam_labels, machine.label_ptr);
                     lb->address = machine.program_ptr-machine.machine_memory;
+
+                    printf("Label ptr =%d\n", machine.program_ptr - machine.machine_memory);
+
                     machine.program_ptr++;
+
                     continue;
                 }
                 DWORD op =  opcodes_find(token);
+                printf("%s [PTR]=%d\n", token, machine.program_ptr - machine.machine_memory);
                 *machine.program_ptr++ = op;//add opcode if opcode is not var and label
 
                 if(token_unknown(token))
@@ -115,10 +121,12 @@ int main( int argc, char *argv[] )
                         if(!label_exists(argument, machine.progam_labels, machine.label_ptr))
                         {
                             label_init(machine.label_ptr++, argument, 0);
+                            machine.lablel_number++;
                         }
                         label* lb = label_find(argument, machine.progam_labels, machine.label_ptr);
                         *(lb->jump_ptr++) = machine.machine_memory-machine.program_ptr;
                         lb->jump_number++;
+                          printf("Label %s ptr =%d\n", argument,  machine.program_ptr - machine.machine_memory);
                         *machine.program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
                     }
                     else
@@ -134,6 +142,7 @@ int main( int argc, char *argv[] )
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
+                            printf("Numberic argument %s\n [PTR] =%d\n", argument,  machine.program_ptr - machine.machine_memory);
                             *machine.program_ptr++=number;
                         }
                         else
@@ -145,7 +154,8 @@ int main( int argc, char *argv[] )
                             }
                             else
                             {
-                                *(var->link_ptr++) =machine.machine_memory-machine.program_ptr;
+                                printf("Link argument %s ptr =%d\n", argument,  machine.program_ptr - machine.machine_memory);
+                                *(var->link_ptr++) =machine.program_ptr - machine.machine_memory;
                                 *machine.program_ptr++ = 0;
                             }
 
@@ -160,13 +170,17 @@ int main( int argc, char *argv[] )
                 else if(token_is_dup(token))
                 {
                     if(ntokens == 1)
+                    {
+                        printf("Dup ptr =%d\n",  machine.program_ptr - machine.machine_memory);
                         *machine.program_ptr++ = 1;
+                    }
                     if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
+                          printf("Dup ptr =%d\n",  machine.program_ptr - machine.machine_memory);
                             *machine.program_ptr++ = number;
                         }
                     }
@@ -181,15 +195,16 @@ int main( int argc, char *argv[] )
             free(tokens);
         }
     }
-
+    printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
     *machine.program_ptr++ = opcodes_find("QUIT");
     BYTE i;
-    for(i = 0; i < lablel_number; i++)
+    for(i = 0; i < machine.lablel_number; i++)
         label_set_jumps(&machine.progam_labels[i]);
 
     for(i = 0; i < machine.var_number; i++)
     {
-        var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
+         printf("Var %d allocation [PTR] =%d\n", i+1, machine.program_ptr - machine.machine_memory);
+         var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
         *machine.program_ptr++ = 0;
     }
 

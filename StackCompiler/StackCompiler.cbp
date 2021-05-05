@@ -34,14 +34,17 @@
 		</Compiler>
 		<Unit filename="../common/auxillary.h" />
 		<Unit filename="../common/global.h" />
+		<Unit filename="../common/label.h" />
+		<Unit filename="../common/machine.h" />
 		<Unit filename="../common/opcodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../common/opcodes.h" />
+		<Unit filename="../common/token.h" />
+		<Unit filename="../common/variable.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/machine.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

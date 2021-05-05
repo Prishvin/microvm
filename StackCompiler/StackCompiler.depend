@@ -1,16 +1,17 @@
 # depslib dependency file v1.0
-1620151063 source:/home/misha/source/VirtualMachine/common/opcodes.c
+1620231944 source:/home/misha/source/VirtualMachine/common/opcodes.c
 	"opcodes.h"
 
-1620070430 /home/misha/source/VirtualMachine/common/opcodes.h
+1620231961 /home/misha/source/VirtualMachine/common/opcodes.h
 	"global.h"
+	"machine.h"
 	<string.h>
 
-1620045371 /home/misha/source/VirtualMachine/common/global.h
+1620234116 /home/misha/source/VirtualMachine/common/global.h
 	<string.h>
 	<ctype.h>
 
-1620156694 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
+1620237162 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -27,29 +28,55 @@
 	<string.h>
 	<stdio.h>
 
-1620141827 /home/misha/source/VirtualMachine/common/token.h
+1620232189 /home/misha/source/VirtualMachine/common/token.h
 	"global.h"
 	<string.h>
 
-1620156683 /home/misha/source/VirtualMachine/common//machine.h
+1620237032 /home/misha/source/VirtualMachine/common//machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
 
-1620045371 /home/misha/source/VirtualMachine/common//global.h
+1620234116 /home/misha/source/VirtualMachine/common//global.h
 	<string.h>
 	<ctype.h>
 
-1620149907 /home/misha/source/VirtualMachine/common//variable.h
+1620234113 /home/misha/source/VirtualMachine/common//variable.h
 	"token.h"
 	"machine.h"
 
-1620141827 /home/misha/source/VirtualMachine/common//token.h
+1620232189 /home/misha/source/VirtualMachine/common//token.h
 	"global.h"
 	<string.h>
 
-1620139779 /home/misha/source/VirtualMachine/common//label.h
+1620237027 /home/misha/source/VirtualMachine/common//label.h
 	<string.h>
 	"../common/token.h"
 	"../common/machine.h"
+
+1620237276 source:/home/misha/source/VirtualMachine/common/label.c
+	"label.h"
+
+1620237027 /home/misha/source/VirtualMachine/common/label.h
+	<string.h>
+	"../common/token.h"
+	"../common/machine.h"
+
+1620237032 /home/misha/source/VirtualMachine/common/machine.h
+	"global.h"
+	"variable.h"
+	"label.h"
+
+1620234113 /home/misha/source/VirtualMachine/common/variable.h
+	"token.h"
+	"machine.h"
+
+1620233008 source:/home/misha/source/VirtualMachine/common/machine.c
+	"machine.h"
+
+1620232163 source:/home/misha/source/VirtualMachine/common/token.c
+	"token.h"
+
+1620236711 source:/home/misha/source/VirtualMachine/common/variable.c
+	"variable.h"
 

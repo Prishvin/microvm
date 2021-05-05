@@ -3,13 +3,15 @@
 
 #define MAX_OPCODES 100
 #include "global.h"
+#include "machine.h"
 #include <string.h>
 
-
+typedef void (* voidfunc)(void);
 
 typedef struct
 {
     DWORD opcode;
+    voidfunc ptr;
     char txt[10];
 } Opcode;
 
