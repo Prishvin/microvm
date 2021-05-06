@@ -16,19 +16,28 @@ int main( int argc, char *argv[] )
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
-
+    initialize_opcodes();
     if(argc == 2)
     {
         if(strcmp(argv[1],"-h") == 0)
         {
             printf("Compile file: stackcompiler -c source_file destination_file\n");
-            printf("Run interpreter:  stackcompiler -i\n");
+            printf("Run:  stackcompiler -r filename\n");
         }
         if(strcmp(argv[1],"-i") == 0)
         {
+            Machine interpreter;
+            machine_initialize(&interpreter);
+            printf("Ready\n>");
             while ((read = getline(&line, &len, stdin) != -1))
             {
-                printf("%s", line);
+                if(compile_line(line, &interpreter))
+
+                {
+                    printf("OK\n>");
+                }
+                else
+                    printf("Error\n>");
             }
         }
 
@@ -36,6 +45,19 @@ int main( int argc, char *argv[] )
     }
     if(argc == 3)
     {
-        compile_all(argv[2], argv[3]);
+        if(strcmp(argv[1],"-r") == 0)
+        {
+            Machine interpreter;
+            machine_initialize(&interpreter);
+            machine_load(argv[2], &interpreter);
+            //TODO READ WORD
+        }
+    }
+    if(argc == 4)
+    {
+        if(strcmp(argv[1],"-c") == 0)
+            compile_all(argv[2], argv[3]);
+        else
+            perror("Unknown command");
     }
 }

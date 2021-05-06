@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="/home/misha/source/VirtualMachine/simple.p /home/misha/source/VirtualMachine/simple.b" />
+				<Option parameters="-c /home/misha/source/VirtualMachine/simple.p /home/misha/source/VirtualMachine/simple.b" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -32,19 +32,38 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../common/auxillary.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../common/auxillary.h" />
 		<Unit filename="../common/global.h" />
+		<Unit filename="../common/label.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../common/label.h" />
+		<Unit filename="../common/machine.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../common/machine.h" />
 		<Unit filename="../common/opcodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../common/opcodes.h" />
+		<Unit filename="../common/token.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../common/token.h" />
+		<Unit filename="../common/variable.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../common/variable.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/compiler.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/compiler.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

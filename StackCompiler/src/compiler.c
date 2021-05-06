@@ -19,10 +19,11 @@ void compile_file(char* input_file, char* output_file)
 {
 
 }
-void compile_line(char* line, Machine* mac)
+BOOL compile_line(char* line, Machine* mac)
 {
+    BOOL result = FALSE;
     printf("[Processing line]\n %s", line);
-        char** tokens;
+    char** tokens;
     BYTE ntokens;
     tokens = str_split(&ntokens, line, ' ');
 
@@ -36,7 +37,8 @@ void compile_line(char* line, Machine* mac)
             if(token_is_comment(token))
             {
                 printf("Comment found =[%s]\n", (char*) line);
-                return;
+                free(tokens);
+                return TRUE;
 
             }
             else if(token_is_var(token))
@@ -47,17 +49,20 @@ void compile_line(char* line, Machine* mac)
                     var_init(mac->variable_ptr, argument);
                     mac->variable_ptr++;
                     mac->var_number++;
-                    return;
+                    free(tokens);
+                    return TRUE;
                 }
                 if(ntokens == 3)
                 {
                     perror("FATAL: array not implemented yet");
-                    return;
+                    free(tokens);
+                    return TRUE;
                 }
                 else
                 {
-                    perror("FATAL: missing VAR arguments");
-                    return;
+                    perror("FATAL: wrong VAR arguments");
+                    free(tokens);
+                    return TRUE;
                 }
             }
             else if(token_is_label(token))
@@ -75,101 +80,109 @@ void compile_line(char* line, Machine* mac)
 
                 mac->program_ptr++;
 
-                return;
+                free(tokens);
+                return TRUE;
             }
-            DWORD op =  opcodes_find(token);
-            printf("%s [PTR]=%d\n", token, mac->program_ptr - mac->machine_memory);
-            *mac->program_ptr++ = op;//add opcode if opcode is not var and label
-
-            if(token_unknown(token))
             {
-                perror("FATAL: Unexpected opcode");
-            }
+                DWORD op =  opcodes_find(token);
+                printf("%s [PTR]=%d\n", token, mac->program_ptr - mac->machine_memory);
+                *mac->program_ptr++ = op;//add opcode if opcode is not var and label
 
-
-
-            if(token_is_control(token))
-            {
-                if(ntokens == 2)
+                if(token_unknown(token))
                 {
-                    char* argument = *(tokens + i + 1);
-                    str_to_upper(argument);
-                    if(!label_exists(argument, mac->progam_labels, mac->label_ptr))
-                    {
-                        label_init(mac->label_ptr++, argument, 0);
-                        mac->lablel_number++;
-                    }
-                    label* lb = label_find(argument, mac->progam_labels, mac->label_ptr);
-                    *(lb->jump_ptr++) = mac->machine_memory-mac->program_ptr;
-                    lb->jump_number++;
-                    printf("Label %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                    *mac->program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
+                    perror("FATAL: Unexpected opcode");
+                    result =  FALSE;
                 }
-                else
+
+
+
+                if(token_is_control(token))
                 {
-                    perror("FATAL: no argument supplied");
-                }
-            }
-            else if(token_is_mem(token))
-            {
-                if(ntokens == 2)
-                {
-                    char* argument = *(tokens + i + 1);
-                    DWORD number;
-                    if(is_numeric(argument, &number))
+                    if(ntokens == 2)
                     {
-                        printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                        *mac->program_ptr++=number;
+                        char* argument = *(tokens + i + 1);
+                        str_to_upper(argument);
+                        if(!label_exists(argument, mac->progam_labels, mac->label_ptr))
+                        {
+                            label_init(mac->label_ptr++, argument, 0);
+                            mac->lablel_number++;
+                        }
+                        label* lb = label_find(argument, mac->progam_labels, mac->label_ptr);
+                        *(lb->jump_ptr++) = mac->machine_memory-mac->program_ptr;
+                        lb->jump_number++;
+                        printf("Label %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                        *mac->program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
+                        result = TRUE;
                     }
                     else
                     {
-                        variable* var = variable_find(argument, mac->variables,  mac->variable_ptr);
-                        if((DWORD) var == VARIABLE_NOT_FOUND)
+                        perror("FATAL: no argument supplied");
+                        result =  FALSE;
+                    }
+                }
+                else if(token_is_mem(token))
+                {
+                    if(ntokens == 2)
+                    {
+                        char* argument = *(tokens + i + 1);
+                        DWORD number;
+                        if(is_numeric(argument, &number))
                         {
-                            perror("FATAL: variable not found");
+                            printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                            *mac->program_ptr++=number;
                         }
                         else
                         {
-                            printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                            *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
-                            *mac->program_ptr++ = 0;
-                        }
+                            variable* var = variable_find(argument, mac->variables,  mac->variable_ptr);
+                            if((DWORD) var == VARIABLE_NOT_FOUND)
+                            {
+                                perror("FATAL: variable not found");
+                                return FALSE;
+                            }
+                            else
+                            {
+                                printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                                *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
+                                *mac->program_ptr++ = 0;
+                            }
 
+                        }
+                    }
+                    else
+                    {
+                        perror("FATAL: no argument supplied");
+                        result =  FALSE;
                     }
                 }
-                else
-                {
-                    perror("FATAL: no argument supplied");
-                }
-            }
 
-            else if(token_is_dup(token))
-            {
-                if(ntokens == 1)
+                else if(token_is_dup(token))
                 {
-                    printf("Dup ptr =%d\n",  mac->program_ptr - mac->machine_memory);
-                    *mac->program_ptr++ = 1;
-                }
-                if(ntokens == 2)
-                {
-                    char* argument = *(tokens + i + 1);
-                    DWORD number;
-                    if(is_numeric(argument, &number))
+                    if(ntokens == 1)
                     {
                         printf("Dup ptr =%d\n",  mac->program_ptr - mac->machine_memory);
-                        *mac->program_ptr++ = number;
+                        *mac->program_ptr++ = 1;
                     }
+                    if(ntokens == 2)
+                    {
+                        char* argument = *(tokens + i + 1);
+                        DWORD number;
+                        if(is_numeric(argument, &number))
+                        {
+                            printf("Dup ptr =%d\n",  mac->program_ptr - mac->machine_memory);
+                            *mac->program_ptr++ = number;
+                        }
+                    }
+
                 }
 
+
             }
-
-
-
             free(token);
         }
         printf("\n");
         free(tokens);
     }
+    return result;
 }
 void compile_all(char* input_file, char* ooutput_file)
 {
@@ -183,12 +196,7 @@ void compile_all(char* input_file, char* ooutput_file)
     }
     char line[MAX_LEN];
     // -1 to allow room for NULL terminator for really long string
-    machine.program_ptr = machine.machine_memory; //now pointer is at first instruction
-    machine.variable_ptr = machine.variables;
-    machine.label_ptr = machine.progam_labels;
-
-    initialize_opcodes();
-    machine.program_ptr = machine.machine_memory;
+    machine_initialize(&machine);
 
     while (fgets(line, MAX_LEN - 1, fp))
     {

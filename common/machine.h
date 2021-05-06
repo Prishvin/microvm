@@ -5,7 +5,8 @@
 #include "variable.h"
 #include "label.h"
 
-
+#include <stdio.h>
+#include <stdlib.h>
 #define DEVICE_MEMORY_SIZE  4096
 
 #define LABEL_MEMORY_SIZE 512
@@ -49,7 +50,7 @@ long long ticks;
 
 Machine machine;
 
-
+void machine_load(char* filename, Machine* mac);
 void machine_initialize();
 void read_inputs();
 void update_outputs();

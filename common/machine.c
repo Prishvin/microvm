@@ -2,15 +2,45 @@
 
 
 Machine machine;
-
-void machine_initialize()
+void machine_load(char* filename, Machine* mac)
 {
-    machine.memory_end = machine.machine_memory + DEVICE_MEMORY_SIZE;
-    machine.stack_end = machine.machine_stack + STACK_SIZE;
-    machine.stack_first = machine.machine_stack+1;
-    machine.call_first = machine.machine_stack+1;
-    machine.var_number = 0;
-    machine.progam_cursor_mask = 0xFFF;
+
+    FILE *fileptr;
+    char *buffer;
+    long filelen;
+
+    fileptr = fopen(filename, "rb");  // Open the file in binary mode
+    if(fileptr == NULL)
+    {
+        perror("FATAL: reading binary file");
+        return;
+    }
+    fseek(fileptr, 0, SEEK_END);          // Jump to the end of the file
+    filelen = ftell(fileptr);             // Get the current byte offset in the file
+    rewind(fileptr);                      // Jump back to the beginning of the file
+
+    buffer = (char *)malloc(filelen * sizeof(char)); // Enough memory for the file
+    fread(buffer, filelen, 1, fileptr); // Read in the entire file
+    fclose(fileptr); // Close the file
+
+    memcpy(&mac->machine_memory, buffer, filelen);
+    free(buffer);
+
+}
+void machine_initialize(Machine *mac)
+{
+    mac->program_ptr = mac->machine_memory; //now pointer is at first instruction
+    mac->variable_ptr = mac->variables;
+    mac->label_ptr = mac->progam_labels;
+    mac->program_ptr = mac->machine_memory;
+
+
+    mac->memory_end = mac->machine_memory + DEVICE_MEMORY_SIZE;
+    mac->stack_end = mac->machine_stack + STACK_SIZE;
+    mac->stack_first = mac->machine_stack+1;
+    mac->call_first = mac->machine_stack+1;
+    mac->var_number = 0;
+    mac->progam_cursor_mask = 0xFFF;
 }
 
 void read_inputs();
