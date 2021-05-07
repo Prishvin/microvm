@@ -44,5 +44,5 @@ opcode   Mnemonics
      38   BNOT  
      39   BXOR  
      
-     
+      
 example program is presented in simple.p
