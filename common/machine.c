@@ -67,26 +67,27 @@ void halt() {}
  void increment_stack_cursor() //+
 {
     machine.stack_ptr++;
-#ifdef MEMORY_CHECKS_ENABLED
-    if(machine.stack_ptr>=machine.stack_end)
-        halt();
-#endif // MEMORY_CHECKS_ENABLED
+    #ifdef MEMORY_CHECKS_ENABLED
+        if(machine.stack_ptr>=machine.stack_end)
+            halt();
+    #endif // MEMORY_CHECKS_ENABLED
 }
  void decrement_stack_cursor() //+
 {
     if(machine.stack_ptr==machine.machine_stack)
         halt();
     machine.stack_ptr--;
-#ifdef MEMORY_CHECKS_ENABLED
+    #ifdef MEMORY_CHECKS_ENABLED
 
-#endif
+    #endif
 }
 
  void push() //+
 {
-    increment_program_ptr(); //push is followed by one byte, so increment to skip argument
+     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
      *machine.stack_ptr = *machine.program_ptr;
      increment_stack_cursor();
+     increment_program_ptr();
 
 
 }
@@ -259,8 +260,10 @@ void halt() {}
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
 
+
+    *machine.stack_ptr = *(machine.variable_memory + *machine.program_ptr);
     increment_stack_cursor();
-    *machine.stack_ptr = *(machine.program_ptr + *machine.program_ptr);
+     increment_program_ptr();
 }
 
  void tomm() //8
@@ -270,7 +273,8 @@ void halt() {}
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
-    *(machine.machine_memory + *machine.program_ptr) = *machine.stack_ptr;
+   *(machine.variable_memory + *machine.program_ptr) = *(machine.stack_ptr-1);
+    increment_program_ptr();
 }
 
  void sfrommem() //8

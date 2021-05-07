@@ -26,7 +26,7 @@ int main( int argc, char *argv[] )
         }
         if(strcmp(argv[1],"-i") == 0)
         {
-
+            printf("StackVM v0.1: buy me a bear if you used it\n");
             machine_initialize(&machine);
             printf("Ready\n>");
             while ((read = getline(&line, &len, stdin) != -1))
@@ -91,17 +91,25 @@ int main( int argc, char *argv[] )
                 }
                 else
                 {
+
                     DWORD *ptr = machine.program_ptr;
                     if(compile_line(line, &machine))
                     {
-                        machine.program_ptr = ptr;
+                             machine.program_ptr=ptr;
                         (opcodes[*ptr].ptr)();
-                        printf("OK");
+                        DWORD result = 0xFFFF;
+                        if(machine.stack_ptr < machine.stack_end)
+                            result = *(machine.stack_ptr-1);
+                               printf("=%d\n>", result);
+
                     }
                     else
-                        printf("Error");
+                    {
+                        printf("\n>");
+                    }
+
                 }
-                printf("\n>");
+
             }
         }
 

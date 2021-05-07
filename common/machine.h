@@ -24,6 +24,7 @@ variable* variable_ptr;
 label progam_labels[MAX_LABELS];
 label* label_ptr;
 
+DWORD* exec_ptr;
 DWORD machine_memory[DEVICE_MEMORY_SIZE];
 DWORD variable_memory[DEVICE_VAR_SIZE];
 DWORD* variable_memory_ptr;

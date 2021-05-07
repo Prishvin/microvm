@@ -22,7 +22,9 @@ void compile_file(char* input_file, char* output_file)
 BOOL compile_line(char* line, Machine* mac)
 {
     BOOL result = TRUE;
+    #ifdef DEBUG_COMPILE
     printf("[Processing line]\n %s", line);
+    #endif
     char** tokens;
     BYTE ntokens;
     tokens = str_split(&ntokens, line, ' ');
@@ -36,9 +38,11 @@ BOOL compile_line(char* line, Machine* mac)
             str_to_upper(token);
             if(token_is_comment(token))
             {
+                  #ifdef DEBUG_COMPILE
                 printf("Comment found =[%s]\n", (char*) line);
+                #endif
                 free(tokens);
-                return TRUE;
+                return FALSE;
 
             }
             else if(token_is_var(token))
@@ -54,19 +58,19 @@ BOOL compile_line(char* line, Machine* mac)
 
 
                     free(tokens);
-                    return TRUE;
+                    return FALSE;
                 }
                 if(ntokens == 3)
                 {
                     perror("FATAL: array not implemented yet");
                     free(tokens);
-                    return TRUE;
+                    return FALSE;
                 }
                 else
                 {
                     perror("FATAL: wrong VAR arguments");
                     free(tokens);
-                    return TRUE;
+                    return FALSE;
                 }
             }
             else if(token_is_label(token))
@@ -78,27 +82,29 @@ BOOL compile_line(char* line, Machine* mac)
                     mac->lablel_number++;
                 }
                 label* lb = label_find(token, mac->progam_labels, mac->label_ptr);
-                lb->address = mac->program_ptr-mac->machine_memory;
-
-                printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
-
-                //mac->program_ptr++;
+                lb->address = mac->program_ptr;
+                #ifdef DEBUG_COMPILE
+                                printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
+                #endif
+                                //mac->program_ptr++;
 
                 free(tokens);
-                return TRUE;
+                return FALSE;
             }
             else
             {
                 DWORD op =  opcodes_find(token);
+                #ifdef DEBUG_COMPILE
                 printf("%s [PTR]=%d\n", token, mac->program_ptr - mac->machine_memory);
-                *mac->program_ptr++ = op;//add opcode if opcode is not var and label
+                #endif
+
 
                 if(token_unknown(op))
                 {
                     perror("FATAL: Unexpected opcode");
                     result =  FALSE;
                 }
-
+                *mac->program_ptr++ = op;//add opcode if opcode is not var and label
 
 
                 if(token_is_control(token))
@@ -116,7 +122,9 @@ BOOL compile_line(char* line, Machine* mac)
                         DWORD jump = mac->program_ptr - mac->machine_memory;
                         *(lb->jump_ptr++) = jump;
                         lb->jump_number++;
+                              #ifdef DEBUG_COMPILE
                         printf("Label %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                        #endif
                         *mac->program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
                         result = TRUE;
                     }
@@ -134,7 +142,9 @@ BOOL compile_line(char* line, Machine* mac)
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
+                              #ifdef DEBUG_COMPILE
                             printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                            #endif // DEBUG_COMPILE
                             *mac->program_ptr++=number;
                         }
                         else
@@ -147,11 +157,13 @@ BOOL compile_line(char* line, Machine* mac)
                             }
                             else
                             {
+                                #ifdef DEBUG_COMPILE
                                 printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
+                                #endif
                                 *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
 
                                 #ifdef HARVARD_A
-                                    *mac->program_ptr++ = var->address;
+                                    *mac->program_ptr++ = var->index;
                                 #else
                                     *mac->program_ptr++ = 0;
                                 #endif
