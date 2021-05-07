@@ -34,6 +34,7 @@ void machine_initialize(Machine *mac)
     mac->label_ptr = mac->progam_labels;
     mac->program_ptr = mac->machine_memory;
 
+    mac->stack_ptr = mac->machine_stack ;
 
     mac->memory_end = mac->machine_memory + DEVICE_MEMORY_SIZE;
     mac->stack_end = mac->machine_stack + STACK_SIZE;
@@ -41,6 +42,11 @@ void machine_initialize(Machine *mac)
     mac->call_first = mac->machine_stack+1;
     mac->var_number = 0;
     mac->progam_cursor_mask = 0xFFF;
+
+    mac->section_var = mac->program_ptr;
+    mac->section_str = mac->program_ptr;
+
+    mac->variable_memory_ptr =mac->variable_memory;
 }
 
 void read_inputs();
@@ -79,8 +85,10 @@ void halt() {}
  void push() //+
 {
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
-    increment_stack_cursor();
-    *machine.machine_stack = *machine.machine_memory;
+     *machine.stack_ptr = *machine.program_ptr;
+     increment_stack_cursor();
+
+
 }
  void pop()
 {
@@ -93,6 +101,7 @@ void halt() {}
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
+    machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
 }
  void sub() //+
@@ -102,6 +111,7 @@ void halt() {}
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
+    machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) - *machine.stack_ptr;
 }
  void mult() //+
@@ -111,6 +121,7 @@ void halt() {}
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
+  machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) * (*machine.stack_ptr);
 
 }
@@ -121,6 +132,7 @@ void halt() {}
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
+    machine.stack_ptr--;
     if(!*machine.stack_ptr)
     halt();
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) / *machine.stack_ptr;

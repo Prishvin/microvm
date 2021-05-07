@@ -10,9 +10,10 @@
 #define DEVICE_MEMORY_SIZE  4096
 
 #define LABEL_MEMORY_SIZE 512
+#define DEVICE_VAR_SIZE 64
 #define STACK_SIZE 2048
 
-
+#define SHADOW_MEMORY DEVICE_MEMORY_SIZE
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
 typedef struct{
@@ -24,12 +25,16 @@ label progam_labels[MAX_LABELS];
 label* label_ptr;
 
 DWORD machine_memory[DEVICE_MEMORY_SIZE];
+DWORD variable_memory[DEVICE_VAR_SIZE];
+DWORD* variable_memory_ptr;
 DWORD* memory_end;
 DWORD* stack_end;
 DWORD* stack_first;
 DWORD* stack_second;
 DWORD* call_stack_end;
 DWORD* call_first;
+DWORD* section_var;
+DWORD* section_str;
 DWORD machine_call_stack[STACK_SIZE];
 DWORD machine_stack[STACK_SIZE]; //first value will always be 0 and treated as empty stack
 

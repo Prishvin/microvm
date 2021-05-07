@@ -7,11 +7,13 @@
 #define LABEL_CHAR ':'
 #define VAR_STR "VAR"
 
+#define TOKEN_UNKNOWN 0xFFFF
+
 char token_control[9][MAX_OPCODE_STR_LENGTH];
 char token_memory[6][MAX_OPCODE_STR_LENGTH];
 
 
-BOOL token_unknown(char* token);
+BOOL token_unknown(DWORD token);
 BOOL string_in_array(char** arr, char* str);
 BOOL token_is_dup(char* token);
 BOOL    token_is_comment(char* token);

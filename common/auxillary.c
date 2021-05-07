@@ -119,6 +119,13 @@ BOOL is_numeric(char* name, DWORD* number)
 
 
 }
+void str_trim(char* str, char c)
+{
+    DWORD len = strlen(str);
+    if(len > 0 && *(str + len - 1) ==c)
+         *(str + len - 1) = 0;
+
+}
 void str_shift_left(char myarray[], int sz, int shiftBy)
 {
     if(shiftBy > sz)
@@ -131,6 +138,7 @@ void str_shift_left(char myarray[], int sz, int shiftBy)
         //do nothing
     }
     else
+
     {
         char temp;
         //for loop to print the array with indexes moved up (to the left) <-- by 2

@@ -5,6 +5,7 @@
 #include "global.h"
 #include "machine.h"
 #include <string.h>
+#include "token.h"
 
 typedef void (* voidfunc)(void);
 

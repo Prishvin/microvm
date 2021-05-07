@@ -21,7 +21,7 @@ void compile_file(char* input_file, char* output_file)
 }
 BOOL compile_line(char* line, Machine* mac)
 {
-    BOOL result = FALSE;
+    BOOL result = TRUE;
     printf("[Processing line]\n %s", line);
     char** tokens;
     BYTE ntokens;
@@ -47,8 +47,12 @@ BOOL compile_line(char* line, Machine* mac)
                 {
                     char* argument = *(tokens + i + 1);
                     var_init(mac->variable_ptr, argument);
+                    mac->variable_ptr->index = mac->variable_ptr - mac->variables;
+                    mac->variable_ptr->address = mac->variable_memory_ptr++;
                     mac->variable_ptr++;
                     mac->var_number++;
+
+
                     free(tokens);
                     return TRUE;
                 }
@@ -78,17 +82,18 @@ BOOL compile_line(char* line, Machine* mac)
 
                 printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
 
-                mac->program_ptr++;
+                //mac->program_ptr++;
 
                 free(tokens);
                 return TRUE;
             }
+            else
             {
                 DWORD op =  opcodes_find(token);
                 printf("%s [PTR]=%d\n", token, mac->program_ptr - mac->machine_memory);
                 *mac->program_ptr++ = op;//add opcode if opcode is not var and label
 
-                if(token_unknown(token))
+                if(token_unknown(op))
                 {
                     perror("FATAL: Unexpected opcode");
                     result =  FALSE;
@@ -108,7 +113,8 @@ BOOL compile_line(char* line, Machine* mac)
                             mac->lablel_number++;
                         }
                         label* lb = label_find(argument, mac->progam_labels, mac->label_ptr);
-                        *(lb->jump_ptr++) = mac->machine_memory-mac->program_ptr;
+                        DWORD jump = mac->program_ptr - mac->machine_memory;
+                        *(lb->jump_ptr++) = jump;
                         lb->jump_number++;
                         printf("Label %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
                         *mac->program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
@@ -143,7 +149,12 @@ BOOL compile_line(char* line, Machine* mac)
                             {
                                 printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
                                 *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
-                                *mac->program_ptr++ = 0;
+
+                                #ifdef HARVARD_A
+                                    *mac->program_ptr++ = var->address;
+                                #else
+                                    *mac->program_ptr++ = 0;
+                                #endif
                             }
 
                         }
@@ -208,12 +219,17 @@ void compile_all(char* input_file, char* ooutput_file)
     for(i = 0; i < machine.lablel_number; i++)
         label_set_jumps(&machine.progam_labels[i]);
 
+    #ifdef HARVARD
+    printf("Harvard defined, skippind var allocation");
+    #else
+    printf("Harvard not defined, allocating variables");
     for(i = 0; i < machine.var_number; i++)
     {
         printf("Var %d allocation [PTR] =%d\n", i+1, machine.program_ptr - machine.machine_memory);
         var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
         *machine.program_ptr++ = 0;
     }
+    #endif
 
     fclose(fp);
 

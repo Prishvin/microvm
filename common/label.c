@@ -30,8 +30,8 @@ void label_set_jumps(label* lb)
     BYTE i;
     for(i = 0; i < lb->jump_number; i++)
     {
-        lb->jumps[i] = lb->address;
-        printf("jump %d <- %d address %d", lb->jumps[i], lb->address);
+        machine.machine_memory[lb->jumps[i]] = lb->address;
+        printf("jump %d <- %d address %d\n", lb->jumps[i], lb->address, i);
     }
 }
 

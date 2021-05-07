@@ -19,8 +19,12 @@ typedef unsigned char BOOL;
 #define MAX_LABELS 128
 #define MAX_LABEL_TRANSITIONS 128
 
+#define HARVARD_A
+
 struct varvar {
 
+DWORD index;
+DWORD* address;
 DWORD links[MAX_VARIABLE_LINKS];
 DWORD* link_ptr;
 DWORD  sz;

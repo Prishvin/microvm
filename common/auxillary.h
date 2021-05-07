@@ -28,6 +28,6 @@ void str_to_upper(char * temp);
 char str_is_number(char *text);
 BOOL is_numeric(char* name, DWORD* number);
 void str_shift_left(char myarray[], int sz, int shiftBy);
-
+void str_trim(char* str, char c);
 
 #endif // AUXILLARY_H_INCLUDED
