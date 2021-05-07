@@ -36,6 +36,16 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 28, .txt = "CMP",.ptr =  cmp};
     *p++= (Opcode){.opcode = 29, .txt = "PRINT",.ptr =  cmp};
     *p++= (Opcode){.opcode = 30, .txt = "DELAY",.ptr =  cmp};
+    *p++= (Opcode){.opcode = 31, .txt = "STATE",.ptr =  cmp};
+
+    *p++= (Opcode){.opcode = 32, .txt = "AND",.ptr =  land};
+    *p++= (Opcode){.opcode = 33, .txt = "OR",.ptr =  lor};
+    *p++= (Opcode){.opcode = 34, .txt = "NOT",.ptr =  lnot};
+    *p++= (Opcode){.opcode = 35, .txt = "XOR",.ptr =  lxor};
+    *p++= (Opcode){.opcode = 36, .txt = "BAND",.ptr =  band};
+    *p++= (Opcode){.opcode = 37, .txt = "BOR",.ptr =  bor};
+    *p++= (Opcode){.opcode = 38, .txt = "BNOT",.ptr =  bnot};
+    *p++= (Opcode){.opcode = 39, .txt = "BXOR",.ptr =  bxor};
 }
 
 DWORD opcodes_find(char* txt)

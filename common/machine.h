@@ -16,42 +16,43 @@
 #define SHADOW_MEMORY DEVICE_MEMORY_SIZE
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
-typedef struct{
+typedef struct
+{
 
-variable variables[VARIABLE_MEMORY_SIZE];
-variable* variable_ptr;
+    variable variables[VARIABLE_MEMORY_SIZE];
+    variable* variable_ptr;
 
-label progam_labels[MAX_LABELS];
-label* label_ptr;
+    label progam_labels[MAX_LABELS];
+    label* label_ptr;
 
-DWORD* exec_ptr;
-DWORD machine_memory[DEVICE_MEMORY_SIZE];
-DWORD variable_memory[DEVICE_VAR_SIZE];
-DWORD* variable_memory_ptr;
-DWORD* memory_end;
-DWORD* stack_end;
-DWORD* stack_first;
-DWORD* stack_second;
-DWORD* call_stack_end;
-DWORD* call_first;
-DWORD* section_var;
-DWORD* section_str;
-DWORD machine_call_stack[STACK_SIZE];
-DWORD machine_stack[STACK_SIZE]; //first value will always be 0 and treated as empty stack
+    DWORD* exec_ptr;
+    DWORD machine_memory[DEVICE_MEMORY_SIZE];
+    DWORD variable_memory[DEVICE_VAR_SIZE];
+    DWORD* variable_memory_ptr;
+    DWORD* memory_end;
+    DWORD* stack_end;
+    DWORD* stack_first;
+    DWORD* stack_second;
+    DWORD* call_stack_end;
+    DWORD* call_first;
+    DWORD* section_var;
+    DWORD* section_str;
+    DWORD machine_call_stack[STACK_SIZE];
+    DWORD machine_stack[STACK_SIZE]; //first value will always be 0 and treated as empty stack
 
-DWORD progam_cursor_mask;
-DWORD* program_ptr;
-DWORD lablel_number;
+    DWORD progam_cursor_mask;
+    DWORD* program_ptr;
+    DWORD lablel_number;
 
-DWORD* stack_ptr;
-DWORD* call_ptr;
+    DWORD* stack_ptr;
+    DWORD* call_ptr;
 
 
-BOOL flag_eq;
-BOOL flag_gr;
-DWORD var_number;
+    BOOL flag_eq;
+    BOOL flag_gr;
+    DWORD var_number;
 
-long long ticks;
+    long long ticks;
 } Machine;
 
 Machine machine;
@@ -64,58 +65,68 @@ void update_outputs();
 
 void halt() ;
 
- void increment_program_ptr();
+void increment_program_ptr();
 
- void increment_stack_cursor() ;
- void decrement_stack_cursor() ;
- void push() ;
- void pop();
- void add() ;
- void sub() ;
- void mult();
- void divide();
- void jmp(); //+;
- void cmp(); // lower is grater;
+void increment_stack_cursor() ;
+void decrement_stack_cursor() ;
+void push() ;
+void pop();
+void add() ;
+void sub() ;
+void mult();
+void divide();
+void jmp(); //+;
+void cmp(); // lower is grater;
 
 
- void je(); /// jump if equal, 8byte (skip one byte);
+void je(); /// jump if equal, 8byte (skip one byte);
 
- void jne() ;
+void jne() ;
 
- void jl();
- void jg();
+void jl();
+void jg();
 
- void jle();
- void jge();
+void jle();
+void jge();
 
- void frmm(); //8;
+void frmm(); //8;
 
- void tomm(); //8;
+void tomm(); //8;
 
- void sfrommem(); //8;
- void stomem(); //8;
- void afrom(); //8;
+void sfrommem(); //8;
+void stomem(); //8;
+void afrom(); //8;
 
- void atom() ;
+void atom() ;
 
- void call();
+void call();
 
- void ret();
- void dup();
+void ret();
+void dup();
 
- void randint();
+void randint();
 
- void swap();
- void stinc();
- void stdec();
- void inc();
- void dec();
- void sttoar();
- void artost();
+void swap();
+void stinc();
+void stdec();
+void inc();
+void dec();
+void sttoar();
+void artost();
 
- void nop();
- void succ_exit();
- void  quit();
- void bp();
+void land();
+void lor();
+void lxor();
+void lnot();
+
+void band();
+void bor();
+void bxor();
+void bnot();
+
+void nop();
+void succ_exit();
+void  quit();
+void bp();
 
 #endif // MACHINE_H_INCLUDED

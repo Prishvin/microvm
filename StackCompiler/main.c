@@ -5,7 +5,7 @@
 #include "../common/opcodes.h"
 #include "../common/token.h"
 #include "../common//machine.h"
-
+#include "src/cli.h"
 #define MAX_LEN 256
 
 Machine machine;
@@ -19,36 +19,39 @@ int main( int argc, char *argv[] )
     initialize_opcodes();
     if(argc == 2)
     {
-        if(strcmp(argv[1],"-h") == 0)
+        if(strcmp(argv[1],CLI_FLAG_HELP) == 0)
         {
             printf("Compile file: stackcompiler -c source_file destination_file\n");
             printf("Run:  stackcompiler -r filename\n");
         }
-        if(strcmp(argv[1],"-i") == 0)
+        if(strcmp(argv[1],CLI_FLAG_INTERPRETER) == 0)
         {
             printf("StackVM v0.1: buy me a bear if you used it\n");
             machine_initialize(&machine);
             printf("Ready\n>");
             while ((read = getline(&line, &len, stdin) != -1))
             {
-                if(*line == '$')
+                if(*line == CLI_CMD_CHAR)
                 {
                     str_trim(line, '\n');
                     str_shift_left(line, sizeof(line), 1 );
-                    if(strcmp(line, "clear") == 0)
+                    if(strcmp(line, CLI_FLAGS) == 0)
+                    {
+                        printf("Flag Equal = %d\nFlag Greater = %d\n>", machine.flag_eq, machine.flag_gr);
+                    }
+                    if(strcmp(line, CLI_CLEAR) == 0)
+                    {
+                        clrscr();
+                    }
+                    if(strcmp(line, CLI_RESET) == 0)
                     {
                         machine_initialize(&machine);
                         clrscr();
                     }
-                    if(strcmp(line, "reset") == 0)
-                    {
-                        machine_initialize(&machine);
-                        clrscr();
-                    }
-                    if(strcmp(line, "stack") == 0)
+                    if(strcmp(line, CLI_STACK) == 0)
                     {   BYTE i = 1;
-                        printf("Stack memory, bytes N=%d\n", machine.stack_ptr - machine.machine_stack);
-                        DWORD* ptr = machine.machine_stack;
+                        printf("Stack memory %d bytes\n>", machine.stack_ptr - machine.stack_first);
+                        DWORD* ptr = machine.stack_first;
                         while(ptr<machine.stack_ptr)
                         {
                             printf("0x%02X ", *ptr);
@@ -59,7 +62,7 @@ int main( int argc, char *argv[] )
                         }
                         printf("\n");
                     }
-                    if(strcmp(line, "mem") == 0)
+                    if(strcmp(line, CLI_MEM) == 0)
                     {
                         printf("Program memory, bytes N=%d\n", machine.program_ptr - machine.machine_memory);
                         for (int i = 0; i < machine.program_ptr - machine.machine_memory; i++)
@@ -71,7 +74,7 @@ int main( int argc, char *argv[] )
                         printf("\n");
                     }
 
-                    if(strcmp(line, "var") == 0)
+                    if(strcmp(line, CLI_VAR) == 0)
                     {
 
                         printf("Program variables, N=%d\n", machine.var_number);
@@ -86,7 +89,7 @@ int main( int argc, char *argv[] )
 
                     }
 
-                    if(strcmp(line, "labels") == 0)
+                    if(strcmp(line, CLI_LABELS) == 0)
                     {
                         printf("Program labels, N=%d\n", machine.lablel_number);
                         for (int i = 0; i < machine.lablel_number; i++)
@@ -133,7 +136,7 @@ int main( int argc, char *argv[] )
     }
     if(argc == 4)
     {
-        if(strcmp(argv[1],"-c") == 0)
+        if(strcmp(argv[1],CLI_FLAG_COMPULE) == 0)
             compile_all(argv[2], argv[3]);
         else
             perror("Unknown command");

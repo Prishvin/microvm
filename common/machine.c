@@ -34,12 +34,14 @@ void machine_initialize(Machine *mac)
     mac->label_ptr = mac->progam_labels;
     mac->program_ptr = mac->machine_memory;
 
-    mac->stack_ptr = mac->machine_stack ;
+    mac->stack_first = mac->machine_stack+1;
+    mac->stack_end = mac->machine_stack + STACK_SIZE;
+    mac->stack_ptr = mac->stack_first;
 
     mac->memory_end = mac->machine_memory + DEVICE_MEMORY_SIZE;
-    mac->stack_end = mac->machine_stack + STACK_SIZE;
-    mac->stack_first = mac->machine_stack+1;
-    mac->call_first = mac->machine_stack+1;
+
+
+    mac->call_first = mac->machine_stack;
     mac->var_number = 0;
     mac->progam_cursor_mask = 0xFFF;
 
@@ -104,6 +106,7 @@ void add() //+
 #endif // MEMORY_CHECKS_ENABLED
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
+
 }
 void sub() //+
 
@@ -146,6 +149,7 @@ void jmp() //+
 
 void cmp() // lower is grater
 {
+    machine.stack_ptr--;
     if(machine.stack_ptr> machine.stack_first && machine.stack_ptr < machine.stack_end)
     {
         if (*(machine.stack_ptr-1) == *machine.stack_ptr)
@@ -164,6 +168,8 @@ void cmp() // lower is grater
     }
     else
         halt();
+
+    machine.stack_ptr++;
 }
 
 
@@ -339,19 +345,9 @@ void ret()
 
 void dup()
 {
-    /*
-        increment_program_ptr();
-        int num = mem[c_cur];
-        if (num < 1)
-            halt("bad command dup argument");
-        if (st_cur < num - 1)
-            halt("cannot dup: not enough values in stack");
-        int i;
-        for(i = 0; i < num; i++)
-        {
-            inc_st_cur();
-            stack[st_cur]  = stack[st_cur - num];
-        }*/
+
+   *machine.stack_ptr = *(machine.stack_ptr - 1);
+    *machine.stack_ptr++;
 }
 
 void randint()
@@ -428,15 +424,19 @@ void  quit()
 {
     succ_exit();
 }
-
-void bp()
+void print()
+{
+    DWORD* ptr = machine.machine_stack;
+    printf("Top = 0x%02X", *machine.stack_ptr );
+}
+void state()
 {
     printf("Breakpoint reached at 0x%x\n", machine.program_ptr-machine.machine_memory);
     printf("Call stack depth: %i\n", machine.call_ptr-machine.call_first);
     printf("Stack depth: %i\n", machine.stack_ptr-machine.machine_stack);
     printf("Stack content:\n");
     int i;
-    DWORD* ptr = machine.machine_stack;
+    DWORD* ptr = machine.stack_first;
     while(ptr<machine.stack_ptr)
     {
         printf("0x%02X ", *ptr);
@@ -446,5 +446,46 @@ void bp()
         i++;
     }
     printf("\n");
+}
+void bp()
+{
+    state();
     getchar();
+}
+
+void land()
+{
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) && *machine.stack_ptr;
+}
+void lor(){
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) || *machine.stack_ptr;
+}
+void lxor(){
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = (*(machine.stack_ptr-1) ^ *machine.stack_ptr)>0;
+}
+void lnot()
+{
+    machine.stack_ptr;
+    *(machine.stack_ptr-1) = !(*(machine.stack_ptr-1));
+}
+
+void band()
+{
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) & *machine.stack_ptr;
+}
+void bor(){
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) | *machine.stack_ptr;
+}
+void bxor(){
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) ^ *machine.stack_ptr;
+}
+void bnot(){
+
+    *(machine.stack_ptr-1) = ~(*(machine.stack_ptr-1));
 }
