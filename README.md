@@ -34,7 +34,6 @@ opcode   Mnemonics
      29   PRINT       
      30   DELAY  
      31   STATE  
-
      32   AND  
      33   OR  
      34   NOT  
