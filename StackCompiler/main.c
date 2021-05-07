@@ -35,9 +35,15 @@ int main( int argc, char *argv[] )
                 {
                     str_trim(line, '\n');
                     str_shift_left(line, sizeof(line), 1 );
+                    if(strcmp(line, "clear") == 0)
+                    {
+                        machine_initialize(&machine);
+                        clrscr();
+                    }
                     if(strcmp(line, "reset") == 0)
                     {
                         machine_initialize(&machine);
+                        clrscr();
                     }
                     if(strcmp(line, "stack") == 0)
                     {   BYTE i = 1;

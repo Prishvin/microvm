@@ -55,7 +55,7 @@ void update_outputs();
 
 void halt() {}
 
- void increment_program_ptr()
+void increment_program_ptr()
 {
     machine.program_ptr++;
 #ifdef MEMORY_CHECKS_ENABLED
@@ -64,39 +64,39 @@ void halt() {}
 #endif // MEMORY_CHECKS_ENABLED
 }
 
- void increment_stack_cursor() //+
+void increment_stack_cursor() //+
 {
     machine.stack_ptr++;
-    #ifdef MEMORY_CHECKS_ENABLED
-        if(machine.stack_ptr>=machine.stack_end)
-            halt();
-    #endif // MEMORY_CHECKS_ENABLED
+#ifdef MEMORY_CHECKS_ENABLED
+    if(machine.stack_ptr>=machine.stack_end)
+        halt();
+#endif // MEMORY_CHECKS_ENABLED
 }
- void decrement_stack_cursor() //+
+void decrement_stack_cursor() //+
 {
     if(machine.stack_ptr==machine.machine_stack)
         halt();
     machine.stack_ptr--;
-    #ifdef MEMORY_CHECKS_ENABLED
+#ifdef MEMORY_CHECKS_ENABLED
 
-    #endif
+#endif
 }
 
- void push() //+
+void push() //+
 {
-     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
-     *machine.stack_ptr = *machine.program_ptr;
-     increment_stack_cursor();
-     increment_program_ptr();
+    increment_program_ptr(); //push is followed by one byte, so increment to skip argument
+    *machine.stack_ptr = *machine.program_ptr;
+    increment_stack_cursor();
+    increment_program_ptr();
 
 
 }
- void pop()
+void pop()
 {
     decrement_stack_cursor();
 }
 
- void add() //+
+void add() //+
 {
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
@@ -105,7 +105,7 @@ void halt() {}
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
 }
- void sub() //+
+void sub() //+
 
 {
 #ifdef MEMORY_CHECKS_ENABLED
@@ -115,18 +115,18 @@ void halt() {}
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) - *machine.stack_ptr;
 }
- void mult() //+
+void mult() //+
 {
 
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
 #endif // MEMORY_CHECKS_ENABLED
-  machine.stack_ptr--;
+    machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) * (*machine.stack_ptr);
 
 }
- void divide()
+void divide()
 
 {
 #ifdef MEMORY_CHECKS_ENABLED
@@ -135,16 +135,16 @@ void halt() {}
 #endif // MEMORY_CHECKS_ENABLED
     machine.stack_ptr--;
     if(!*machine.stack_ptr)
-    halt();
+        halt();
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) / *machine.stack_ptr;
 }
- void jmp() //+
+void jmp() //+
 {
     increment_program_ptr(); //increment because argument byte
     machine.program_ptr = *machine.program_ptr;
 }
 
- void cmp() // lower is grater
+void cmp() // lower is grater
 {
     if(machine.stack_ptr> machine.stack_first && machine.stack_ptr < machine.stack_end)
     {
@@ -167,7 +167,7 @@ void halt() {}
 }
 
 
- void je() /// jump if equal, 8byte (skip one byte)
+void je() /// jump if equal, 8byte (skip one byte)
 {
 
     if (machine.flag_eq == 1)
@@ -175,84 +175,84 @@ void halt() {}
         machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (machine.program_ptr >= machine.memory_end)
-                          halt("Segmentation fault after je");
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after je");
 #endif // MEMORY_CHECKS_ENABLED
     }
 }
 
 
- void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
+void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
 {
     if (machine.flag_eq == 0)
     {
         machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (machine.program_ptr >= machine.memory_end)
-                          halt("Segmentation fault after jne");
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after jne");
 #endif // MEMORY_CHECKS_ENABLED
     }
 }
 
- void jl()
+void jl()
 {
 
 
     if (machine.flag_eq == 0 && machine.flag_gr == 0)
     {
         machine.program_ptr = *machine.program_ptr;
-          increment_program_ptr();
+        increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (machine.program_ptr >= machine.memory_end)
-                          halt("Segmentation fault after jl");
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after jl");
 #endif // MEMORY_CHECKS_ENABLED
     }
 }
- void jg()
+void jg()
 {
 
     if (machine.flag_gr)
     {
         machine.program_ptr = *machine.program_ptr;
-           increment_program_ptr();
+        increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (machine.program_ptr >= machine.memory_end)
-                          halt("Segmentation fault after jg");
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after jg");
 #endif // MEMORY_CHECKS_ENABLED
     }
 }
 
- void jle()
+void jle()
 {
 
     if (!machine.flag_gr)
     {
         machine.program_ptr = *machine.program_ptr;
-         increment_program_ptr();
+        increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
-                      if (machine.program_ptr >= machine.memory_end)
-                          halt("Segmentation fault after jle");
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after jle");
 #endif // MEMORY_CHECKS_ENABLED
     }
 }
 
- void jge()
+void jge()
 {
 
     if (machine.flag_eq && machine.flag_gr)
     {
         machine.program_ptr = *machine.program_ptr;
         increment_program_ptr();
-        #ifdef MEMORY_CHECKS_ENABLED
-                              if (machine.program_ptr >= machine.memory_end)
-                                  halt("Segmentation fault after jle");
-        #endif // MEMORY_CHECKS_ENABLED
+#ifdef MEMORY_CHECKS_ENABLED
+        if (machine.program_ptr >= machine.memory_end)
+            halt("Segmentation fault after jle");
+#endif // MEMORY_CHECKS_ENABLED
     }
 
 }
 
- void frmm() //8
+void frmm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
@@ -263,21 +263,21 @@ void halt() {}
 
     *machine.stack_ptr = *(machine.variable_memory + *machine.program_ptr);
     increment_stack_cursor();
-     increment_program_ptr();
+    increment_program_ptr();
 }
 
- void tomm() //8
+void tomm() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
-   *(machine.variable_memory + *machine.program_ptr) = *(machine.stack_ptr-1);
+    *(machine.variable_memory + *machine.program_ptr) = *(machine.stack_ptr-1);
     increment_program_ptr();
 }
 
- void sfrommem() //8
+void sfrommem() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
@@ -289,7 +289,7 @@ void halt() {}
     *machine.stack_ptr = *(machine.program_ptr + *machine.program_ptr - 1);
 }
 
- void stomem() //8
+void stomem() //8
 {
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
@@ -299,7 +299,7 @@ void halt() {}
     *(machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
 }
 
- void afrom() //8
+void afrom() //8
 {
     //TODO aserts here
     increment_program_ptr();
@@ -307,15 +307,15 @@ void halt() {}
     *machine.stack_ptr = *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
 }
 
- void atom() //8
+void atom() //8
 {
-  //TODO aserts here
-   increment_program_ptr();
-   *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr) = *machine.stack_ptr;
+    //TODO aserts here
+    increment_program_ptr();
+    *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr) = *machine.stack_ptr;
 }
 
 
- void call()
+void call()
 {
     machine.call_ptr++;
     if (machine.call_ptr >= machine.call_stack_end)
@@ -327,7 +327,7 @@ void halt() {}
     machine.program_ptr = *machine.program_ptr;
 }
 
- void ret()
+void ret()
 {
     if (machine.call_ptr < machine.call_first)
         halt("cannot ret: call stack is empty");
@@ -337,29 +337,29 @@ void halt() {}
 
 }
 
- void dup()
+void dup()
 {
-/*
-    increment_program_ptr();
-    int num = mem[c_cur];
-    if (num < 1)
-        halt("bad command dup argument");
-    if (st_cur < num - 1)
-        halt("cannot dup: not enough values in stack");
-    int i;
-    for(i = 0; i < num; i++)
-    {
-        inc_st_cur();
-        stack[st_cur]  = stack[st_cur - num];
-    }*/
+    /*
+        increment_program_ptr();
+        int num = mem[c_cur];
+        if (num < 1)
+            halt("bad command dup argument");
+        if (st_cur < num - 1)
+            halt("cannot dup: not enough values in stack");
+        int i;
+        for(i = 0; i < num; i++)
+        {
+            inc_st_cur();
+            stack[st_cur]  = stack[st_cur - num];
+        }*/
 }
 
- void randint()
+void randint()
 {
 
 }
 
- void swap()
+void swap()
 {
     if (machine.stack_ptr < machine.stack_second)
         halt("not enough elements in stack to swap");
@@ -368,73 +368,83 @@ void halt() {}
     *(machine.stack_ptr-1) = temp;
 }
 
- void stinc()
+void stinc()
 {
     if (machine.stack_ptr >= machine.stack_end)
         halt("cannot inc because stack is empty");
     machine.stack_ptr++;
 }
 
- void stdec()
+void stdec()
 {
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     machine.stack_ptr--;
 }
- void inc()
+void inc()
 {
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     *machine.stack_ptr = *machine.stack_ptr + 1;
 }
- void dec()
+void dec()
 {
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
-   *machine.stack_ptr = *machine.stack_ptr - 1;
+    *machine.stack_ptr = *machine.stack_ptr - 1;
 }
 
- void sttoar()
+void sttoar()
 {
-/*
-    if (machine.stack_ptr < machine.stack_first)
-        halt("stack is empty, cannot afrommem");
-    increment_program_ptr();
-    if (stack[st_cur] + mem[c_cur] < 0 || stack[st_cur] + mem[c_cur] >= MEM_SIZE)
-        halt("segmentation fault in afrommem");
-    inc_st_cur();
-    stack[st_cur] = mem[stack[st_cur - 1] + mem[c_cur]];*/
+    /*
+        if (machine.stack_ptr < machine.stack_first)
+            halt("stack is empty, cannot afrommem");
+        increment_program_ptr();
+        if (stack[st_cur] + mem[c_cur] < 0 || stack[st_cur] + mem[c_cur] >= MEM_SIZE)
+            halt("segmentation fault in afrommem");
+        inc_st_cur();
+        stack[st_cur] = mem[stack[st_cur - 1] + mem[c_cur]];*/
 }
 
- void artost()
+void artost()
 {
 //    if (st_cur < 1)
-  //      halt("Not enough elements in stack for atomem");
+    //      halt("Not enough elements in stack for atomem");
     increment_program_ptr();
     //if (stack[st_cur - 1] + mem[c_cur] < 0 || stack[st_cur - 1] + mem[c_cur] >= MEM_SIZE)
     //    halt("segmentation fault in atomem");
     *(machine.machine_memory + *machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
 }
 
- void nop()
+void nop()
 {
     ;
 }
- void succ_exit() {;}
- void  quit()
+void succ_exit()
+{
+    ;
+}
+void  quit()
 {
     succ_exit();
 }
 
- void bp()
+void bp()
 {
-//    printf("Breakpoint reached at 0x%x\n", c_cur);
-//    printf("Call stack depth: %i\n", call_st_cur + 1);
-//    printf("Stack depth: %i\n", st_cur + 1);
-//    printf("Stack content:\n");
-//    int i;
-//    for (i = st_cur; i >= 0; i--)
-//        printf("    0x%x\n", stack[i]);
-//    printf("Press enter to continue\n");
-//    getchar();
+    printf("Breakpoint reached at 0x%x\n", machine.program_ptr-machine.machine_memory);
+    printf("Call stack depth: %i\n", machine.call_ptr-machine.call_first);
+    printf("Stack depth: %i\n", machine.stack_ptr-machine.machine_stack);
+    printf("Stack content:\n");
+    int i;
+    DWORD* ptr = machine.machine_stack;
+    while(ptr<machine.stack_ptr)
+    {
+        printf("0x%02X ", *ptr);
+        if(i%4 == 0)
+            printf("\n");
+        ptr++;
+        i++;
+    }
+    printf("\n");
+    getchar();
 }

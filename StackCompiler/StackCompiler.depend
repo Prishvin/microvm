@@ -12,7 +12,7 @@
 	<string.h>
 	<ctype.h>
 
-1620391195 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
+1620396853 source:/home/misha/source/VirtualMachine/StackCompiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -21,13 +21,14 @@
 	"../common/token.h"
 	"../common//machine.h"
 
-1620379211 /home/misha/source/VirtualMachine/common/auxillary.h
+1620396806 /home/misha/source/VirtualMachine/common/auxillary.h
 	"global.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<string.h>
 	<stdio.h>
+	<stdlib.h>
 
 1620367298 /home/misha/source/VirtualMachine/common/token.h
 	"global.h"
@@ -76,7 +77,7 @@
 	"token.h"
 	"machine.h"
 
-1620393506 source:/home/misha/source/VirtualMachine/common/machine.c
+1620396684 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620367154 source:/home/misha/source/VirtualMachine/common/token.c

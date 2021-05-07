@@ -7,6 +7,7 @@
 #include <string.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct list_node_t node;
 struct list_node_t
@@ -29,5 +30,5 @@ char str_is_number(char *text);
 BOOL is_numeric(char* name, DWORD* number);
 void str_shift_left(char myarray[], int sz, int shiftBy);
 void str_trim(char* str, char c);
-
+void clrscr();
 #endif // AUXILLARY_H_INCLUDED

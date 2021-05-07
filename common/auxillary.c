@@ -1,6 +1,13 @@
 #include "auxillary.h"
+#include <unistd.h>
 
 
+void clrscr()
+{
+    const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+    write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
+    printf("\n>");
+}
 void node_init(node* ptr, node* l, node* r, DWORD i, DWORD arg)
 {
     ptr->nchilds = 0;
