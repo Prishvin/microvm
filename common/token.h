@@ -23,6 +23,6 @@ BOOL    token_is_label(char* token);
 BOOL    token_is_var(char* token);
 BOOL    token_is_control(char* token);
 BOOL    token_is_mem(char* token);
-
+BOOL    token_is_print(char* token);
 
 #endif // TOKEN_H_INCLUDED

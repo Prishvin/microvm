@@ -22,9 +22,9 @@ void compile_file(char* input_file, char* output_file)
 BOOL compile_line(char* line, Machine* mac)
 {
     BOOL result = TRUE;
-    #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
     printf("[Processing line]\n %s", line);
-    #endif
+#endif
     char** tokens;
     BYTE ntokens;
     tokens = str_split(&ntokens, line, ' ');
@@ -38,9 +38,9 @@ BOOL compile_line(char* line, Machine* mac)
             str_to_upper(token);
             if(token_is_comment(token))
             {
-                  #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
                 printf("Comment found =[%s]\n", (char*) line);
-                #endif
+#endif
                 free(tokens);
                 return FALSE;
 
@@ -83,10 +83,10 @@ BOOL compile_line(char* line, Machine* mac)
                 }
                 label* lb = label_find(token, mac->progam_labels, mac->label_ptr);
                 lb->address = mac->program_ptr;
-                #ifdef DEBUG_COMPILE
-                                printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
-                #endif
-                                //mac->program_ptr++;
+#ifdef DEBUG_COMPILE
+                printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
+#endif
+                //mac->program_ptr++;
 
                 free(tokens);
                 return FALSE;
@@ -94,9 +94,9 @@ BOOL compile_line(char* line, Machine* mac)
             else
             {
                 DWORD op =  opcodes_find(token);
-                #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
                 printf("%s [PTR]=%d\n", token, mac->program_ptr - mac->machine_memory);
-                #endif
+#endif
 
 
                 if(token_unknown(op))
@@ -122,9 +122,9 @@ BOOL compile_line(char* line, Machine* mac)
                         DWORD jump = mac->program_ptr - mac->machine_memory;
                         *(lb->jump_ptr++) = jump;
                         lb->jump_number++;
-                              #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
                         printf("Label %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                        #endif
+#endif
                         *mac->program_ptr++ = 0; // label address will be garbage at thi point. label adress to be set after progam is compiled
                         result = TRUE;
                     }
@@ -142,9 +142,9 @@ BOOL compile_line(char* line, Machine* mac)
                         DWORD number;
                         if(is_numeric(argument, &number))
                         {
-                              #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
                             printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                            #endif // DEBUG_COMPILE
+#endif // DEBUG_COMPILE
                             *mac->program_ptr++=number;
                         }
                         else
@@ -157,16 +157,16 @@ BOOL compile_line(char* line, Machine* mac)
                             }
                             else
                             {
-                                #ifdef DEBUG_COMPILE
+#ifdef DEBUG_COMPILE
                                 printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-                                #endif
+#endif
                                 *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
 
-                                #ifdef HARVARD_A
-                                    *mac->program_ptr++ = var->index;
-                                #else
-                                    *mac->program_ptr++ = 0;
-                                #endif
+#ifdef HARVARD_A
+                                *mac->program_ptr++ = var->index;
+#else
+                                *mac->program_ptr++ = 0;
+#endif
                             }
 
                         }
@@ -175,6 +175,20 @@ BOOL compile_line(char* line, Machine* mac)
                     {
                         perror("FATAL: no argument supplied");
                         result =  FALSE;
+                    }
+                }
+                else if(token_is_print(token))
+                {
+                    char* argument = *(tokens + 1);
+                    DWORD number;
+                    if(is_numeric(argument, &number))
+                    {
+
+                        *mac->program_ptr++=number;
+                    }
+                    else
+                    {
+                        *mac->program_ptr++;
                     }
                 }
 
@@ -231,9 +245,9 @@ void compile_all(char* input_file, char* ooutput_file)
     for(i = 0; i < machine.lablel_number; i++)
         label_set_jumps(&machine.progam_labels[i]);
 
-    #ifdef HARVARD
+#ifdef HARVARD
     printf("Harvard defined, skippind var allocation");
-    #else
+#else
     printf("Harvard not defined, allocating variables");
     for(i = 0; i < machine.var_number; i++)
     {
@@ -241,7 +255,7 @@ void compile_all(char* input_file, char* ooutput_file)
         var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
         *machine.program_ptr++ = 0;
     }
-    #endif
+#endif
 
     fclose(fp);
 

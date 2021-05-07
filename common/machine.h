@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include<unistd.h>
+
 #define DEVICE_MEMORY_SIZE  4096
 
 #define LABEL_MEMORY_SIZE 512
@@ -102,7 +104,7 @@ void atom() ;
 void call();
 
 void ret();
-void dup();
+void adup();
 
 void randint();
 
@@ -114,6 +116,9 @@ void dec();
 void sttoar();
 void artost();
 
+void aprint();
+void adelay();
+void astate();
 void land();
 void lor();
 void lxor();

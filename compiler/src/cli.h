@@ -10,11 +10,11 @@
 #define CLI_VAR "var"
 #define CLI_LABELS  "labels"
 
-#define CLI_FLAG_COMPULE '-c'
-#define CLI_FLAG_HELP '-h'
-#define CLI_FLAG_INTERPRETER '-i'
-#define CLI_FLAG_COMPULE '-c'
+#define CLI_FLAG_COMPULE "-c"
+#define CLI_FLAG_HELP "-h"
+#define CLI_FLAG_INTERPRETER "-i"
+#define CLI_FLAG_COMPULE "-c"
 
 
-#define CLI_CMD_CHAR '$'
+#define CLI_CMD_CHAR "$"
 #endif // CLI_H_INCLUDED

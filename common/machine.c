@@ -343,7 +343,7 @@ void ret()
 
 }
 
-void dup()
+void adup()
 {
 
    *machine.stack_ptr = *(machine.stack_ptr - 1);
@@ -424,12 +424,26 @@ void  quit()
 {
     succ_exit();
 }
-void print()
+void aprint()
 {
     DWORD* ptr = machine.machine_stack;
-    printf("Top = 0x%02X", *machine.stack_ptr );
+    increment_program_ptr();
+    DWORD n = *machine.program_ptr;
+    DWORD i=0;
+     printf("Top %d stack values:\n", n);
+    while(i++<n)
+    {
+
+        printf(" 0x%02X", *(machine.stack_ptr -n + i - 1) );
+    }
+      printf("\n>");
 }
-void state()
+void adelay()
+{
+    increment_program_ptr();
+    usleep(*machine.program_ptr*1000000);
+}
+void astate()
 {
     printf("Breakpoint reached at 0x%x\n", machine.program_ptr-machine.machine_memory);
     printf("Call stack depth: %i\n", machine.call_ptr-machine.call_first);
@@ -449,7 +463,7 @@ void state()
 }
 void bp()
 {
-    state();
+    astate();
     getchar();
 }
 

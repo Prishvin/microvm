@@ -105,6 +105,7 @@ int main( int argc, char *argv[] )
                     if(compile_line(line, &machine))
                     {
                              machine.program_ptr=ptr;
+
                         (opcodes[*ptr].ptr)();
                         DWORD result = 0xFFFF;
                         if(machine.stack_ptr < machine.stack_end)

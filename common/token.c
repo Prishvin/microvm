@@ -7,7 +7,8 @@ char token_memory[6][MAX_OPCODE_STR_LENGTH] =  {"PUSH", "FRMM", "TOMM","AFROM", 
 
 BOOL token_unknown(DWORD token)
 {
-    return FALSE;
+
+    return TOKEN_UNKNOWN == token;
 }
 BOOL string_in_array(char** arr, char* str)
 {
@@ -17,6 +18,10 @@ BOOL string_in_array(char** arr, char* str)
             return TRUE;
 
     return FALSE;
+}
+BOOL token_is_print(char* token)
+{
+    return strcmp(token, "PRINT") == 0;
 }
 BOOL token_is_dup(char* token)
 {

@@ -34,9 +34,9 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 26, .txt = "ATOMM",.ptr =  atom};
     *p++= (Opcode){.opcode = 27, .txt = "BP",.ptr =  bp};
     *p++= (Opcode){.opcode = 28, .txt = "CMP",.ptr =  cmp};
-    *p++= (Opcode){.opcode = 29, .txt = "PRINT",.ptr =  cmp};
-    *p++= (Opcode){.opcode = 30, .txt = "DELAY",.ptr =  cmp};
-    *p++= (Opcode){.opcode = 31, .txt = "STATE",.ptr =  cmp};
+    *p++= (Opcode){.opcode = 29, .txt = "PRINT",.ptr =  aprint};
+    *p++= (Opcode){.opcode = 30, .txt = "DELAY",.ptr =  adelay};
+    *p++= (Opcode){.opcode = 31, .txt = "STATE",.ptr =  astate};
 
     *p++= (Opcode){.opcode = 32, .txt = "AND",.ptr =  land};
     *p++= (Opcode){.opcode = 33, .txt = "OR",.ptr =  lor};
