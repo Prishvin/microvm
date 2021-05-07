@@ -30,18 +30,18 @@ opcode   Mnemonics
      25   AFRMM          // array not implemented
      26   ATOMM          // array not implemented
      27   BP             // breakpoint not implemented
-     28   CMP         //compare top two stack values. place result in flag_gr and flag_eq
-     29   PRINT       
-     30   DELAY  
-     31   STATE  
-     32   AND  
-     33   OR  
-     34   NOT  
-     35   XOR  
-     36   BAND  
-     37   BOR  
-     38   BNOT  
-     39   BXOR  
+     28   CMP            //compare top two stack values. place result in flag_gr and flag_eq
+     29   PRINT          //
+     30   DELAY          //
+     31   STATE          //
+     32   AND            //
+     33   OR             //
+     34   NOT            //
+     35   XOR            //
+     36   BAND           //
+     37   BOR            //
+     38   BNOT           //
+     39   BXOR           //
      
       
 example program is presented in simple.p
