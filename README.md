@@ -2,8 +2,8 @@
 The aim of this project is to created a stack based language and virtual machine for microcontrollers. A mix of approaches is used. Available commands are listed below.
 
 opcode   Mnemonics
-     0    NOP            // no operation 4 byte
-     1    PUSH           // push to stack 
+     0    NOP            // no operation 4 byte <BR>
+     1    PUSH           // push to stack  <BR>
      2    POP            // pop from stack
      3    ADD            // add two values on stack
      4    SUB            // subtact top value from previos
