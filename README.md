@@ -12,7 +12,21 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
-
+```asm
+push 1    #push 1 to stack
+push 20   #push 20 to stack
+var dcr   #declare a variable named dcr
+push 1    #push 1 to stack
+TOMM dcr  #assign dcr 1 (top from stack)
+pop       #remove top stack   
+:label    #label named label
+print 1   #print one top value from stack 
+FRMM dcr  #put value from dcr to stack top
+sub       #subtract top value from previos
+cmp       #compare top two values
+jle label #jump to label if not completed
+quit
+```
 The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called.
 ```C
             DWORD *ptr = machine.program_ptr;
