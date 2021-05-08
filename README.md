@@ -13,7 +13,12 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
+The interpreter code cnipped is presented on Fig. 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on fig. 2.
 
+![image](https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png)
+Fig. 1
+![image](https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png)
+Fig. 2
 
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
@@ -36,7 +41,7 @@ Available commands are listed below.
 |     15 |  FRMM     |       from memory address to stack                                       |
 |     16 |  TOMM     |       from stack to memory                                               |
 |     17 |  RFRMM    |       from memory adress defined by stack                                |
-|     18 |  RTOMM    |       to memory adress defined by stack                                  |a
+|     18 |  RTOMM    |       to memory adress defined by stack                                  |
 |     19 |  CALL     |       call label                                                         |
 |     20 |  RET      |       return from call                                                   |
 |     21 |  DUP      |       duplicate stack value                                              |
@@ -58,6 +63,7 @@ Available commands are listed below.
 |     37 |  BOR      |                                                                          |
 |     38 |  BNOT     |                                                                          |
 |     39 |  QUIT     |                                                                          |
-    
+
+Table. 1.
       
 example program is presented in simple|p
