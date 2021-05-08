@@ -13,7 +13,7 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
-The interpreter code cnipped is presented on Fig. 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on fig. 2.
+The interpreter code snipped is presented on Fig. 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on fig. 2.
 
 ![image](https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png)
 
