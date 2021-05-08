@@ -17,7 +17,7 @@ Available commands are listed below.
 |     4  |  SUB      |       subtact top value from previos                                     |
 |     5  |  MUL      |       multiply two values|                                               |
 |     6  |  DIV      |       divied two values|                                                 |
-|     7  |  QUIT     |       last opcode                                                        |
+|     7  |  BXOR     |       last opcode                                                        |
 |     8  |  JMP      |       unconditional jump to label                                        |
 |     9  |  JE       |       jump if equal                                                      |
 |     10 |  JL       |       jump if less                                                       |
@@ -28,7 +28,7 @@ Available commands are listed below.
 |     15 |  FRMM     |       from memory address to stack                                       |
 |     16 |  TOMM     |       from stack to memory                                               |
 |     17 |  RFRMM    |       from memory adress defined by stack                                |
-|     18 |  RTOMM    |       to memory adress defined by stack                                  |
+|     18 |  RTOMM    |       to memory adress defined by stack                                  |a
 |     19 |  CALL     |       call label                                                         |
 |     20 |  RET      |       return from call                                                   |
 |     21 |  DUP      |       duplicate stack value                                              |
@@ -49,7 +49,7 @@ Available commands are listed below.
 |     36 |  BAND     |                                                                          |
 |     37 |  BOR      |                                                                          |
 |     38 |  BNOT     |                                                                          |
-|     39 |  BXOR     |                                                                          |
+|     39 |  QUIT     |                                                                          |
     
       
 example program is presented in simple|p
