@@ -17,12 +17,11 @@ The interpreter code snipped is presented on Fig. 1. The VM loops through the av
 
 <img src="https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png" Width="40%" />
 
-Fig. 1
+            Fig. 1
 
-<img src="https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png" Width="75%" />
+<img src="https://user-images.githubusercontent.com/371566/117549294-980d2980-b04a-11eb-9c77-73fd837e67a0.png" Width="75%" />
 
-
-Fig. 2
+            Fig. 2
 
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
