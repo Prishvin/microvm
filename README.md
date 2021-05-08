@@ -8,6 +8,8 @@ use **codeblocks 16.01**  and **GCC** to build.  Make file work in progress.
 for vm code look at **machine.h**, machine.c
 compiler code can be found in **compiler.h**, compiler.c
 
+currently this code is distributed under **GNU AGPLv3.** or commercial license upon request.
+
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
