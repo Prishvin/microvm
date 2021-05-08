@@ -5,7 +5,7 @@ Separate memory is used for program and variable space. An interpreter, virtual 
 
 use **codeblocks 16.01**  and **GCC** to build.  Make file work in progress.
 
-for vm code lookg at **machine.h**, machine.c
+for vm code look at **machine.h**, machine.c
 compiler code can be found in **compiler.h**, compiler.c
 
 
