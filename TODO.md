@@ -1,0 +1,3 @@
+- [] Make sure labels works.
+- [] Add memory checks for array element addressing
+- [] Make project portable between xc32 and gcc
