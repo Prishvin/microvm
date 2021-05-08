@@ -22,7 +22,7 @@ The interpreter code snipped is presented on Block 1. The VM loops through the a
             {
                 if(op>=qt || *ptr>=machine.memory_end)
                 {
-                    if(op ==qt )
+                    if(op==qt )
                     {
                         perror("[SUCCESS] program executed.");
                     }
