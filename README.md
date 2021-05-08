@@ -13,15 +13,57 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
-The interpreter code snipped is presented on Fig. 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on fig. 2.
+The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on Block 2.
 
-<img src="https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png" Width="40%" />
+```C
+            DWORD *ptr = machine.program_ptr;
+            DWORD op = *ptr;
+            DWORD qt = opcodes_find("QUIT");
+            while(TRUE)
+            {
+                if(op>=qt || *ptr>=machine.memory_end)
+                {
+                    if(op ==qt )
+                    {
+                        perror("[SUCCESS] program executed.");
+                    }
+                    else
+                    {
+                        perror("[FATAl] Abnormal termination");
+                    }
+                    break;
+                }
+                (opcodes[*ptr].ptr)();
+                ptr++;
+            }
+```
+Block 1
+```
+void push() //+
+{
+    increment_program_ptr(); //push is followed by one byte, so increment to skip argument
+    *machine.stack_ptr = *machine.program_ptr;
+    increment_stack_cursor();
+    increment_program_ptr();
+}
+void pop()
+{
+    decrement_stack_cursor();
+}
+void add() //+
+{
+#ifdef MEMORY_CHECKS_ENABLED
+    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
+        halt();
+#endif // MEMORY_CHECKS_ENABLED
+    machine.stack_ptr--;
+    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
 
-            Fig. 1
+}
+```
+Block 2
 
-<img src="https://user-images.githubusercontent.com/371566/117549294-980d2980-b04a-11eb-9c77-73fd837e67a0.png" Width="75%" />
 
-            Fig. 2
 
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
