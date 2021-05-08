@@ -49,7 +49,8 @@ int main( int argc, char *argv[] )
                         clrscr();
                     }
                     if(strcmp(line, CLI_STACK) == 0)
-                    {   BYTE i = 1;
+                    {
+                        BYTE i = 1;
                         printf("Stack memory %d bytes\n>", machine.stack_ptr - machine.stack_first);
                         DWORD* ptr = machine.stack_first;
                         while(ptr<machine.stack_ptr)
@@ -104,13 +105,13 @@ int main( int argc, char *argv[] )
                     DWORD *ptr = machine.program_ptr;
                     if(compile_line(line, &machine))
                     {
-                             machine.program_ptr=ptr;
+                        machine.program_ptr=ptr;
 
                         (opcodes[*ptr].ptr)();
                         DWORD result = 0xFFFF;
                         if(machine.stack_ptr < machine.stack_end)
                             result = *(machine.stack_ptr-1);
-                               printf("=%d\n>", result);
+                        printf("=%d\n>", result);
 
                     }
                     else
@@ -127,12 +128,34 @@ int main( int argc, char *argv[] )
     }
     if(argc == 3)
     {
-        if(strcmp(argv[1],"-r") == 0)
+
+        if(strcmp(argv[1],CLI_READ) == 0)
         {
-            Machine interpreter;
-            machine_initialize(&interpreter);
-            machine_load(argv[2], &interpreter);
-            //TODO READ WORD
+            machine_initialize(&machine);
+            machine_load(argv[2], &machine);
+            DWORD *ptr = machine.program_ptr;
+            DWORD op = *ptr;
+            DWORD qt = opcodes_find("QUIT");
+            while(TRUE)
+            {
+                if(op>=qt || *ptr>=machine.memory_end)
+                {
+                    if(op ==qt )
+                    {
+                        perror("[SUCCESS] program executed.");
+                    }
+                    else
+                    {
+                        perror("[FATAl] Abnormal termination");
+
+                    }
+                    break;
+                }
+
+                (opcodes[*ptr].ptr)();
+                ptr++;
+
+            }
         }
     }
     if(argc == 4)

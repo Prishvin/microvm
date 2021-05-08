@@ -12,7 +12,7 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 4, .txt = "SUB",.ptr =  sub};
     *p++= (Opcode){.opcode = 5, .txt = "MUL",.ptr =  mult};
     *p++= (Opcode){.opcode = 6, .txt = "DIV",.ptr =  divide};
-    *p++= (Opcode){.opcode = 7, .txt = "QUIT",.ptr =  quit};
+    *p++= (Opcode){.opcode = 7, .txt = "BXOR",.ptr =  quit};
     *p++= (Opcode){.opcode = 8, .txt = "JMP",.ptr =  jmp};
     *p++= (Opcode){.opcode = 9, .txt = "JE",.ptr =  je};
     *p++= (Opcode){.opcode = 10, .txt = "JL",.ptr =  jl};
@@ -45,7 +45,9 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 36, .txt = "BAND",.ptr =  band};
     *p++= (Opcode){.opcode = 37, .txt = "BOR",.ptr =  bor};
     *p++= (Opcode){.opcode = 38, .txt = "BNOT",.ptr =  bnot};
-    *p++= (Opcode){.opcode = 39, .txt = "BXOR",.ptr =  bxor};
+    *p++= (Opcode){.opcode = 39, .txt = "QUIT",.ptr =  bxor};
+
+    machine.total_opcodes = 40;
 }
 
 DWORD opcodes_find(char* txt)

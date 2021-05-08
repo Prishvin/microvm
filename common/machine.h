@@ -53,7 +53,7 @@ typedef struct
     BOOL flag_eq;
     BOOL flag_gr;
     DWORD var_number;
-
+DWORD total_opcodes;
     long long ticks;
 } Machine;
 
