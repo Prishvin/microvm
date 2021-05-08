@@ -1,7 +1,13 @@
 # vm
-The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. Available commands are listed below.
-Separate memory is used for program and variable space.
+The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. 
+Separate memory is used for program and variable space. An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
+
+https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
+
+
+
+Available commands are listed below.
 |   opcode |  Mnemonics |      description |
 |----------|------------|-----------------------------------------------------------------------|
 |     0  |  NOP      |       no operation 4 byte <BR>											|
