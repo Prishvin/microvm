@@ -40,26 +40,26 @@ Block 1
 
 An example implementation of such functions are shown in Block 2.
 ```C
-void push() 
-{
-    increment_program_ptr(); //push is followed by one byte, so increment to skip argument
-    *machine.stack_ptr = *machine.program_ptr;
-    increment_stack_cursor();
-    increment_program_ptr();
-}
-void pop()
-{
-    decrement_stack_cursor();
-}
-void add() 
-{
-#ifdef MEMORY_CHECKS_ENABLED
-    if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
-        halt();
-#endif // MEMORY_CHECKS_ENABLED
-    machine.stack_ptr--;
-    *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
-}
+            void push() 
+            {
+                increment_program_ptr(); //push is followed by one byte, so increment to skip argument
+                *machine.stack_ptr = *machine.program_ptr;
+                increment_stack_cursor();
+                increment_program_ptr();
+            }
+            void pop()
+            {
+                decrement_stack_cursor();
+            }
+            void add() 
+            {
+            #ifdef MEMORY_CHECKS_ENABLED
+                if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
+                    halt();
+            #endif // MEMORY_CHECKS_ENABLED
+                machine.stack_ptr--;
+                *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
+            }
 ```
 Block 2
 
