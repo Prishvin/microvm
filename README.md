@@ -15,10 +15,11 @@ https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95
 
 The interpreter code snipped is presented on Fig. 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on fig. 2.
 
-<img src="https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png" width="443"/>
+<img src="https://user-images.githubusercontent.com/371566/117548628-0cde6480-b047-11eb-8a13-19e557cc73f1.png" Width="443" Height="342"/>
 
 Fig. 1
-<img src="https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png" width="762"/>
+
+<img src="https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png" Width="762" Height="385"/>
 
 
 Fig. 2
@@ -26,7 +27,7 @@ Fig. 2
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
 |----------|------------|-----------------------------------------------------------------------|
-|     0  |  NOP      |       no operation 4 byte <BR>											|
+|     0  |  NOP      |       no operation 4 byte <BR>								|
 |     1  |  PUSH     |      push to stack  <BR>                                                 |
 |     2  |  POP      |       pop from stack                                                     |
 |     3  |  ADD      |       add two values on stack                                            |
