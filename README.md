@@ -20,6 +20,7 @@ The interpreter code snipped is presented on Block 1. The VM loops through the a
             DWORD qt = opcodes_find("QUIT");
             while(TRUE)
             {
+                op = *ptr;         
                 if(op>=qt || *ptr>=machine.memory_end)
                 {
                     if(op==qt )
