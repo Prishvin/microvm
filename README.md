@@ -4,10 +4,8 @@ The aim of this project is to create a stack based language and virtual machine 
 Separate memory is used for program and variable space. An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
 use **codeblocks 16.01**  and **GCC** to build.  Make file work in progress.
-
 for vm code lookg at **machine.h**, machine.c
-
-compuler code can be found in **compiler.h**, compiler.c
+compiler code can be found in **compiler.h**, compiler.c
 
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
