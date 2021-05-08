@@ -19,7 +19,7 @@ The interpreter code snipped is presented on Fig. 1. The VM loops through the av
 
 Fig. 1
 
-<img src="https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png" Width="60%" />
+<img src="https://user-images.githubusercontent.com/371566/117548719-92faab00-b047-11eb-9913-d0c51595ea82.png" Width="68%" />
 
 
 Fig. 2
