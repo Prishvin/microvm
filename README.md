@@ -13,8 +13,7 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
-The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called. An example implementation of such functions are shown on Block 2.
-
+The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called.
 ```C
             DWORD *ptr = machine.program_ptr;
             DWORD op = *ptr;
@@ -38,8 +37,10 @@ The interpreter code snipped is presented on Block 1. The VM loops through the a
             }
 ```
 Block 1
-```
-void push() //+
+
+An example implementation of such functions are shown in Block 2.
+```C
+void push() 
 {
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
     *machine.stack_ptr = *machine.program_ptr;
@@ -50,7 +51,7 @@ void pop()
 {
     decrement_stack_cursor();
 }
-void add() //+
+void add() 
 {
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
@@ -58,7 +59,6 @@ void add() //+
 #endif // MEMORY_CHECKS_ENABLED
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) + *machine.stack_ptr;
-
 }
 ```
 Block 2
