@@ -1,4 +1,5 @@
 # microvm
+## version 0.1.0
 The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. 
 Separate memory is used for program and variable space. An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
