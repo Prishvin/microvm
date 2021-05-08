@@ -28,10 +28,10 @@ int main( int argc, char *argv[] )
         {
             printf("StackVM v0.1: buy me a bear if you used it\n");
             machine_initialize(&machine);
-            printf("Ready\n>");
+            printf("Ready %c\n>",CLI_CMD_CHAR1);
             while ((read = getline(&line, &len, stdin) != -1))
             {
-                if(*line == CLI_CMD_CHAR)
+                if(*line == CLI_CMD_CHAR1)
                 {
                     str_trim(line, '\n');
                     str_shift_left(line, sizeof(line), 1 );
@@ -87,7 +87,6 @@ int main( int argc, char *argv[] )
                             printf("[name]=%s, [Addr] = 0x%02X, [VAL] = 0x%02X\n", ptr->name, ptr->address, *ptr->address);
                             ptr++;
                         }
-
                     }
 
                     if(strcmp(line, CLI_LABELS) == 0)
@@ -101,7 +100,6 @@ int main( int argc, char *argv[] )
                 }
                 else
                 {
-
                     DWORD *ptr = machine.program_ptr;
                     if(compile_line(line, &machine))
                     {
@@ -112,7 +110,6 @@ int main( int argc, char *argv[] )
                         if(machine.stack_ptr < machine.stack_end)
                             result = *(machine.stack_ptr-1);
                         printf("=%d\n>", result);
-
                     }
                     else
                     {
@@ -120,7 +117,6 @@ int main( int argc, char *argv[] )
                     }
 
                 }
-
             }
         }
 
@@ -146,15 +142,13 @@ int main( int argc, char *argv[] )
                     }
                     else
                     {
-                        perror("[FATAl] Abnormal termination");
+                        perror("[FATAL] Abnormal termination");
 
                     }
                     break;
                 }
-
                 (opcodes[*ptr].ptr)();
                 ptr++;
-
             }
         }
     }

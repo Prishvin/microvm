@@ -84,14 +84,12 @@ void decrement_stack_cursor() //+
 #endif
 }
 
-void push() //+
+void push()
 {
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
     *machine.stack_ptr = *machine.program_ptr;
     increment_stack_cursor();
-    increment_program_ptr();
-
-
+    increment_program_ptr(); //increment program_ptr to skip argument
 }
 void pop()
 {

@@ -18,5 +18,5 @@
 
 
 
-#define CLI_CMD_CHAR "$"
+#define CLI_CMD_CHAR1 36
 #endif // CLI_H_INCLUDED
