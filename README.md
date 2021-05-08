@@ -25,11 +25,11 @@ The interpreter code snipped is presented on Block 1. The VM loops through the a
                 {
                     if(op==qt )
                     {
-                        perror("[SUCCESS] program executed.");
+                        printf("[SUCCESS] program executed.");
                     }
                     else
                     {
-                        perror("[FATAl] Abnormal termination");
+                        perror("[FATAL] Abnormal termination");
                     }
                     break;
                 }
