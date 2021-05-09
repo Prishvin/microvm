@@ -7,3 +7,6 @@ All notable changes to this project will be documented in this file.
 -minimal data element is 4 bytes. this project aims 32bit systems. Although can be easily ported to 16bit. 8 bit operation is not planned.
 -interpreter commands tested: push, pop, var, add, mul, div, sub, and, or, not, binary and, binary or, binary not
 -cli commands tested: $clear, $reset, $stack
+## [0.2.0]
+-not all opcodes are tested.
+-interpreter, compiler and machine pass simple test located in test folder.
