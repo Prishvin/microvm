@@ -10,7 +10,7 @@ void write_binary(char* filename, Machine* mac)
     if(fout !=NULL)
     {
 
-        fwrite(mac->machine_memory, sizeof(DWORD), mac->program_ptr - mac->machine_memory, fout );
+        fwrite(mac->machine_memory, sizeof(DWORD), mac->program_ptr - mac->machine_memory + 1, fout );
 
     }
     fclose(fout);
@@ -52,7 +52,7 @@ BOOL compile_line(char* line, Machine* mac)
                     char* argument = *(tokens + i + 1);
                     var_init(mac->variable_ptr, argument);
                     mac->variable_ptr->index = mac->variable_ptr - mac->variables;
-                    mac->variable_ptr->address = mac->variable_memory_ptr++;
+                    mac->variable_ptr->address =  mac->variable_ptr - mac->variables;
                     mac->variable_ptr++;
                     mac->var_number++;
 
@@ -78,11 +78,11 @@ BOOL compile_line(char* line, Machine* mac)
                 str_shift_left(token, sizeof(token), 1);
                 if(!label_exists(token, mac->progam_labels, mac->label_ptr))
                 {
-                    label_init(mac->label_ptr++, token,  mac->machine_memory-mac->program_ptr);
+                    label_init(mac->label_ptr++, token,  mac->program_ptr - mac->machine_memory);
                     mac->lablel_number++;
                 }
                 label* lb = label_find(token, mac->progam_labels, mac->label_ptr);
-                lb->address = mac->program_ptr;
+                lb->address = mac->program_ptr - mac->machine_memory;
 #ifdef DEBUG_COMPILE
                 printf("Label ptr =%d\n", mac->program_ptr - mac->machine_memory);
 #endif
@@ -162,8 +162,8 @@ BOOL compile_line(char* line, Machine* mac)
 #endif
                                 *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
 
-#ifdef HARVARD_A
-                                *mac->program_ptr++ = var->index;
+#ifdef HARVARD
+                                *mac->program_ptr++ = var->address;
 #else
                                 *mac->program_ptr++ = 0;
 #endif
@@ -188,7 +188,7 @@ BOOL compile_line(char* line, Machine* mac)
                     }
                     else
                     {
-                        *mac->program_ptr++;
+                        *mac->program_ptr++ = 1;
                     }
                 }
 
@@ -246,9 +246,9 @@ void compile_all(char* input_file, char* ooutput_file)
         label_set_jumps(&machine.progam_labels[i]);
 
 #ifdef HARVARD
-    printf("Harvard defined, skippind var allocation");
+    printf("Harvard defined, skippind var allocation\n");
 #else
-    printf("Harvard not defined, allocating variables");
+    printf("Harvard not defined, allocating variables\n");
     for(i = 0; i < machine.var_number; i++)
     {
         printf("Var %d allocation [PTR] =%d\n", i+1, machine.program_ptr - machine.machine_memory);

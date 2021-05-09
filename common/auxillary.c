@@ -114,7 +114,7 @@ BOOL is_numeric(char* name, DWORD* number)
 {
 
 
-    if(str_is_number(name))
+    if(name != 0 && str_is_number(name))
     {
         *number = strtoul(name, 0,10 );
         return TRUE;

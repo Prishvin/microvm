@@ -130,13 +130,14 @@ int main( int argc, char *argv[] )
             machine_initialize(&machine);
             machine_load(argv[2], &machine);
             DWORD *ptr = machine.program_ptr;
-            DWORD op = *ptr;
+            DWORD op;
             DWORD qt = opcodes_find("QUIT");
             while(TRUE)
             {
+                op = *machine.program_ptr;
                 if(op>=qt || *ptr>=machine.memory_end)
                 {
-                    if(op ==qt )
+                    if(op==qt )
                     {
                         perror("[SUCCESS] program executed.");
                     }
@@ -147,8 +148,9 @@ int main( int argc, char *argv[] )
                     }
                     break;
                 }
-                (opcodes[*ptr].ptr)();
-                ptr++;
+                (opcodes[*machine.program_ptr].ptr)();
+                bp();
+                machine.program_ptr++;
             }
         }
     }
@@ -158,5 +160,8 @@ int main( int argc, char *argv[] )
             compile_all(argv[2], argv[3]);
         else
             perror("Unknown command");
+
+        printf("[SUCCESS] progam compiled to %s", argv[3]);
+           getchar();
     }
 }

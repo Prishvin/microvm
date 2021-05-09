@@ -86,13 +86,15 @@ void decrement_stack_cursor() //+
 
 void push()
 {
+    printf("{PUSH}\n");
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
     *machine.stack_ptr = *machine.program_ptr;
     increment_stack_cursor();
-    increment_program_ptr(); //increment program_ptr to skip argument
+
 }
 void pop()
 {
+    printf("{POP}\n");
     decrement_stack_cursor();
 }
 
@@ -109,6 +111,7 @@ void add() //+
 void sub() //+
 
 {
+  printf("{SUB}\n");
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
@@ -147,6 +150,7 @@ void jmp() //+
 
 void cmp() // lower is grater
 {
+    printf("{CMP}\n");
     machine.stack_ptr--;
     if(machine.stack_ptr> machine.stack_first && machine.stack_ptr < machine.stack_end)
     {
@@ -166,7 +170,6 @@ void cmp() // lower is grater
     }
     else
         halt();
-
     machine.stack_ptr++;
 }
 
@@ -176,8 +179,8 @@ void je() /// jump if equal, 8byte (skip one byte)
 
     if (machine.flag_eq == 1)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+             machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after je");
@@ -190,8 +193,8 @@ void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
 {
     if (machine.flag_eq == 0)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jne");
@@ -205,8 +208,8 @@ void jl()
 
     if (machine.flag_eq == 0 && machine.flag_gr == 0)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jl");
@@ -215,11 +218,13 @@ void jl()
 }
 void jg()
 {
+    printf("{JG}\n");
 
     if (machine.flag_gr)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //
+
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jg");
@@ -229,15 +234,21 @@ void jg()
 
 void jle()
 {
-
+    printf("{JLE}\n");
     if (!machine.flag_gr)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //set to previos, since ptr will be incremented
+
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jle");
 #endif // MEMORY_CHECKS_ENABLED
+    }
+    else
+    {
+        machine.program_ptr++; //skip argument
     }
 }
 
@@ -246,8 +257,8 @@ void jge()
 
     if (machine.flag_eq && machine.flag_gr)
     {
-        machine.program_ptr = *machine.program_ptr;
-        increment_program_ptr();
+            machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jle");
@@ -258,6 +269,7 @@ void jge()
 
 void frmm() //8
 {
+    printf("{FRMM}\n");
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -267,18 +279,19 @@ void frmm() //8
 
     *machine.stack_ptr = *(machine.variable_memory + *machine.program_ptr);
     increment_stack_cursor();
-    increment_program_ptr();
+
 }
 
 void tomm() //8
 {
+    printf("{TOMM}\n");
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
     *(machine.variable_memory + *machine.program_ptr) = *(machine.stack_ptr-1);
-    increment_program_ptr();
+
 }
 
 void sfrommem() //8
@@ -446,7 +459,10 @@ void astate()
     printf("Breakpoint reached at 0x%x\n", machine.program_ptr-machine.machine_memory);
     printf("Call stack depth: %i\n", machine.call_ptr-machine.call_first);
     printf("Stack depth: %i\n", machine.stack_ptr-machine.machine_stack);
+    printf("Flags EQ: %d, GR %d\n", machine.flag_eq,machine.flag_gr);
     printf("Stack content:\n");
+    printf("Program ptr = [%d]\n", machine.program_ptr - machine.machine_memory);
+    printf("Stack   ptr = [%d]\n", machine.stack_ptr - machine.machine_stack);
     int i;
     DWORD* ptr = machine.stack_first;
     while(ptr<machine.stack_ptr)

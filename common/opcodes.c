@@ -12,7 +12,7 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 4, .txt = "SUB",.ptr =  sub};
     *p++= (Opcode){.opcode = 5, .txt = "MUL",.ptr =  mult};
     *p++= (Opcode){.opcode = 6, .txt = "DIV",.ptr =  divide};
-    *p++= (Opcode){.opcode = 7, .txt = "BXOR",.ptr =  quit};
+    *p++= (Opcode){.opcode = 7, .txt = "BXOR",.ptr = bxor };
     *p++= (Opcode){.opcode = 8, .txt = "JMP",.ptr =  jmp};
     *p++= (Opcode){.opcode = 9, .txt = "JE",.ptr =  je};
     *p++= (Opcode){.opcode = 10, .txt = "JL",.ptr =  jl};
@@ -37,7 +37,6 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 29, .txt = "PRINT",.ptr =  aprint};
     *p++= (Opcode){.opcode = 30, .txt = "DELAY",.ptr =  adelay};
     *p++= (Opcode){.opcode = 31, .txt = "STATE",.ptr =  astate};
-
     *p++= (Opcode){.opcode = 32, .txt = "AND",.ptr =  land};
     *p++= (Opcode){.opcode = 33, .txt = "OR",.ptr =  lor};
     *p++= (Opcode){.opcode = 34, .txt = "NOT",.ptr =  lnot};
@@ -45,7 +44,7 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 36, .txt = "BAND",.ptr =  band};
     *p++= (Opcode){.opcode = 37, .txt = "BOR",.ptr =  bor};
     *p++= (Opcode){.opcode = 38, .txt = "BNOT",.ptr =  bnot};
-    *p++= (Opcode){.opcode = 39, .txt = "QUIT",.ptr =  bxor};
+    *p++= (Opcode){.opcode = 39, .txt = "QUIT",.ptr =  quit};
 
     machine.total_opcodes = 40;
 }

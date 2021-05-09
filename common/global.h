@@ -19,7 +19,7 @@ typedef unsigned char BOOL;
 #define MAX_LABELS 128
 #define MAX_LABEL_TRANSITIONS 128
 
-#define HARVARD_A
+#define HARVARD
 
 struct varvar {
 
