@@ -101,11 +101,12 @@ int main( int argc, char *argv[] )
                 else
                 {
                     DWORD *ptr = machine.program_ptr;
-                    if(compile_line(line, &machine))
+                    DWORD op;
+                    if(strlen(line)>MIN_INPUT_LENGTH && compile_line(line, &machine))
                     {
                         machine.program_ptr=ptr;
-
-                        (opcodes[*ptr].ptr)();
+                        op=*ptr;
+                        (opcodes[op].ptr)();
                         DWORD result = 0xFFFF;
                         if(machine.stack_ptr < machine.stack_end)
                             result = *(machine.stack_ptr-1);
@@ -149,7 +150,7 @@ int main( int argc, char *argv[] )
                     break;
                 }
                 (opcodes[*machine.program_ptr].ptr)();
-                bp();
+                //bp();
                 machine.program_ptr++;
             }
         }

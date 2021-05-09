@@ -197,7 +197,7 @@ BOOL compile_line(char* line, Machine* mac)
                     if(ntokens == 1)
                     {
                         printf("Dup ptr =%d\n",  mac->program_ptr - mac->machine_memory);
-                        *mac->program_ptr++ = 1;
+
                     }
                     if(ntokens == 2)
                     {

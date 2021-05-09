@@ -20,6 +20,9 @@ typedef unsigned char BOOL;
 #define MAX_LABEL_TRANSITIONS 128
 
 #define HARVARD
+#define TRACE_VM
+
+#define MIN_INPUT_LENGTH 1
 
 struct varvar {
 

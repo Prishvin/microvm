@@ -81,17 +81,21 @@ BOOL str_in_array(char (*arr)[MAX_OPCODE_STR_LENGTH], char* str)
     return FALSE;
 }
 
-void str_to_upper(char * temp)
+void str_to_upper(char* temp)
 {
+ if(temp != 0)
+    {
+
     char * name;
     name = strtok(temp,":");
 
     // Convert to upper case
     char *s = name;
-    while (*s)
-    {
-        *s = toupper((unsigned char) *s);
-        s++;
+     while (*s)
+        {
+            *s = toupper((unsigned char) *s);
+            s++;
+        }
     }
 
 }

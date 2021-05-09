@@ -26,7 +26,7 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 18, .txt = "RTOMM",.ptr =  stomem};
     *p++= (Opcode){.opcode = 19, .txt = "CALL",.ptr =  call};
     *p++= (Opcode){.opcode = 20, .txt = "RET",.ptr =  ret};
-    *p++= (Opcode){.opcode = 21, .txt = "DUP",.ptr =  dup};
+    *p++= (Opcode){.opcode = 21, .txt = "DUP",.ptr =  adup};
     *p++= (Opcode){.opcode = 22, .txt = "SWAP",.ptr =  swap};
     *p++= (Opcode){.opcode = 23, .txt = "INC",.ptr =  inc};
     *p++= (Opcode){.opcode = 24, .txt = "DEC",.ptr =  dec};

@@ -40,6 +40,8 @@ void machine_initialize(Machine *mac)
 
     mac->memory_end = mac->machine_memory + DEVICE_MEMORY_SIZE;
 
+    mac->call_ptr  = mac->machine_call_stack;
+    mac->call_stack_end = mac->machine_call_stack + STACK_SIZE;
 
     mac->call_first = mac->machine_stack;
     mac->var_number = 0;
@@ -86,7 +88,10 @@ void decrement_stack_cursor() //+
 
 void push()
 {
+#ifdef TRACE_VM
     printf("{PUSH}\n");
+    bp();
+#endif
     increment_program_ptr(); //push is followed by one byte, so increment to skip argument
     *machine.stack_ptr = *machine.program_ptr;
     increment_stack_cursor();
@@ -94,12 +99,19 @@ void push()
 }
 void pop()
 {
+#ifdef TRACE_VM
     printf("{POP}\n");
+    bp();
+#endif
     decrement_stack_cursor();
 }
 
 void add() //+
 {
+#ifdef TRACE_VM
+    printf("{ADD}\n");
+    bp();
+#endif
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
@@ -111,7 +123,10 @@ void add() //+
 void sub() //+
 
 {
-  printf("{SUB}\n");
+#ifdef TRACE_VM
+    printf("{SUB}\n");
+    bp();
+#endif
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
@@ -121,7 +136,10 @@ void sub() //+
 }
 void mult() //+
 {
-
+#ifdef TRACE_VM
+    printf("{MULT}\n");
+    bp();
+#endif
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
@@ -133,6 +151,10 @@ void mult() //+
 void divide()
 
 {
+#ifdef TRACE_VM
+    printf("{DIV}\n");
+    bp();
+#endif
 #ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr < machine.stack_second || machine.stack_ptr >= machine.stack_end)
         halt();
@@ -144,13 +166,20 @@ void divide()
 }
 void jmp() //+
 {
+#ifdef TRACE_VM
+    printf("{JMP}\n");
+    bp();
+#endif
     increment_program_ptr(); //increment because argument byte
     machine.program_ptr = *machine.program_ptr;
 }
 
 void cmp() // lower is grater
 {
+#ifdef TRACE_VM
     printf("{CMP}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     if(machine.stack_ptr> machine.stack_first && machine.stack_ptr < machine.stack_end)
     {
@@ -176,10 +205,13 @@ void cmp() // lower is grater
 
 void je() /// jump if equal, 8byte (skip one byte)
 {
-
+#ifdef TRACE_VM
+    printf("{JE}\n");
+    bp();
+#endif
     if (machine.flag_eq == 1)
     {
-             machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
@@ -191,9 +223,13 @@ void je() /// jump if equal, 8byte (skip one byte)
 
 void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
 {
+#ifdef TRACE_VM
+    printf("{JNE}\n");
+    bp();
+#endif
     if (machine.flag_eq == 0)
     {
-           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
@@ -204,11 +240,14 @@ void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
 
 void jl()
 {
-
+#ifdef TRACE_VM
+    printf("{JL}\n");
+    bp();
+#endif
 
     if (machine.flag_eq == 0 && machine.flag_gr == 0)
     {
-           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
@@ -218,11 +257,14 @@ void jl()
 }
 void jg()
 {
+#ifdef TRACE_VM
     printf("{JG}\n");
+    bp();
+#endif
 
     if (machine.flag_gr)
     {
-           machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
 
 #ifdef MEMORY_CHECKS_ENABLED
@@ -234,7 +276,10 @@ void jg()
 
 void jle()
 {
+#ifdef TRACE_VM
     printf("{JLE}\n");
+    bp();
+#endif
     if (!machine.flag_gr)
     {
 
@@ -254,10 +299,13 @@ void jle()
 
 void jge()
 {
-
+#ifdef TRACE_VM
+    printf("{JGE}\n");
+    bp();
+#endif
     if (machine.flag_eq && machine.flag_gr)
     {
-            machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
+        machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
 #ifdef MEMORY_CHECKS_ENABLED
         if (machine.program_ptr >= machine.memory_end)
@@ -269,7 +317,10 @@ void jge()
 
 void frmm() //8
 {
+#ifdef TRACE_VM
     printf("{FRMM}\n");
+    bp();
+#endif
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -284,7 +335,10 @@ void frmm() //8
 
 void tomm() //8
 {
+#ifdef TRACE_VM
     printf("{TOMM}\n");
+    bp();
+#endif
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -296,6 +350,11 @@ void tomm() //8
 
 void sfrommem() //8
 {
+#ifdef TRACE_VM
+    printf("{SFRMM}\n");
+    bp();
+#endif
+
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -308,6 +367,10 @@ void sfrommem() //8
 
 void stomem() //8
 {
+#ifdef TRACE_VM
+    printf("{STOMM}\n");
+    bp();
+#endif
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -318,7 +381,10 @@ void stomem() //8
 
 void afrom() //8
 {
-    //TODO aserts here
+#ifdef TRACE_VM
+    printf("{AFROM}\n");
+    bp();
+#endif
     increment_program_ptr();
     increment_stack_cursor();
     *machine.stack_ptr = *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
@@ -326,7 +392,10 @@ void afrom() //8
 
 void atom() //8
 {
-    //TODO aserts here
+#ifdef TRACE_VM
+    printf("{ATOM}\n");
+    bp();
+#endif
     increment_program_ptr();
     *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr) = *machine.stack_ptr;
 }
@@ -334,30 +403,40 @@ void atom() //8
 
 void call()
 {
-    machine.call_ptr++;
-    if (machine.call_ptr >= machine.call_stack_end)
-        halt("call stack overflow");
-    *machine.call_ptr = machine.program_ptr+2;
-    increment_program_ptr();
-    if (machine.program_ptr >= machine.memory_end)
-        halt("segmentation fault in call");
-    machine.program_ptr = *machine.program_ptr;
+#ifdef TRACE_VM
+    printf("{CALL}\n");
+    bp();
+#endif
+     DWORD tmp =  machine.program_ptr - machine.machine_memory;; //save ptr
+     machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1); //now
+     machine.program_ptr--;  //set to previos, since ptr will be incremented
+
+    *machine.call_ptr = tmp+1;
+     machine.call_ptr++;
+    //TODO add checks
 }
 
 void ret()
 {
+#ifdef TRACE_VM
+    printf("{RET}\n");
+    bp();
+#endif
     if (machine.call_ptr < machine.call_first)
         halt("cannot ret: call stack is empty");
     if (machine.call_ptr < machine.call_first || machine.call_ptr >= machine.call_stack_end)
         halt("segmentation fault in ret");
-    *machine.program_ptr = *machine.call_ptr--;
+    machine.program_ptr = machine.machine_memory +*(--machine.call_ptr);
 
 }
 
 void adup()
 {
-
-   *machine.stack_ptr = *(machine.stack_ptr - 1);
+#ifdef TRACE_VM
+    printf("{DUP}\n");
+    bp();
+#endif
+    *machine.stack_ptr = *(machine.stack_ptr - 1);
     *machine.stack_ptr++;
 }
 
@@ -368,6 +447,10 @@ void randint()
 
 void swap()
 {
+#ifdef TRACE_VM
+    printf("{SWAP}\n");
+    bp();
+#endif
     if (machine.stack_ptr < machine.stack_second)
         halt("not enough elements in stack to swap");
     DWORD temp = *machine.stack_ptr;
@@ -377,6 +460,10 @@ void swap()
 
 void stinc()
 {
+#ifdef TRACE_VM
+    printf("{STINC}\n");
+    bp();
+#endif
     if (machine.stack_ptr >= machine.stack_end)
         halt("cannot inc because stack is empty");
     machine.stack_ptr++;
@@ -384,18 +471,30 @@ void stinc()
 
 void stdec()
 {
+#ifdef TRACE_VM
+    printf("{STDEC}\n");
+    bp();
+#endif
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     machine.stack_ptr--;
 }
 void inc()
 {
+#ifdef TRACE_VM
+    printf("{INC}\n");
+    bp();
+#endif
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     *machine.stack_ptr = *machine.stack_ptr + 1;
 }
 void dec()
 {
+#ifdef TRACE_VM
+    printf("{DEC}\n");
+    bp();
+#endif
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     *machine.stack_ptr = *machine.stack_ptr - 1;
@@ -425,10 +524,18 @@ void artost()
 
 void nop()
 {
+#ifdef TRACE_VM
+    printf("{NOP}\n");
+    bp();
+#endif
     ;
 }
 void succ_exit()
 {
+#ifdef TRACE_VM
+    printf("{EXIT}\n");
+    bp();
+#endif
     ;
 }
 void  quit()
@@ -441,16 +548,21 @@ void aprint()
     increment_program_ptr();
     DWORD n = *machine.program_ptr;
     DWORD i=0;
-     printf("Top %d stack values:\n", n);
+    printf("Top %d stack values:\n", n);
     while(i++<n)
     {
 
         printf(" 0x%02X", *(machine.stack_ptr -n + i - 1) );
     }
-      printf("\n>");
+    printf("\n>");
 }
 void adelay()
 {
+#ifdef TRACE_VM
+    printf("{DELAY}\n");
+    bp();
+#endif
+    ;
     increment_program_ptr();
     usleep(*machine.program_ptr*1000000);
 }
@@ -483,37 +595,73 @@ void bp()
 
 void land()
 {
+#ifdef TRACE_VM
+    printf("{LAND}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) && *machine.stack_ptr;
 }
-void lor(){
+void lor()
+{
+#ifdef TRACE_VM
+    printf("{LOR}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) || *machine.stack_ptr;
 }
-void lxor(){
+void lxor()
+{
+#ifdef TRACE_VM
+    printf("{LXOR}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = (*(machine.stack_ptr-1) ^ *machine.stack_ptr)>0;
 }
 void lnot()
 {
+#ifdef TRACE_VM
+    printf("{LNOR}\n");
+    bp();
+#endif
     machine.stack_ptr;
     *(machine.stack_ptr-1) = !(*(machine.stack_ptr-1));
 }
 
 void band()
 {
+#ifdef TRACE_VM
+    printf("{BAND}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) & *machine.stack_ptr;
 }
-void bor(){
+void bor()
+{
+#ifdef TRACE_VM
+    printf("{BOR}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) | *machine.stack_ptr;
 }
-void bxor(){
+void bxor()
+{
+#ifdef TRACE_VM
+    printf("{BXOR}\n");
+    bp();
+#endif
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) ^ *machine.stack_ptr;
 }
-void bnot(){
-
+void bnot()
+{
+#ifdef TRACE_VM
+    printf("{BNOT}\n");
+    bp();
+#endif
     *(machine.stack_ptr-1) = ~(*(machine.stack_ptr-1));
 }
