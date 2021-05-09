@@ -12,7 +12,7 @@
 
 void compile_all(char* input_file, char* ooutput_file);
 void compile_file(char* input_file, char* output_file);
-BOOL compile_line(char* line, Machine* mac);
+BOOL compile_line(char* line, DWORD line_number, Machine* mac);
 BOOL compile_iline(char* line, Machine* mac);
 void write_binary(char* filename, Machine* machine);
 
