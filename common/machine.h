@@ -58,6 +58,7 @@ DWORD total_opcodes;
 } Machine;
 
 Machine machine;
+Machine backup_machine;
 
 void machine_load(char* filename, Machine* mac);
 void machine_initialize();

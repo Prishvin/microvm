@@ -34,7 +34,7 @@
 	"global.h"
 	<string.h>
 
-1620665651 /home/misha/source/VirtualMachine/common//machine.h
+1620675255 /home/misha/source/VirtualMachine/common//machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -67,7 +67,7 @@
 	"../common/token.h"
 	"../common/machine.h"
 
-1620665651 /home/misha/source/VirtualMachine/common/machine.h
+1620675255 /home/misha/source/VirtualMachine/common/machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -79,7 +79,7 @@
 	"token.h"
 	"machine.h"
 
-1620673192 source:/home/misha/source/VirtualMachine/common/machine.c
+1620674499 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620420360 source:/home/misha/source/VirtualMachine/common/token.c
@@ -106,7 +106,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1620583235 source:/home/misha/source/VirtualMachine/compiler/main.c
+1620675050 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -115,8 +115,9 @@
 	"../common/token.h"
 	"../common//machine.h"
 	"src/cli.h"
+	"src/interpreter.h"
 
-1620505688 /home/misha/source/VirtualMachine/compiler/src/cli.h
+1620675952 /home/misha/source/VirtualMachine/compiler/src/cli.h
 
 1620671038 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
 	"compiler.h"
@@ -131,4 +132,17 @@
 	"../../common/opcodes.h"
 	"../../common/token.h"
 	"../../common//machine.h"
+
+1620674963 /home/misha/source/VirtualMachine/compiler/src/interpreter.h
+	<stdio.h>
+	<stdlib.h>
+	"../../common/global.h"
+	"../../common/auxillary.h"
+	"../../common/opcodes.h"
+	"../../common/token.h"
+	"../../common//machine.h"
+	"cli.h"
+
+1620675266 source:/home/misha/source/VirtualMachine/compiler/src/interpeter.c
+	"interpreter.h"
 

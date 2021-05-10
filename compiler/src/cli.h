@@ -1,7 +1,8 @@
 #ifndef CLI_H_INCLUDED
 #define CLI_H_INCLUDED
 
-
+#define CLI_BACKUP "backup"
+#define CLI_RESTORE "rest"
 #define CLI_FLAGS "flags"
 #define CLI_CLEAR "clear"
 #define CLI_RESET "reset"
