@@ -27,6 +27,13 @@ cmp       #compare top two values
 jle label #jump to label if not completed
 quit
 ```
+##microvm usage
+interpreter mode>    microvm **-i** 
+compile source file> microvm **-c** <source> <destination>
+run script>          microvm **-r**  <binary> 
+display help>        microvm **-h**
+
+##interpreter loop
 The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called.
 ```C
             DWORD *ptr = machine.program_ptr;
@@ -78,7 +85,7 @@ An example implementation of such functions are shown in Block 2.
 ```
 Block 2
 
-
+## opcodes
 
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
