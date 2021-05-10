@@ -31,20 +31,20 @@ quit
 ```
 ## microvm usage
 
--interpreter mode>    microvm **-i**
--compile source file> microvm **-c** <source> <destination>
--run script>          microvm **-r**  <binary>
--display help>        microvm **-h**
+-interpreter mode>    microvm **-i**            
+-compile source file> microvm **-c** <source> <destination> 
+-run script>          microvm **-r**  <binary>  
+-display help>        microvm **-h**            
             
 ## interpreter commands
 The interperter commands can be used in interactive mode to display or control vm state. A command should be preceded by a '$' sign.
 
--**$stack**      - displays stack contents.
--**$var**        - displays all vars.
--**$clear**      - clears screen
--**$reset**      - resets vm
--**$backup**     - creates a copy of vm memory.
--**$rest **      - restores memory from a backup.
+-**$stack**      - displays stack contents.     
+-**$var**        - displays all vars.           
+-**$clear**      - clears screen    
+-**$reset**      - resets vm        
+-**$backup**     - creates a copy of vm memory. 
+-**$rest **      - restores memory from a backup.           
 
 
 ## interpreter loop
