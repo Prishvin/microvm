@@ -29,13 +29,21 @@ quit
 ```
 ## microvm usage
 
-interpreter mode>    microvm **-i** 
+-interpreter mode>    microvm **-i** 
+-compile source file> microvm **-c** <source> <destination>          
+-run script>          microvm **-r**  <binary>            
+-display help>        microvm **-h**
 
-compile source file> microvm **-c** <source> <destination>
-            
-run script>          microvm **-r**  <binary> 
-            
-display help>        microvm **-h**
+## interpreter commands
+The interperter commands can be used in interactive mode to display or control vm state. A command should be preceded by a '$' sign.
+
+-**$stack**      - displays stack contents.
+-**$var**        - displays all vars.
+-**$clear**      - clears screen
+-**$reset**      - resets vm
+-**$backup**     - creates a copy of vm memory.
+-**$rest **      - restores memory from a backup.
+
 
 ## interpreter loop
 The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called.
