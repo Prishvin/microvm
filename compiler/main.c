@@ -84,7 +84,7 @@ int main( int argc, char *argv[] )
                         {
                             variable v;
 
-                            printf("[name]=%s, [Addr] = 0x%02X, [VAL] = 0x%02X\n", ptr->name, ptr->address, *ptr->address);
+                            printf("[name]=%s, [Addr] = 0x%02X, [VAL] = 0x%02X\n", ptr->name, ptr->address, machine.variable_memory[ptr->index]);
                             ptr++;
                         }
                     }

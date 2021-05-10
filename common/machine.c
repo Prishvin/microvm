@@ -355,28 +355,29 @@ void sfrommem() //8
     bp();
 #endif
 
-    increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
+    machine.stack_ptr--;
+    *machine.stack_ptr = *(machine.variable_memory + *(machine.stack_ptr) - 1);
 
-    increment_stack_cursor();
-    *machine.stack_ptr = *(machine.program_ptr + *machine.program_ptr - 1);
+
+
 }
 
 void stomem() //8
 {
 #ifdef TRACE_VM
-    printf("{STOMM}\n");
+    printf("{TOMM}\n");
     bp();
 #endif
-    increment_program_ptr();
+
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
 #endif // MEMORY_CHECKS_ENABLED
-    *(machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
+    *(machine.variable_memory + *(machine.stack_ptr-2)) = *(machine.stack_ptr-1);
 }
 
 void afrom() //8
@@ -430,7 +431,7 @@ void ret()
 
 }
 
-void adup()
+void duplicate()
 {
 #ifdef TRACE_VM
     printf("{DUP}\n");

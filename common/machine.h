@@ -104,7 +104,7 @@ void atom() ;
 void call();
 
 void ret();
-void adup();
+void duplicate();
 
 void randint();
 

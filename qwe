@@ -1,0 +1,299 @@
+[33mcommit 4ba399d1775845485de1f8cbdd09e2d27015fe53[m[33m ([m[1;36mHEAD -> [m[1;32marray_branch[m[33m)[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 15:58:56 2021 -0400
+
+    working on arrays
+
+[33mcommit daa10728d5c52e9d2e6653aa27d6b380d6912844[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 22:34:10 2021 +0400
+
+    Update VERSION
+
+[33mcommit c7958c848477b7dec1d455b45cf4ac389868a9e9[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 14:32:31 2021 -0400
+
+    version 0.2.0
+
+[33mcommit afdf8825bb71ea27c0878942b96ba33cb2de3a85[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 14:10:39 2021 -0400
+
+    call, ret, lable, jumps, dup works
+
+[33mcommit d47086237502c6069ee5458a68091b0be2436e54[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 07:36:13 2021 -0400
+
+    :lable works. todo: increment call stack, ret, array
+
+[33mcommit 29274b7fd03bcbca8ac0f6474e058ca20cfc4d3d[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 16:33:44 2021 -0400
+
+    command symbol fix. TODO: restrict stack decrement beyond first element
+
+[33mcommit a53aa9505f45685ba5086dc37b00affc052c0afb[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 16:33:17 2021 -0400
+
+    command symbol fix. TODO: restrict stack decrement beyond first element
+
+[33mcommit f71149147279a37f906074f4384ef0b4fc05ec26[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 00:21:34 2021 +0400
+
+    Update README.md
+
+[33mcommit 535ba4691b22d1acb7f63c1be2c7c6a98d3285f9[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 00:06:26 2021 +0400
+
+    Update README.md
+
+[33mcommit b399d3bd52466b1876948a7732d3fd1f90386926[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 00:05:22 2021 +0400
+
+    Update README.md
+
+[33mcommit e63753b22caf4163c15c202bca9ba99f9531da50[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 00:04:18 2021 +0400
+
+    Update README.md
+
+[33mcommit 4f7203d1eea8dbb47813d6baf7e650c79c27f519[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sun May 9 00:03:22 2021 +0400
+
+    Rename CHANGELOG to CHANGELOG.md
+
+[33mcommit 778a69da43f54c0e45bd893b4c8350b757ac79c5[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:23:20 2021 +0400
+
+    Update README.md
+
+[33mcommit 08bef9d1145031b1ba27875e72c46c65d99dc1f7[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:22:48 2021 +0400
+
+    Update README.md
+
+[33mcommit 9f73b1b3377cb2381cc848882a72fe8918a83885[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:22:21 2021 +0400
+
+    Update README.md
+
+[33mcommit c4f2b62b49285e5850aca8c9091d71d31840f918[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:21:19 2021 +0400
+
+    Update README.md
+
+[33mcommit 5189f33565f683010b9474a692df4fa9808e0f66[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:13:46 2021 +0400
+
+    Update README.md
+
+[33mcommit 9e0921aa90d0bd9f96b1d02403213498dfc4c30d[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:12:20 2021 +0400
+
+    Update README.md
+
+[33mcommit 12b51cddd0aacd67118afe4a84d0732c48383fc9[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:12:04 2021 +0400
+
+    Update README.md
+
+[33mcommit 53f93dcc043b9c14d3befc20f6090e202446cdac[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:11:47 2021 +0400
+
+    Update README.md
+
+[33mcommit 7321221def7ff4698bc2718a349d5884403e939b[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:11:34 2021 +0400
+
+    Update README.md
+
+[33mcommit 38358caa4dcc0b089b341c13258211cb8aacc0c3[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:11:19 2021 +0400
+
+    Update README.md
+
+[33mcommit 9508157c8a78d39d2b97f214b994192a1baec931[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:11:03 2021 +0400
+
+    Update README.md
+
+[33mcommit 257fb571e665aca26059f4abf6160732474f2587[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:09:21 2021 +0400
+
+    Update README.md
+
+[33mcommit ac8c5d3309bd476c59a616fa2b7e3c71890074ed[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:08:11 2021 +0400
+
+    Update README.md
+
+[33mcommit 977ca4dd78dd21e134a04a3dc5312560b3c65580[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:07:05 2021 +0400
+
+    Update README.md
+
+[33mcommit 9faa714bd4e8ddc5bd98f463fd9727b4c6289573[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:05:58 2021 +0400
+
+    Update README.md
+
+[33mcommit e8fdfdf14692a1f1e86f9e57e2252a25406a73e6[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 22:04:50 2021 +0400
+
+    Update README.md
+
+[33mcommit 6bc28ba6fd905633d65d6b140aff6d9d12eac595[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:53:48 2021 +0400
+
+    Update README.md
+
+[33mcommit 1ae36da07a2f1e0673a0a2fca1c57ff4fd0a60f7[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:53:22 2021 +0400
+
+    Update README.md
+
+[33mcommit 8503420f4ca156728d2d6b1d71c907ed9fa391d6[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:52:45 2021 +0400
+
+    Update README.md
+
+[33mcommit 61601591a049394d20a2f014523c75d1c2419753[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:23:21 2021 +0400
+
+    Update VERSION
+
+[33mcommit fc17bb7b59d2506fbff639fdb9f5395c0c98efce[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:23:04 2021 +0400
+
+    Update CHANGELOG
+
+[33mcommit e18981397baa513e2654af010075d95a0e448d31[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 21:05:26 2021 +0400
+
+    Update README.md
+
+[33mcommit e31dabe9b0f7fd58dd925bcfd02252b67c6ca2ab[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:37:15 2021 +0400
+
+    Update README.md
+
+[33mcommit e3a598dafa4ff2c27da84d18cf1c2674d3452f35[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:36:33 2021 +0400
+
+    Update TODO.md
+
+[33mcommit e6122716935d7f71cabc03e0ff6150e9964fad42[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:35:49 2021 +0400
+
+    Create README.md
+
+[33mcommit 96ae1ace612d25b680f99154ef53d1c33a417892[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:35:23 2021 +0400
+
+    Update README.md
+
+[33mcommit 25a7aef7ce44b66bfcfcac2679e11e6cd3b32b36[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:34:55 2021 +0400
+
+    Update README.md
+
+[33mcommit 8a27a4cf38c838cba3b892b756caa3dbe75753b2[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:34:35 2021 +0400
+
+    Update README.md
+
+[33mcommit f7990e7f76ed69804418027ca96e1b21e0c52bcc[m
+Merge: 4d97ca1 d7d02e3
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:30:50 2021 -0400
+
+    Merge branch 'main' of https://github.com/Prishvin/vm into main
+
+[33mcommit 4d97ca14330c93c3cf704687d9660d2d20df83de[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:30:28 2021 -0400
+
+    minor changes
+
+[33mcommit d7d02e3503e31e887f2406d22529fd3dcb845eab[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 20:23:40 2021 +0400
+
+    Update README.md
+
+[33mcommit 0357de0e9b5945e2f8b4c97106f43b6dbe65358d[m
+Merge: 1c82781 6aeb9c1
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 11:54:34 2021 -0400
+
+    Merge branch 'main' of https://github.com/Prishvin/vm into main
+
+[33mcommit 1c827818983364485cfe77cadd0922d1abe44307[m
+Author: Mikheil Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 11:53:37 2021 -0400
+
+    -r option added.
+    run loop added.
+    extra folders removed
+
+[33mcommit 6aeb9c16642ebbfedd7e547245833eb1221387c7[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:49:45 2021 +0400
+
+    Update CHANGELOG
+
+[33mcommit a57fcc4e4a7f4dc14c78695fa9709aea5e22977e[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:48:38 2021 +0400
+
+    Update TODO.md
+
+[33mcommit cafe9f1a9713ff7ee3e3cf79acea51e176c7f37f[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:47:45 2021 +0400
+
+    Update TODO.md
+
+[33mcommit a5ff058236324bfe692dcdd14bad34f97ed189ed[m
+Author: Prishvin <prishvin@gmail.com>
+Date:   Sat May 8 12:46:43 2021 +0400
+
+    Update README.md
+
+[33mcommit 682dcfff0150d573762880248ce9747
