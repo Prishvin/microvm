@@ -9,7 +9,9 @@ void write_binary(char* filename, Machine* mac)
     FILE* fout=fopen(filename,"wb");
     if(fout !=NULL)
     {
+
         fwrite(mac->machine_memory, sizeof(DWORD), mac->program_ptr - mac->machine_memory + 1, fout );
+
     }
     fclose(fout);
 }
@@ -17,7 +19,7 @@ void compile_file(char* input_file, char* output_file)
 {
 
 }
-BOOL compile_line(char* line, DWORD line_number, Machine* mac)
+BOOL compile_line(char* line, Machine* mac)
 {
     BOOL result = TRUE;
 #ifdef DEBUG_COMPILE
@@ -45,39 +47,28 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
             }
             else if(token_is_var(token))
             {
-                if(ntokens == 2 ||  ntokens == 3)
+                if(ntokens == 2)
                 {
                     char* argument = *(tokens + i + 1);
                     var_init(mac->variable_ptr, argument);
                     mac->variable_ptr->index = mac->variable_ptr - mac->variables;
                     mac->variable_ptr->address =  mac->variable_ptr - mac->variables;
-                    if(ntokens == 2)
-                    {
-                        mac->variable_ptr++;
-                    }
-                    if(ntokens == 3)
-                    {
-                        DWORD sz;
-                        if(is_numeric(argument, &sz))
-                        {
-                            mac->variable_ptr->sz = sz;
-                            mac->variable_ptr =  mac->variable_ptr + sz;
-                        }
-                        else
-                        {
-                            fprintf(stderr,"FATAL: line %d, parsing array size", line_number);
-                            return FALSE;
-                        }
-                    }
-
+                    mac->variable_ptr++;
                     mac->var_number++;
-                    free(tokens);
 
-                    return TRUE;
+
+                    free(tokens);
+                    return FALSE;
+                }
+                if(ntokens == 3)
+                {
+                    perror("FATAL: array not implemented yet");
+                    free(tokens);
+                    return FALSE;
                 }
                 else
                 {
-                    fprintf(stderr,"FATAL: line %d, wrong VAR arguments", line_number);
+                    perror("FATAL: wrong VAR arguments");
                     free(tokens);
                     return FALSE;
                 }
@@ -110,7 +101,7 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
 
                 if(token_unknown(op))
                 {
-                    fprintf(stderr,"FATAL: line %d, Unexpected opcode", line_number);
+                    perror("FATAL: Unexpected opcode");
                     result =  FALSE;
                 }
                 *mac->program_ptr++ = op;//add opcode if opcode is not var and label
@@ -139,14 +130,13 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
                     }
                     else
                     {
-                        fprintf(stderr,"FATAL: line %d, no argument supplied", line_number);
-
+                        perror("FATAL: no argument supplied");
                         result =  FALSE;
                     }
                 }
                 else if(token_is_mem(token))
                 {
-                    if(ntokens == 2 || ntokens == 3)
+                    if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
                         DWORD number;
@@ -162,7 +152,7 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
                             variable* var = variable_find(argument, mac->variables,  mac->variable_ptr);
                             if((DWORD) var == VARIABLE_NOT_FOUND)
                             {
-                                fprintf(stderr,"FATAL: line %d, variable not found", line_number);
+                                perror("FATAL: variable not found");
                                 return FALSE;
                             }
                             else
@@ -172,22 +162,13 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
 #endif
                                 *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
 
+#ifdef HARVARD
                                 *mac->program_ptr++ = var->address;
-                                if(ntokens == 3)
-                                {
-                                    argument = *(tokens + i + 1);
-                                    DWORD number;
-                                    if(is_numeric(argument, &number))
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        fprintf(stderr,"FATAL: line %d, array index parse error", line_number);
-                                        return FALSE;
-                                    }
-                                }
+#else
+                                *mac->program_ptr++ = 0;
+#endif
                             }
+
                         }
                     }
                     else
@@ -202,6 +183,7 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
                     DWORD number;
                     if(is_numeric(argument, &number))
                     {
+
                         *mac->program_ptr++=number;
                     }
                     else
@@ -215,6 +197,7 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
                     if(ntokens == 1)
                     {
                         printf("Dup ptr =%d\n",  mac->program_ptr - mac->machine_memory);
+
                     }
                     if(ntokens == 2)
                     {
@@ -226,7 +209,10 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
                             *mac->program_ptr++ = number;
                         }
                     }
+
                 }
+
+
             }
             free(token);
         }
@@ -237,6 +223,7 @@ BOOL compile_line(char* line, DWORD line_number, Machine* mac)
 }
 void compile_all(char* input_file, char* ooutput_file)
 {
+
     FILE* fp;
     fp = fopen(input_file, "r");
     if (fp == NULL)
@@ -247,11 +234,10 @@ void compile_all(char* input_file, char* ooutput_file)
     char line[MAX_LEN];
     // -1 to allow room for NULL terminator for really long string
     machine_initialize(&machine);
-    DWORD n= 0;
+
     while (fgets(line, MAX_LEN - 1, fp))
     {
-        n++;
-        compile_line(line, n, &machine);
+        compile_line(line, &machine);
     }
     printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
     *machine.program_ptr++ = opcodes_find("QUIT");
@@ -259,14 +245,17 @@ void compile_all(char* input_file, char* ooutput_file)
     for(i = 0; i < machine.lablel_number; i++)
         label_set_jumps(&machine.progam_labels[i]);
 
-
+#ifdef HARVARD
+    printf("Harvard defined, skippind var allocation\n");
+#else
+    printf("Harvard not defined, allocating variables\n");
     for(i = 0; i < machine.var_number; i++)
     {
         printf("Var %d allocation [PTR] =%d\n", i+1, machine.program_ptr - machine.machine_memory);
         var_set_links(&machine.variables[i],(DWORD) (machine.program_ptr - machine.machine_memory), machine.machine_memory);
         *machine.program_ptr++ = 0;
     }
-
+#endif
 
     fclose(fp);
 
