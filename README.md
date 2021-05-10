@@ -28,9 +28,13 @@ jle label #jump to label if not completed
 quit
 ```
 ## microvm usage
+
 interpreter mode>    microvm **-i** 
+
 compile source file> microvm **-c** <source> <destination>
+            
 run script>          microvm **-r**  <binary> 
+            
 display help>        microvm **-h**
 
 ## interpreter loop
