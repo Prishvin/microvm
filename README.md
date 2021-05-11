@@ -44,7 +44,7 @@ The interperter commands can be used in interactive mode to display or control v
 -**$clear**      - clears screen    
 -**$reset**      - resets vm        
 -**$backup**     - creates a copy of vm memory.                         
--**$rest **      - restores memory from a backup.           
+-**$rest**       - restores memory from a backup.           
 
 
 ## interpreter loop
