@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int nconstants = 0;
 
 void write_binary(char* filename, Machine* mac)
 {
@@ -19,6 +20,24 @@ void compile_file(char* input_file, char* output_file)
 {
 
 }
+
+void preprocessor_substitute(char* token)
+{
+    DWORD i;
+    int index;
+    for(i = 0; i < nconstants; i++)
+    {
+        if(*token == CHAR_CONSTANT)
+        {
+            str_shift_left(token, sizeof(token), 1);
+            constant* c= constant_find(token, &index);
+            if(index != -1)
+            {
+                strcpy(token, c->destination);
+            }
+        }
+    }
+}
 BOOL compile_line(char* line, Machine* mac)
 {
     BOOL result = TRUE;
@@ -32,7 +51,10 @@ BOOL compile_line(char* line, Machine* mac)
     if (tokens)
     {
         int i = 0;;
-        //for (i = 0; *(tokens + i); i++)
+        for(i = 0; i<ntokens;i++)
+                {
+                    preprocessor_substitute(ntokens+i);
+                }
         {
             char* token = *(tokens + i);
             str_to_upper(token);
@@ -221,6 +243,43 @@ BOOL compile_line(char* line, Machine* mac)
     }
     return result;
 }
+BOOL preprocessor(char* line, Machine* mac)
+{
+    BOOL result = TRUE;
+    str_shift_left(line, strlen(line), 1);
+    char** tokens;
+    BYTE ntokens;
+    tokens = str_split(&ntokens, line, ' ');
+
+    if(ntokens>1 && strcmp(tokens[0], PRE_DEFINE) == 0)
+    {
+        int index;
+        constant* c = constant_find(tokens[0], &index);
+        if(index == -1)
+        {
+            c = &constants[nconstants++];
+        }
+        strcpy(*line, c->destination);
+    }
+
+    return result;
+}
+
+constant* constant_find(char* name, int* index)
+{
+    DWORD i;
+    *index = -1;
+    for(i = 0; i < nconstants; i++)
+    {
+        if(strcmp(name, constants[i].source)==0)
+        {
+            index = i;
+            return &constants[i];
+        }
+    }
+
+    return NULL;
+}
 void compile_all(char* input_file, char* ooutput_file)
 {
 
@@ -237,7 +296,14 @@ void compile_all(char* input_file, char* ooutput_file)
 
     while (fgets(line, MAX_LEN - 1, fp))
     {
-        compile_line(line, &machine);
+        if(*line == '$') //preprocessor
+        {
+            preprocessor(line, &machine);
+        }
+        else
+        {
+            compile_line(line, &machine);
+        }
     }
     printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
     *machine.program_ptr++ = opcodes_find("QUIT");

@@ -9,11 +9,32 @@
 #include "../../common//machine.h"
 
 #define MAX_LEN 256
+#define MAX_CONSTANTS 128
+#define MAX_PREPROCESSOR_NAME_LEN 128
 
+#define PRE_INCLUDE "include"
+#define PRE_DEFINE "define"
+
+
+#define CHAR_CONSTANT '_'
+typedef struct {
+
+ char source[MAX_PREPROCESSOR_NAME_LEN];
+ char destination[MAX_PREPROCESSOR_NAME_LEN];
+ DWORD value;
+
+} constant;
+
+constant constants[MAX_CONSTANTS];
+
+int nconstants;
 void compile_all(char* input_file, char* ooutput_file);
 void compile_file(char* input_file, char* output_file);
 BOOL compile_line(char* line, Machine* mac);
+BOOL preprocessor(char* line, Machine* mac);
+void preprocessor_substitute(char* token);
 BOOL compile_iline(char* line, Machine* mac);
+constant* constant_find(char* name, int* index);
 void write_binary(char* filename, Machine* machine);
 
 #endif // COMPILER_H_INCLUDED

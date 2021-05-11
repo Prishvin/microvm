@@ -1,6 +1,8 @@
 #ifndef CLI_H_INCLUDED
 #define CLI_H_INCLUDED
 
+#define PRE_INCLUDE "include"
+
 #define CLI_BACKUP "backup"
 #define CLI_RESTORE "rest"
 #define CLI_FLAGS "flags"

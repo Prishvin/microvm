@@ -11,6 +11,8 @@ typedef  unsigned int DWORD;
 typedef unsigned long long QWORD;
 typedef unsigned char BOOL;
 
+#define NULL 0
+
 #define VARIABLE_NOT_FOUND 0xFFFF
 #define VARIABLE_MEMORY_SIZE 512
 #define MAX_VARIABLE_LINKS 128

@@ -36,7 +36,7 @@ int main( int argc, char *argv[] )
             {
                 if(*line == CLI_CMD_CHAR1)
                 {
-                   process_interpreter_command(line);
+                    process_interpreter_command(line);
                 }
                 else
                 {
