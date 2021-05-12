@@ -1,6 +1,9 @@
 # microvm todo
 
 ## version 0.2.0
+- [] test arrays,
+- [] add $include 
+## version 0.2.0
 - [x] add stack backup command $backup <-> $reset
 - [] add two pass compiling in order to have dynamic memory allocation targeting smaller boards.
 - [] change DWORD to TYPE, in order to change 32 <> 16 bit with one define.
