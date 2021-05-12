@@ -2,7 +2,8 @@
 
 ## version 0.2.1
 - [x] test arrays,
-- [x] add $include 
+- [x] add $define
+- [ ] add $include 
 ## version 0.2.0
 - [x] add stack backup command $backup <-> $reset
 - [] add two pass compiling in order to have dynamic memory allocation targeting smaller boards.
