@@ -21,8 +21,9 @@ void compile_file(char* input_file, char* output_file)
 
 }
 
-void preprocessor_substitute(char* token)
+BOOL preprocessor_substitute(char* token)
 {
+    BOOL result = TRUE;
     DWORD i;
     int index;
     for(i = 0; i < nconstants; i++)
@@ -35,9 +36,17 @@ void preprocessor_substitute(char* token)
             {
 
                 strcpy(token, c->destination);
+                break;
+            }
+            else
+            {
+                result = FALSE;
+                 break;
             }
         }
     }
+
+    return result;
 }
 BOOL compile_line(char* line, Machine* mac)
 {
@@ -54,8 +63,10 @@ BOOL compile_line(char* line, Machine* mac)
         int i = 0;;
         for(i = 0; i<ntokens; i++)
         {
-            preprocessor_substitute(*(tokens+i));
+            if(!preprocessor_substitute(*(tokens+i)))
+                return FALSE;
         }
+        if(TRUE)
         {
             i = 0;
             char* token = *(tokens + i);
@@ -66,7 +77,7 @@ BOOL compile_line(char* line, Machine* mac)
                 printf("Comment found =[%s]\n", (char*) line);
 #endif
                 free(tokens);
-                return FALSE;
+                return TRUE;
 
             }
             else if(token_is_var(token))
@@ -82,13 +93,13 @@ BOOL compile_line(char* line, Machine* mac)
 
 
                     free(tokens);
-                    return FALSE;
+                    return TRUE;
                 }
                 if(ntokens == 3)
                 {
                     perror("FATAL: array not implemented yet");
                     free(tokens);
-                    return FALSE;
+                    return TRUE;
                 }
                 else
                 {
@@ -113,7 +124,7 @@ BOOL compile_line(char* line, Machine* mac)
                 //mac->program_ptr++;
 
                 free(tokens);
-                return FALSE;
+                return TRUE;
             }
             else
             {
@@ -286,8 +297,9 @@ constant* constant_find(char* name, int* index)
 
     return NULL;
 }
-void compile_all(char* input_file, char* ooutput_file)
+BOOL compile_all(char* input_file, char* ooutput_file)
 {
+    BOOL result = TRUE;
 
     FILE* fp;
     fp = fopen(input_file, "r");
@@ -299,7 +311,7 @@ void compile_all(char* input_file, char* ooutput_file)
     char line[MAX_LEN];
     // -1 to allow room for NULL terminator for really long string
     machine_initialize(&machine);
-
+    DWORD line_number = 1;
     while (fgets(line, MAX_LEN - 1, fp))
     {
         if(*line == '$') //preprocessor
@@ -308,8 +320,14 @@ void compile_all(char* input_file, char* ooutput_file)
         }
         else
         {
-            compile_line(line, &machine);
+            if(!compile_line(line, &machine))
+            {
+                printf("[ERROR] at [line %d] > %s\n",line_number, line );
+                return FALSE;
+                break;
+            }
         }
+        line_number++;
     }
     printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
     *machine.program_ptr++ = opcodes_find("QUIT");
@@ -318,7 +336,7 @@ void compile_all(char* input_file, char* ooutput_file)
         label_set_jumps(&machine.progam_labels[i]);
 
 #ifdef HARVARD
-    printf("Harvard defined, skippind var allocation\n");
+    printf("Variable allocated\n");
 #else
     printf("Harvard not defined, allocating variables\n");
     for(i = 0; i < machine.var_number; i++)
@@ -332,4 +350,5 @@ void compile_all(char* input_file, char* ooutput_file)
     fclose(fp);
 
     write_binary(ooutput_file, &machine);
+    return result;
 }

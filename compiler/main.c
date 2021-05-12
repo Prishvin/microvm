@@ -83,11 +83,21 @@ int main( int argc, char *argv[] )
     if(argc == 4)
     {
         if(strcmp(argv[1],CLI_FLAG_COMPULE) == 0)
-            compile_all(argv[2], argv[3]);
+        {
+            if(compile_all(argv[2], argv[3]))
+            {
+                printf("[SUCCESS] program compiled to %s\n", argv[3]);
+            }
+            else
+            {
+                 printf("[FAIL] compilation of %s failed\n", argv[2]);
+            }
+        }
+
         else
             perror("Unknown command");
 
-        printf("[SUCCESS] progam compiled to %s", argv[3]);
+
            getchar();
     }
 }

@@ -28,11 +28,12 @@ typedef struct {
 constant constants[MAX_CONSTANTS];
 
 int nconstants;
-void compile_all(char* input_file, char* ooutput_file);
+BOOL compile_all(char* input_file, char* ooutput_file);
 void compile_file(char* input_file, char* output_file);
 BOOL compile_line(char* line, Machine* mac);
 BOOL preprocessor(char* line, Machine* mac);
-void preprocessor_substitute(char* token);
+///  return: FALSE is token is a constant, but not found in list. TRUE otherwise
+BOOL preprocessor_substitute(char* token);
 BOOL compile_iline(char* line, Machine* mac);
 constant* constant_find(char* name, int* index);
 void write_binary(char* filename, Machine* machine);
