@@ -45,12 +45,9 @@ int main( int argc, char *argv[] )
                 }
             }
         }
-
-
     }
     if(argc == 3)
     {
-
         if(strcmp(argv[1],CLI_READ) == 0)
         {
             machine_initialize(&machine);
@@ -63,14 +60,13 @@ int main( int argc, char *argv[] )
                 op = *machine.program_ptr;
                 if(op>=qt || *ptr>=machine.memory_end)
                 {
-                    if(op==qt )
+                    if(op==qt)
                     {
                         perror("[SUCCESS] program executed.");
                     }
                     else
                     {
                         perror("[FATAL] Abnormal termination");
-
                     }
                     break;
                 }
@@ -95,8 +91,9 @@ int main( int argc, char *argv[] )
         }
 
         else
+        {
             perror("Unknown command");
-
+        }
 
            getchar();
     }

@@ -500,28 +500,6 @@ void dec()
     *machine.stack_ptr = *machine.stack_ptr - 1;
 }
 
-void sttoar()
-{
-    /*
-        if (machine.stack_ptr < machine.stack_first)
-            halt("stack is empty, cannot afrommem");
-        increment_program_ptr();
-        if (stack[st_cur] + mem[c_cur] < 0 || stack[st_cur] + mem[c_cur] >= MEM_SIZE)
-            halt("segmentation fault in afrommem");
-        inc_st_cur();
-        stack[st_cur] = mem[stack[st_cur - 1] + mem[c_cur]];*/
-}
-
-void artost()
-{
-//    if (st_cur < 1)
-    //      halt("Not enough elements in stack for atomem");
-    increment_program_ptr();
-    //if (stack[st_cur - 1] + mem[c_cur] < 0 || stack[st_cur - 1] + mem[c_cur] >= MEM_SIZE)
-    //    halt("segmentation fault in atomem");
-    *(machine.machine_memory + *machine.program_ptr + *machine.stack_ptr - 1) = *machine.stack_ptr;
-}
-
 void nop()
 {
 #ifdef TRACE_VM
@@ -551,7 +529,6 @@ void aprint()
     printf("Top %d stack values:\n", n);
     while(i++<n)
     {
-
         printf(" 0x%02X", *(machine.stack_ptr -n + i - 1) );
     }
     printf("\n>");
