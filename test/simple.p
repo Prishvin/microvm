@@ -1,5 +1,8 @@
+$define _maxbound 30
+push _maxbound
+pop
 push 1
-push 20
+push _maxbound
 var dcr
 var v2
 var v3

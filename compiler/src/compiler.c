@@ -29,10 +29,11 @@ void preprocessor_substitute(char* token)
     {
         if(*token == CHAR_CONSTANT)
         {
-            str_shift_left(token, sizeof(token), 1);
+
             constant* c= constant_find(token, &index);
             if(index != -1)
             {
+
                 strcpy(token, c->destination);
             }
         }
@@ -51,11 +52,12 @@ BOOL compile_line(char* line, Machine* mac)
     if (tokens)
     {
         int i = 0;;
-        for(i = 0; i<ntokens;i++)
-                {
-                    preprocessor_substitute(ntokens+i);
-                }
+        for(i = 0; i<ntokens; i++)
         {
+            preprocessor_substitute(*(tokens+i));
+        }
+        {
+            i = 0;
             char* token = *(tokens + i);
             str_to_upper(token);
             if(token_is_comment(token))
@@ -251,16 +253,20 @@ BOOL preprocessor(char* line, Machine* mac)
     BYTE ntokens;
     tokens = str_split(&ntokens, line, ' ');
 
-    if(ntokens>1 && strcmp(tokens[0], PRE_DEFINE) == 0)
+    if(ntokens>2 && strcmp(tokens[0], PRE_DEFINE) == 0)
     {
         int index;
-        constant* c = constant_find(tokens[0], &index);
+        constant* c = constant_find(*(tokens+1), &index);
         if(index == -1)
         {
             c = &constants[nconstants++];
         }
-        strcpy(*line, c->destination);
+        str_trim(*(tokens+2), '\n');
+        strcpy(c->source, *(tokens+1));
+        strcpy(c->destination , *(tokens+2));
+
     }
+    free(tokens);
 
     return result;
 }
@@ -273,7 +279,7 @@ constant* constant_find(char* name, int* index)
     {
         if(strcmp(name, constants[i].source)==0)
         {
-            index = i;
+            *index = i;
             return &constants[i];
         }
     }

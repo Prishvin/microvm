@@ -17,19 +17,25 @@ https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95
 
 ## example microvm code
 ```asm
-push 1    #push 1 to stack
-push 20   #push 20 to stack
-var dcr   #declare a variable named dcr
-push 1    #push 1 to stack
-TOMM dcr  #assign dcr 1 (top from stack)
-pop       #remove top stack   
-:label    #label named label
-print 1   #print one top value from stack 
-FRMM dcr  #put value from dcr to stack top
-sub       #subtract top value from previos
-cmp       #compare top two values
-jle label #jump to label if not completed
+$define _maxbound 30
+push _maxbound
+pop
+push 1
+push _maxbound
+var dcr
+var v2
+var v3
+var v4
+push 2
+TOMM v4
+pop
+:label
+FRMM v4
+sub
+cmp
+jle label
 quit
+
 ```
 ## microvm usage
 
@@ -37,7 +43,11 @@ quit
 -compile source file> microvm **-c** <source> <destination>             
 -run script>          microvm **-r**  <binary>              
 -display help>        microvm **-h**                        
-            
+## preprocessor commands
+
+#A constant named "_constant" is defined below. The "_constant" will be substitued by its value further in the code at compile time.
+**$define** _constant 1024
+
 ## interpreter commands
 The interperter commands can be used in interactive mode to display or control vm state. A command should be preceded by a '$' sign.
 
