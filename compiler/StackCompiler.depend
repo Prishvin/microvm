@@ -79,7 +79,7 @@
 	"token.h"
 	"machine.h"
 
-1620808379 source:/home/misha/source/VirtualMachine/common/machine.c
+1620845527 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620838675 source:/home/misha/source/VirtualMachine/common/token.c
@@ -117,7 +117,7 @@
 	"src/cli.h"
 	"src/interpreter.h"
 
-1620808379 /home/misha/source/VirtualMachine/compiler/src/cli.h
+1620846187 /home/misha/source/VirtualMachine/compiler/src/cli.h
 
 1620843375 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
 	"compiler.h"
@@ -143,6 +143,6 @@
 	"../../common//machine.h"
 	"cli.h"
 
-1620822147 source:/home/misha/source/VirtualMachine/compiler/src/interpeter.c
+1620846293 source:/home/misha/source/VirtualMachine/compiler/src/interpeter.c
 	"interpreter.h"
 

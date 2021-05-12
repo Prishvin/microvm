@@ -133,8 +133,14 @@ BOOL is_numeric(char* name, DWORD* number)
 void str_trim(char* str, char c)
 {
     DWORD len = strlen(str);
-    if(len > 0 && *(str + len - 1) ==c)
+
+    while(TRUE)
+    {
+        len = strlen(str);
+        if(!(len > 0 && *(str + len - 1) ==c))
+            break;
          *(str + len - 1) = 0;
+    }
 
 }
 void str_shift_left(char myarray[], int sz, int shiftBy)
@@ -158,7 +164,7 @@ void str_shift_left(char myarray[], int sz, int shiftBy)
             //EXAMPLE shift by 3  for a c-string of 5
             temp = myarray[i];//temp = myarray[0]
             myarray[i] = myarray[i + shiftBy];//myarray[0] == myarray[2]
-            myarray[i + shiftBy] = temp;//myarray[2] = temp(value previously at index i)
+            //myarray[i + shiftBy] = temp;//myarray[2] = temp(value previously at index i)
         }
 
     }

@@ -4,7 +4,7 @@
 #define PRE_INCLUDE "include"
 
 #define CLI_BACKUP "backup"
-#define CLI_RESTORE "rest"
+#define CLI_RESTORE "restore"
 #define CLI_FLAGS "flags"
 #define CLI_CLEAR "clear"
 #define CLI_RESET "reset"

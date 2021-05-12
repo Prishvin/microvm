@@ -4,8 +4,9 @@
 
 void process_interpreter_command(char* line)
 {
-     str_trim(line, '\n');
+
                     str_shift_left(line, sizeof(line), 1 );
+                    str_trim(line, '\n');
                     if(strcmp(line, CLI_FLAGS) == 0)
                     {
                         printf("Flag Equal = %d\nFlag Greater = %d\n>", machine.flag_eq, machine.flag_gr);
