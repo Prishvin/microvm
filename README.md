@@ -43,11 +43,15 @@ quit
 -compile source file> microvm **-c** <source> <destination>             
 -run script>          microvm **-r**  <binary>              
 -display help>        microvm **-h**                        
+<<<<<<< HEAD
 ## preprocessor commands
 
 #A constant named "_constant" is defined below. The "_constant" will be substitued by its value further in the code at compile time.
 **$define** _constant 1024
 
+=======
+            
+>>>>>>> 3555d72114ef80292422d7a18d2bd7483746d83f
 ## interpreter commands
 The interperter commands can be used in interactive mode to display or control vm state. A command should be preceded by a '$' sign.
 
@@ -56,7 +60,11 @@ The interperter commands can be used in interactive mode to display or control v
 -**$clear**      - clears screen    
 -**$reset**      - resets vm        
 -**$backup**     - creates a copy of vm memory.                         
+<<<<<<< HEAD
 -**$rest **      - restores memory from a backup.           
+=======
+-**$rest**       - restores memory from a backup.           
+>>>>>>> 3555d72114ef80292422d7a18d2bd7483746d83f
 
 
 ## interpreter loop
