@@ -1,8 +1,8 @@
 # microvm todo
 
-## version 0.2.0
-- [] test arrays,
-- [] add $include 
+## version 0.2.1
+- [x] test arrays,
+- [x] add $include 
 ## version 0.2.0
 - [x] add stack backup command $backup <-> $reset
 - [] add two pass compiling in order to have dynamic memory allocation targeting smaller boards.
