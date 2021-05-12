@@ -10,7 +10,9 @@
 #define TOKEN_UNKNOWN 0xFFFF
 
 char token_control[9][MAX_OPCODE_STR_LENGTH];
-char token_memory[6][MAX_OPCODE_STR_LENGTH];
+char token_memory[3][MAX_OPCODE_STR_LENGTH];
+char token_array[3][MAX_OPCODE_STR_LENGTH];
+char token_push[2][MAX_OPCODE_STR_LENGTH];
 
 
 BOOL token_unknown(DWORD token);
@@ -23,6 +25,8 @@ BOOL    token_is_label(char* token);
 BOOL    token_is_var(char* token);
 BOOL    token_is_control(char* token);
 BOOL    token_is_mem(char* token);
+BOOL    token_is_array(char* token);
+BOOL    token_is_push(char* token);
 BOOL    token_is_print(char* token);
 
 #endif // TOKEN_H_INCLUDED

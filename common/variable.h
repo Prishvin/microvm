@@ -16,5 +16,5 @@ void var_set_links(variable* v, DWORD address, DWORD* code);
 
 void var_allocate_space(variable* v, DWORD* code);
 
-variable* variable_find(char* name, variable* variables, variable* last);
+variable* variable_find(char* name, variable* variables, DWORD index, variable* last);
 #endif // VARIABLE_H_INCLUDED

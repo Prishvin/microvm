@@ -23,13 +23,13 @@ void var_allocate_space(variable* v, DWORD* code)
 {
 }
 
-variable* variable_find(char* name, variable* variables, variable* last)
+variable* variable_find(char* name, variable* variables, DWORD index, variable* last)
 {
        variable* ptr = variables;
        variable* result = VARIABLE_NOT_FOUND;
        do
        {
-            if(strcmp(ptr->name, name) == 0)
+            if(strcmp(ptr->name, name) == 0 && ptr->index == index)
                result = ptr;
        }while(ptr++<last)
        ;

@@ -1,7 +1,9 @@
 #include "token.h"
 
-char token_control[9][MAX_OPCODE_STR_LENGTH] = {"CALL", "JGE", "JLE", "JG", "JL", "JNE", "JE", "JMP","",};
-char token_memory[6][MAX_OPCODE_STR_LENGTH] =  {"PUSH", "FRMM", "TOMM","AFROM", "ATOM", "",};
+char token_control[9][MAX_OPCODE_STR_LENGTH] = {"CALL", "JGE", "JLE", "JG", "JL", "JNE", "JE", "JMP",""};
+char token_memory[3][MAX_OPCODE_STR_LENGTH] =  {"FRMM", "TOMM", ""};
+char token_array[3][MAX_OPCODE_STR_LENGTH] =  {"AFROM", "ATOM", ""};
+char token_push[2][MAX_OPCODE_STR_LENGTH] =  {"PUSH", ""};
 
 #define TOKEN_UNKNOWN 0xFFFF
 
@@ -46,6 +48,16 @@ BOOL    token_is_control(char* token)
     return str_in_array(token_control, token);
 }
 BOOL    token_is_mem(char* token)
+{
+    return str_in_array(token_memory, token);
+
+}
+BOOL    token_is_array(char* token)
+{
+    return str_in_array(token_array, token);
+
+}
+BOOL    token_is_push(char* token)
 {
     return str_in_array(token_memory, token);
 
