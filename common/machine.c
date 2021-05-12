@@ -387,8 +387,7 @@ void afrom() //8
     bp();
 #endif
     increment_program_ptr();
-    increment_stack_cursor();
-    *machine.stack_ptr = *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
+    *(machine.stack_ptr -1 ) = *(machine.variable_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
 }
 
 void atom() //8
@@ -398,7 +397,7 @@ void atom() //8
     bp();
 #endif
     increment_program_ptr();
-    *(machine.machine_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr) = *machine.stack_ptr;
+    *(machine.variable_memory + *(machine.stack_ptr - 1 ) + *machine.program_ptr) = *(machine.stack_ptr- 2);
 }
 
 

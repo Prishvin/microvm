@@ -7,6 +7,8 @@
 #include <string.h>
 #include "token.h"
 
+DWORD PUSHOP;
+
 typedef void (* voidfunc)(void);
 
 typedef struct

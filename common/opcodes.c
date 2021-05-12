@@ -1,5 +1,8 @@
 #include "opcodes.h"
 
+
+DWORD PUSHOP = 1;
+
 void initialize_opcodes()
 {
 
@@ -30,8 +33,8 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 22, .txt = "SWAP",.ptr =  swap};
     *p++= (Opcode){.opcode = 23, .txt = "INC",.ptr =  inc};
     *p++= (Opcode){.opcode = 24, .txt = "DEC",.ptr =  dec};
-    *p++= (Opcode){.opcode = 25, .txt = "AFRMM",.ptr =  afrom};
-    *p++= (Opcode){.opcode = 26, .txt = "ATOMM",.ptr =  atom};
+    *p++= (Opcode){.opcode = 25, .txt = "AFROM",.ptr =  afrom};
+    *p++= (Opcode){.opcode = 26, .txt = "ATOM",.ptr =  atom};
     *p++= (Opcode){.opcode = 27, .txt = "BP",.ptr =  bp};
     *p++= (Opcode){.opcode = 28, .txt = "CMP",.ptr =  cmp};
     *p++= (Opcode){.opcode = 29, .txt = "PRINT",.ptr =  aprint};

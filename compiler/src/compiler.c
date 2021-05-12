@@ -92,8 +92,9 @@ BOOL compile_line(char* line, Machine* mac)
                 }
                 if(ntokens == 3)
                 {
-                    char* argument = *(tokens + i + 2);
-                    if(is_numeric(argument, &number))
+                    char* argument = *(tokens + i + 1);
+                    char* arrstr = *(tokens + i + 2);
+                    if(is_numeric(arrstr, &number))
                     {
                         for(n=0; n<number; n++)
                         {
@@ -110,7 +111,7 @@ BOOL compile_line(char* line, Machine* mac)
                         perror("FATAL: wrong ARRAY arguments");
                     }
                     free(tokens);
-                    return FALSE;
+                    return TRUE;
                 }
                 else
                 {
@@ -200,47 +201,7 @@ BOOL compile_line(char* line, Machine* mac)
                         result =  FALSE;
                     }
                 }
-                else if(token_is_array(token))
-                {
-                    if(ntokens == 2)
-                    {
-                        char* arg_name = *(tokens + i + 1); // var name
-                        char* arg_index = *(tokens + i + 2); //index
 
-                         if(is_numeric(arg_index, &number))
-                         {
-
-                            variable* var = variable_find(arg_name, mac->variables,  number,  mac->variable_ptr);
-                            if((DWORD) var == VARIABLE_NOT_FOUND)
-                            {
-                                perror("FATAL: variable not found");
-                                return FALSE;
-                            }
-                            else
-                            {
-#ifdef DEBUG_COMPILE
-                                printf("Link argument %s ptr =%d\n", argument,  mac->program_ptr - mac->machine_memory);
-#endif
-                                *mac->program_ptr--; // roll back one opcode to place the number before it
-                                *mac->program_ptr++ = 1;
-                                *mac->program_ptr++ = number;
-                                *mac->program_ptr++ = op;
-                                *(var->link_ptr++) =mac->program_ptr - mac->machine_memory;
-                                *mac->program_ptr++ = var->address;
-                            }
-                        }
-                        else
-                        {
-                            perror("FATAL: index must be integer");
-                            result =  FALSE;
-                        }
-                    }
-                    else
-                    {
-                        perror("FATAL: no argument supplied");
-                        result =  FALSE;
-                    }
-                }
                 else if(token_is_mem(token))
                 {
                     if(ntokens == 2)
@@ -252,7 +213,7 @@ BOOL compile_line(char* line, Machine* mac)
 #ifdef DEBUG_COMPILE
                             printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
 #endif // DEBUG_COMPILE
-                            *mac->program_ptr++=number;
+                            *mac->program_ptr++=*((DWORD*)number);
                         }
                         else
                         {

@@ -10,9 +10,9 @@
 #define TOKEN_UNKNOWN 0xFFFF
 
 char token_control[9][MAX_OPCODE_STR_LENGTH];
-char token_memory[3][MAX_OPCODE_STR_LENGTH];
-char token_array[3][MAX_OPCODE_STR_LENGTH];
+char token_memory[5][MAX_OPCODE_STR_LENGTH];
 char token_push[2][MAX_OPCODE_STR_LENGTH];
+
 
 
 BOOL token_unknown(DWORD token);
