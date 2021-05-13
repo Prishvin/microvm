@@ -110,10 +110,11 @@ Block 2
 ## opcodes
 
 Available commands are listed below.
-|   opcode |  Mnemonics | Length   |    description |
-|----------|------------|-----------------------------------------------------------------------|
+
+|   opcode |  Mnemonics |Length|                           description                              |
+|----------|------------|------|--------------------------------------------------------------------|
 |     0  |  NOP      |   1     | no operation 4 byte <BR>								            |
-|     1  |  PUSH     |   2     | push to stack  <BR>                                                 |
+|     1  |  PUSH     |   2     | push to stack  <BR>                                                |
 |     2  |  POP      |   1     | pop from stack                                                     |
 |     3  |  ADD      |   1     | add two values on stack                                            |
 |     4  |  SUB      |   1     | subtact top value from previos                                     |
@@ -129,8 +130,8 @@ Available commands are listed below.
 |     14 |  JGE      |   1     | jump if not greter                                                 |
 |     15 |  FRMM     |   2     | from memory address to stack                                       |
 |     16 |  TOMM     |   2     | from stack to memory                                               |
-|     17 |  -----    |         | reserved                                                                  |
-|     18 |  -----    |         | reserved                                                                 |
+|     17 |  -----    |         | reserved                                                           |
+|     18 |  -----    |         | reserved                                                           |
 |     19 |  CALL     |   2     | call label                                                         |
 |     20 |  RET      |   1     | return from call                                                   |
 |     21 |  DUP      |   1     | duplicate stack value                                              |
@@ -148,13 +149,13 @@ Available commands are listed below.
 |     33 |  OR       |   1     | logical or                                                         |
 |     34 |  NOT      |   1     | logical not                                                        |
 |     35 |  XOR      |   1     | binary xor                                                         |
-|     36 |  BAND     |   1     | binary and                                                          |
-|     37 |  BOR      |   1     | binary or                                                           |
-|     38 |  BNOT     |   1     | binary not                                                          |
-|     39 |  ASSERT   |   1     | asserts top two values on stack are equal.                          |
-|     40 |  PTRTO    |   2     | reads from host pointer to top stack                                |
-|     41 |  TOPTR    |   2     | writes top stack to host pointer                                    |
-|     42 |  QUIT     |   1     | finalize program                                                    |
+|     36 |  BAND     |   1     | binary and                                                         |
+|     37 |  BOR      |   1     | binary or                                                          |
+|     38 |  BNOT     |   1     | binary not                                                         |
+|     39 |  ASSERT   |   1     | asserts top two values on stack are equal.                         |
+|     40 |  PTRTO    |   2     | reads from host pointer to top stack                               |
+|     41 |  TOPTR    |   2     | writes top stack to host pointer                                   |
+|     42 |  QUIT     |   1     | finalize program                                                   |
 
 
 Table. 1.
