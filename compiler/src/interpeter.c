@@ -5,8 +5,10 @@
 void process_interpreter_command(char* line)
 {
 
-                    str_shift_left(line, sizeof(line), 1 );
-                    str_trim(line, '\n');
+                    DWORD sz = strlen(line);
+                    str_shift_left(line,sz , 1 );
+                     str_trim(line, '\n');
+
                     if(strcmp(line, CLI_FLAGS) == 0)
                     {
                         printf("Flag Equal = %d\nFlag Greater = %d\n>", machine.flag_eq, machine.flag_gr);
@@ -60,19 +62,23 @@ void process_interpreter_command(char* line)
                     {
 
                         printf("Program variables, N=%d\n", machine.var_number);
+                        printf("Variables memory start, [ADDRESS]=%d\n", machine.variable_memory);
                         variable* ptr = machine.variables;
+                        BYTE i = 0;
                         while(ptr<machine.variable_ptr)
                         {
                             variable v;
 
-                            printf("[name]=%s, [Addr] = 0x%02X, [VAL] = 0x%02X\n", ptr->name, ptr->address, machine.variable_memory[ptr->index]);
+                            printf("[name]=%s, [Addr] = 0x%02X, [VAL] = 0x%02X\n", ptr->name, ptr->address, machine.variable_memory[i]);
                             ptr++;
+                            i++;
                         }
                     }
 
                      else if(strcmp(line, CLI_LABELS) == 0)
                     {
                         printf("Program labels, N=%d\n", machine.lablel_number);
+
                         for (int i = 0; i < machine.lablel_number; i++)
                         {
                             printf("[Name]= %s, [ADDRESS]=%02X, [Jumps]=%d", machine.progam_labels[i].name, machine.progam_labels[i].address,  machine.progam_labels[i].jump_number  );

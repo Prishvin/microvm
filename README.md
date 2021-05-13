@@ -1,5 +1,5 @@
 # microvm
-## version 0.2.1
+## version 0.2.2
 The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. 
 Separate memory is used for program and variable space (Harvard architecture). An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
@@ -112,7 +112,7 @@ Block 2
 Available commands are listed below.
 |   opcode |  Mnemonics |      description |
 |----------|------------|-----------------------------------------------------------------------|
-|     0  |  NOP      |       no operation 4 byte <BR>								|
+|     0  |  NOP      |       no operation 4 byte <BR>								            |
 |     1  |  PUSH     |      push to stack  <BR>                                                 |
 |     2  |  POP      |       pop from stack                                                     |
 |     3  |  ADD      |       add two values on stack                                            |
@@ -141,17 +141,21 @@ Available commands are listed below.
 |     26 |  ATOMM    |       array not implemented                                              |
 |     27 |  BP       |       breakpoint not implemented                                         |
 |     28 |  CMP      |       compare top two stack values| place result in flag_gr and flag_eq  |
-|     29 |  PRINT    |                                                                          |
-|     30 |  DELAY    |                                                                          |
-|     31 |  STATE    |                                                                          |
-|     32 |  AND      |                                                                          |
-|     33 |  OR       |                                                                          |
-|     34 |  NOT      |                                                                          |
-|     35 |  XOR      |                                                                          |
-|     36 |  BAND     |                                                                          |
-|     37 |  BOR      |                                                                          |
-|     38 |  BNOT     |                                                                          |
-|     39 |  QUIT     |                                                                          |
+|     29 |  PRINT    |       prints top stack value                                             |
+|     30 |  DELAY    |       delay in ms                                                        |
+|     31 |  STATE    |       prints current state (depricated)                                  |
+|     32 |  AND      |       logical and                                                        |
+|     33 |  OR       |       logical or                                                         |
+|     34 |  NOT      |       logical not                                                        |
+|     35 |  XOR      |       binary xor                                                         |
+|     36 |  BAND     |      binary and                                                          |
+|     37 |  BOR      |      binary or                                                           |
+|     38 |  BNOT     |      binary not                                                          |
+|     39 |  ASSERT   |      asserts top two values on stack are equal.                          |
+|     40 |  PTRTO    |      reads from host pointer to top stack                                |
+|     41 |  TOPTR    |      writes top stack to host pointer                                    |
+|     42 |  QUIT     |      finalize program                                                    |
+|--------|-----------|--------------------------------------------------------------------------|
 
 Table. 1.
       

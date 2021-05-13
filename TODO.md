@@ -15,4 +15,4 @@
 - [x] write tests.
 - [] write a make file as an alterative to codeblocks.
 - [] cover complete opcode set in test.
-- [] add assert opcode for semi automated testing.
+- [x] add assert opcode for semi automated testing.

@@ -108,6 +108,7 @@ BOOL compile_line(char* line, Machine* mac)
                     }
                     else
                     {
+                        errno = EINVAL;
                         perror("FATAL: wrong ARRAY arguments");
                     }
                     free(tokens);
@@ -115,6 +116,7 @@ BOOL compile_line(char* line, Machine* mac)
                 }
                 else
                 {
+                    errno = EINVAL;
                     perror("FATAL: wrong VAR arguments");
                     free(tokens);
                     return FALSE;
@@ -145,6 +147,7 @@ BOOL compile_line(char* line, Machine* mac)
 #endif
                 if(token_unknown(op))
                 {
+                    errno = EINVAL;
                     perror("FATAL: Unexpected opcode");
                     result =  FALSE;
                 }
@@ -172,6 +175,7 @@ BOOL compile_line(char* line, Machine* mac)
                     }
                     else
                     {
+                        errno = EINVAL;
                         perror("FATAL: no argument supplied");
                         result =  FALSE;
                     }
@@ -191,12 +195,14 @@ BOOL compile_line(char* line, Machine* mac)
                         }
                         else
                         {
+                                errno = EINVAL;
                                  perror("FATAL: push expects numeric argument");
                                 result =  FALSE;
                         }
                     }
                     else
                     {
+                        errno = EINVAL;
                         perror("FATAL: no argument supplied");
                         result =  FALSE;
                     }
@@ -213,13 +219,14 @@ BOOL compile_line(char* line, Machine* mac)
 #ifdef DEBUG_COMPILE
                             printf("Numberic argument %s\n [PTR] =%d\n", argument,  mac->program_ptr - mac->machine_memory);
 #endif // DEBUG_COMPILE
-                            *mac->program_ptr++=*((DWORD*)number);
+                            *mac->program_ptr++= number;
                         }
                         else
                         {
                             variable* var = variable_find(argument, mac->variables,  0,  mac->variable_ptr);
                             if((DWORD) var == VARIABLE_NOT_FOUND)
                             {
+                                errno = EINVAL;
                                 perror("FATAL: variable not found");
                                 return FALSE;
                             }
@@ -235,6 +242,7 @@ BOOL compile_line(char* line, Machine* mac)
                     }
                     else
                     {
+                        errno = EINVAL;
                         perror("FATAL: no argument supplied");
                         result =  FALSE;
                     }
@@ -328,6 +336,7 @@ BOOL compile_all(char* input_file, char* ooutput_file)
     fp = fopen(input_file, "r");
     if (fp == NULL)
     {
+        errno = EBADF;
         perror("Failed: ");
         return 1;
     }

@@ -1,7 +1,7 @@
 #include "token.h"
 
 char token_control[9][MAX_OPCODE_STR_LENGTH] = {"CALL", "JGE", "JLE", "JG", "JL", "JNE", "JE", "JMP",""};
-char token_memory[5][MAX_OPCODE_STR_LENGTH] =  {"FRMM", "TOMM", "AFROM", "ATOM",""};
+char token_memory[7][MAX_OPCODE_STR_LENGTH] =  {"FRMM", "TOMM", "AFROM", "ATOM", "PTRTO", "TOPTR", ""};
 
 char token_push[2][MAX_OPCODE_STR_LENGTH] =  {"PUSH", ""};
 

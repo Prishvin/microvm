@@ -26,6 +26,8 @@ typedef unsigned char BOOL;
 
 #define MIN_INPUT_LENGTH 1
 
+#define ERR_ASSERTATION 1
+
 struct varvar {
 
 DWORD index;

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<unistd.h>
+#include <errno.h>
 
 #define DEVICE_MEMORY_SIZE  4096
 
@@ -18,6 +19,11 @@
 #define SHADOW_MEMORY DEVICE_MEMORY_SIZE
 
 #define MEMORY_CHECKS_ENABLED // disable this to save processing time. might result in aegmentation fault.
+
+#define MACHINE_MODE_COMPILER 0
+#define MACHINE_MODE_INTERPRETER 1
+#define MACHINE_MODE_RUN 2
+
 typedef struct
 {
 
@@ -49,7 +55,7 @@ typedef struct
     DWORD* stack_ptr;
     DWORD* call_ptr;
 
-
+    BYTE mode;
     BOOL flag_eq;
     BOOL flag_gr;
     DWORD var_number;
@@ -133,6 +139,9 @@ void bnot();
 void nop();
 void succ_exit();
 void  quit();
+void asrt();
+void ptrto();
+void toptr();
 void bp();
 
 #endif // MACHINE_H_INCLUDED

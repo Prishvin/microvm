@@ -30,7 +30,10 @@ int main( int argc, char *argv[] )
         if(strcmp(argv[1],CLI_FLAG_INTERPRETER) == 0)
         {
             printf("StackVM v0.1: welcome.\n");
+            printf("Data width: %d.\n", sizeof(DWORD));
             machine_initialize(&machine);
+            machine.mode = MACHINE_MODE_INTERPRETER;
+
             printf("Ready %c\n>",CLI_CMD_CHAR1);
             while ((read = getline(&line, &len, stdin) != -1))
             {
@@ -52,6 +55,7 @@ int main( int argc, char *argv[] )
         {
             machine_initialize(&machine);
             machine_load(argv[2], &machine);
+            machine.mode = MACHINE_MODE_RUN;
             DWORD *ptr = machine.program_ptr;
             DWORD op;
             DWORD qt = opcodes_find("QUIT");
@@ -62,11 +66,17 @@ int main( int argc, char *argv[] )
                 {
                     if(op==qt)
                     {
-                        perror("[SUCCESS] program executed.");
+                        printf("[SUCCESS] program executed.\n");
+                        printf("Press any key to quit\n");
+                        getchar();
+                        exit(0);
                     }
                     else
                     {
+                        errno = EDESTADDRREQ;
                         perror("[FATAL] Abnormal termination");
+                        getchar();
+                        exit(errno);
                     }
                     break;
                 }
@@ -78,8 +88,9 @@ int main( int argc, char *argv[] )
     }
     if(argc == 4)
     {
-        if(strcmp(argv[1],CLI_FLAG_COMPULE) == 0)
+        if(strcmp(argv[1],CLI_FLAG_COMPILE) == 0)
         {
+            machine.mode = MACHINE_MODE_COMPILER;
             if(compile_all(argv[2], argv[3]))
             {
                 printf("[SUCCESS] program compiled to %s\n", argv[3]);
@@ -92,6 +103,7 @@ int main( int argc, char *argv[] )
 
         else
         {
+            errno = EINVAL;
             perror("Unknown command");
         }
 

@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [status - unreleased]
 
+## [0.2.2]
+-toptr, ptro commands added. These commands operate with RAM memory of host device.
+-assert added. Assert ensures top two values on stack are equal.
+-errno added to each perror
+
 ## [0.2.1]
 -not all opcodes are tested.  
 -compilation errors are handled. Compilation is interrupted when unexpected input found.  

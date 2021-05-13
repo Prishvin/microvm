@@ -12,6 +12,7 @@ void machine_load(char* filename, Machine* mac)
     fileptr = fopen(filename, "rb");  // Open the file in binary mode
     if(fileptr == NULL)
     {
+        errno = ENOENT;
         perror("FATAL: reading binary file");
         return;
     }
@@ -57,7 +58,14 @@ void read_inputs();
 void update_outputs();
 
 
-void halt() {}
+void halt()
+ {
+     if(machine.mode != MACHINE_MODE_INTERPRETER)
+     {
+        getchar();
+        exit(-1);
+     }
+ }
 
 void increment_program_ptr()
 {
@@ -407,12 +415,12 @@ void call()
     printf("{CALL}\n");
     bp();
 #endif
-     DWORD tmp =  machine.program_ptr - machine.machine_memory;; //save ptr
-     machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1); //now
-     machine.program_ptr--;  //set to previos, since ptr will be incremented
+    DWORD tmp =  machine.program_ptr - machine.machine_memory;; //save ptr
+    machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1); //now
+    machine.program_ptr--;  //set to previos, since ptr will be incremented
 
     *machine.call_ptr = tmp+1;
-     machine.call_ptr++;
+    machine.call_ptr++;
     //TODO add checks
 }
 
@@ -642,3 +650,48 @@ void bnot()
 #endif
     *(machine.stack_ptr-1) = ~(*(machine.stack_ptr-1));
 }
+
+void asrt()
+{
+    cmp();
+    if(!machine.flag_eq)
+    {
+        errno = EINPROGRESS;
+        perror("[FAIL] assertation");
+        halt();
+    }
+}
+void ptrto()
+{
+#ifdef TRACE_VM
+    printf("{FRMM}\n");
+    bp();
+#endif
+    increment_program_ptr();
+#ifdef MEMORY_CHECKS_ENABLED
+    if (machine.program_ptr >= machine.memory_end)
+        halt("Segmentation fault after frommem");
+#endif // MEMORY_CHECKS_ENABLED
+
+      *(machine.stack_ptr) =  *((DWORD*)*(machine.program_ptr));
+      machine.stack_ptr++;
+
+
+}
+void toptr()
+{
+#ifdef TRACE_VM
+    printf("{TOMM}\n");
+    bp();
+#endif
+    increment_program_ptr();
+#ifdef MEMORY_CHECKS_ENABLED
+    if (machine.program_ptr >= machine.memory_end)
+        halt("Segmentation fault after tomem");
+#endif // MEMORY_CHECKS_ENABLED
+    *((DWORD*)*(machine.program_ptr)) = *(machine.stack_ptr-1);
+
+
+}
+
+
