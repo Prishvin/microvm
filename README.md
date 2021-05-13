@@ -109,7 +109,7 @@ Block 2
 
 ## opcodes
 
-Available commands are listed below.
+Available commands are listed below. Length is give in opcode count including arguments.
 
 |   opcode |  Mnemonics |Length|                           description                              |
 |----------|------------|------|--------------------------------------------------------------------|
