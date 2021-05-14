@@ -459,11 +459,10 @@ void swap()
     printf("{SWAP}\n");
     bp();
 #endif
-    if (machine.stack_ptr < machine.stack_second)
-        halt("not enough elements in stack to swap");
-    DWORD temp = *machine.stack_ptr;
-    *machine.stack_ptr = *(machine.stack_ptr-1);
-    *(machine.stack_ptr-1) = temp;
+
+    DWORD temp = *(machine.stack_ptr-1);
+   *(machine.stack_ptr-1) = *(machine.stack_ptr-2);
+    *(machine.stack_ptr-2) = temp;
 }
 
 void stinc()

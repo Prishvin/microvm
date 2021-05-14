@@ -108,7 +108,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1620936742 source:/home/misha/source/VirtualMachine/compiler/main.c
+1620938472 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"

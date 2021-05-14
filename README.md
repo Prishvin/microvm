@@ -113,9 +113,9 @@ Available commands are listed below. Length is give in opcode count including ar
 
 |   opcode |  Mnemonics |Length|                           description                              |
 |----------|------------|------|--------------------------------------------------------------------|
-|     0  |  NOP      |   1     | no operation 4 byte <BR>								            |
-|     1  |  PUSH     |   2     | push to stack  <BR>                                                |
-|     2  |  POP      |   1     | pop from stack                                                     |
+|     0  |  NOP    [x]  |   1     | no operation 4 byte <BR>								            |
+|     1  |  PUSH   [x]  |   2     | push to stack  <BR>                                                |
+|     2  |  POP    [x]  |   1     | pop from stack                                                     |
 |     3  |  ADD      |   1     | add two values on stack                                            |
 |     4  |  SUB      |   1     | subtact top value from previos                                     |
 |     5  |  MUL      |   1     | multiply two values|                                               |

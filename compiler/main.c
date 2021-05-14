@@ -29,7 +29,7 @@ int main( int argc, char *argv[] )
         }
         if(strcmp(argv[1],CLI_FLAG_INTERPRETER) == 0)
         {
-            printf("StackVM v0.1: welcome.\n");
+            printf("StackVM v0.2.2: welcome.\n");
             printf("Data width: %d.\n", sizeof(DWORD));
             machine_initialize(&machine);
             machine.mode = MACHINE_MODE_INTERPRETER;
