@@ -113,7 +113,7 @@ Available commands are listed below. Length is give in opcode count including ar
 
 |status|opcode |Mnemonics  |Length   |                           description                              |
 |------|-------|-----------|---------|--------------------------------------------------------------------|
-|-[x] |    0  |  NOP      |   1     | no operation 4 byte <BR>	                                          |
+|- [x] |    0  |  NOP      |   1     | no operation 4 byte <BR>	                                          |
 |- [x] |    1  |  PUSH     |   2     | push to stack  <BR>                                                |
 |- [x] |    2  |  POP      |   1     | pop from stack                                                     |
 |- [x] |    3  |  ADD      |   1     | add two values on stack                                            |
