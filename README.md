@@ -113,49 +113,49 @@ Available commands are listed below. Length is give in opcode count including ar
 
 |status|opcode |Mnemonics  |Length   |                           description                              |
 |------|-------|-----------|---------|--------------------------------------------------------------------|
-|- [x] |    0  |  NOP      |   1     | no operation 4 byte <BR>	                                          |
-|- [x] |    1  |  PUSH     |   2     | push to stack  <BR>                                                |
-|- [x] |    2  |  POP      |   1     | pop from stack                                                     |
-|- [x] |    3  |  ADD      |   1     | add two values on stack                                            |
-|- [x] |    4  |  SUB      |   1     | subtact top value from previos                                     |
-|- [x] |    5  |  MUL      |   1     | multiply two values|                                               |
-|- [x] |    6  |  DIV      |   1     | divied two values|                                                 |
-|- [x] |    7  |  BXOR     |   1     | last opcode                                                        |
-|- [ ] |    8  |  JMP      |   2     | unconditional jump to label                                        |
-|- [ ] |    9  |  JE       |   1     | jump if equal                                                      |
-|- [ ] |    10 |  JL       |   1     | jump if less                                                       |
-|- [ ] |    11 |  JG       |   1     | jump if greater                                                    |
-|- [ ] |    12 |  JNE      |   1     | jump if not eq                                                     |
-|- [x] |    13 |  JLE      |   1     | jump if not less                                                   |
-|- [ ] |    14 |  JGE      |   1     | jump if not greter                                                 |
-|- [x] |    15 |  FRMM     |   2     | from memory address to stack                                       |
-|- [x] |    16 |  TOMM     |   2     | from stack to memory                                               |
-|- [ ] |    17 |  -----    |         | reserved                                                           |
-|- [ ] |    18 |  -----    |         | reserved                                                           |
-|- [x] |    19 |  CALL     |   2     | call label                                                         |
-|- [x] |    20 |  RET      |   1     | return from call                                                   |
-|- [x] |    21 |  DUP      |   1     | duplicate stack value                                              |
-|- [x] |    22 |  SWAP     |   1     | swap two stack values                                              |
-|- [x] |    23 |  INC      |   1     | increment top stack value                                          |
-|- [x] |    24 |  DEC      |   1     | decrement top stack value                                          |
-|- [x] |    25 |  AFRMM    |   2     | from array to stack                                                |
-|- [x] |    26 |  ATOMM    |   2     | from stack to array                                                |
-|- [x] |    27 |  BP       |   1     | breakpoint not implemented                                         |
-|- [x] |    28 |  CMP      |   1     | compare top two stack values| place result in flag_gr and flag_eq  |
-|- [x] |    29 |  PRINT    |   1     | prints top stack value                                             |
-|- [-] |    30 |  DELAY    |   2     | delay in ms                                                        |
-|- [x] |    31 |  STATE    |   1     | prints current state (depricated)                                  |
-|- [x] |    32 |  AND      |   1     | logical and                                                        |
-|- [x] |    33 |  OR       |   1     | logical or                                                         |
-|- [x] |    34 |  NOT      |   1     | logical not                                                        |
-|- [x] |    35 |  XOR      |   1     | binary xor                                                         |
-|- [x] |    36 |  BAND     |   1     | binary and                                                         |
-|- [x] |    37 |  BOR      |   1     | binary or                                                          |
-|- [x] |    38 |  BNOT     |   1     | binary not                                                         |
-|- [x] |    39 |  ASSERT   |   1     | asserts top two values on stack are equal.                         |
-|- [x] |    40 |  PTRTO    |   2     | reads from host pointer to top stack                               |
-|- [x] |    41 |  TOPTR    |   2     | writes top stack to host pointer                                   |
-|- [x] |    42 |  QUIT     |   1     | finalize program                                                   |
+|<input type="checkbox" checked> |    0  |  NOP      |   1     | no operation 4 byte <BR>	                                          |
+|<input type="checkbox" checked> |    1  |  PUSH     |   2     | push to stack  <BR>                                                |
+|<input type="checkbox" checked> |    2  |  POP      |   1     | pop from stack                                                     |
+|<input type="checkbox" checked> |    3  |  ADD      |   1     | add two values on stack                                            |
+|<input type="checkbox" checked> |    4  |  SUB      |   1     | subtact top value from previos                                     |
+|<input type="checkbox" checked> |    5  |  MUL      |   1     | multiply two values|                                               |
+|<input type="checkbox" checked> |    6  |  DIV      |   1     | divied two values|                                                 |
+|<input type="checkbox" checked> |    7  |  BXOR     |   1     | last opcode                                                        |
+|<input type="checkbox"> |    8  |  JMP      |   2     | unconditional jump to label                                        |
+|<input type="checkbox"> |    9  |  JE       |   1     | jump if equal                                                      |
+|<input type="checkbox"> |    10 |  JL       |   1     | jump if less                                                       |
+|<input type="checkbox"> |    11 |  JG       |   1     | jump if greater                                                    |
+|<input type="checkbox"> |    12 |  JNE      |   1     | jump if not eq                                                     |
+|<input type="checkbox" checked> |    13 |  JLE      |   1     | jump if not less                                                   |
+|<input type="checkbox"> |    14 |  JGE      |   1     | jump if not greter                                                 |
+|<input type="checkbox" checked> |    15 |  FRMM     |   2     | from memory address to stack                                       |
+|<input type="checkbox" checked> |    16 |  TOMM     |   2     | from stack to memory                                               |
+|<input type="checkbox"> |    17 |  -----    |         | reserved                                                           |
+|<input type="checkbox"> |    18 |  -----    |         | reserved                                                           |
+|<input type="checkbox" checked> |    19 |  CALL     |   2     | call label                                                         |
+|<input type="checkbox" checked> |    20 |  RET      |   1     | return from call                                                   |
+|<input type="checkbox" checked> |    21 |  DUP      |   1     | duplicate stack value                                              |
+|<input type="checkbox" checked> |    22 |  SWAP     |   1     | swap two stack values                                              |
+|<input type="checkbox" checked> |    23 |  INC      |   1     | increment top stack value                                          |
+|<input type="checkbox" checked> |    24 |  DEC      |   1     | decrement top stack value                                          |
+|<input type="checkbox" checked> |    25 |  AFRMM    |   2     | from array to stack                                                |
+|<input type="checkbox" checked> |    26 |  ATOMM    |   2     | from stack to array                                                |
+|<input type="checkbox" checked> |    27 |  BP       |   1     | breakpoint not implemented                                         |
+|<input type="checkbox" checked> |    28 |  CMP      |   1     | compare top two stack values| place result in flag_gr and flag_eq  |
+|<input type="checkbox" checked> |    29 |  PRINT    |   1     | prints top stack value                                             |
+|<input type="checkbox"> |    30 |  DELAY    |   2     | delay in ms                                                        |
+|<input type="checkbox" checked> |    31 |  STATE    |   1     | prints current state (depricated)                                  |
+|<input type="checkbox" checked> |    32 |  AND      |   1     | logical and                                                        |
+|<input type="checkbox" checked> |    33 |  OR       |   1     | logical or                                                         |
+|<input type="checkbox" checked> |    34 |  NOT      |   1     | logical not                                                        |
+|<input type="checkbox" checked> |    35 |  XOR      |   1     | binary xor                                                         |
+|<input type="checkbox" checked> |    36 |  BAND     |   1     | binary and                                                         |
+|<input type="checkbox" checked> |    37 |  BOR      |   1     | binary or                                                          |
+|<input type="checkbox" checked> |    38 |  BNOT     |   1     | binary not                                                         |
+|<input type="checkbox" checked> |    39 |  ASSERT   |   1     | asserts top two values on stack are equal.                         |
+|<input type="checkbox" checked> |    40 |  PTRTO    |   2     | reads from host pointer to top stack                               |
+|<input type="checkbox" checked> |    41 |  TOPTR    |   2     | writes top stack to host pointer                                   |
+|<input type="checkbox" checked> |    42 |  QUIT     |   1     | finalize program                                                   |
 
 
 Table. 1.
