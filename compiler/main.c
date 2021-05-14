@@ -12,7 +12,60 @@
 
 Machine machine;
 Machine backup_machine;
+void compile_local(char* source, char* destination)
+{
+      machine.mode = MACHINE_MODE_COMPILER;
+            if(compile_all(source, destination))
+            {
+                printf("[SUCCESS] program compiled to %s\n", destination);
+            }
+            else
+            {
+                errno = EINVAL;
+                printf("[FAIL] compilation of %s failed\n", source);
+            }
+}
+void run_binary(char* file)
+{
+            machine_initialize(&machine);
+            machine_load(file, &machine);
+            machine.mode = MACHINE_MODE_RUN;
+            DWORD *ptr = machine.program_ptr;
+            DWORD op;
+            DWORD qt = opcodes_find("QUIT");
+            while(TRUE)
+            {
+                op = *machine.program_ptr;
+                if(op>=qt || *ptr>=machine.memory_end)
+                {
+                    if(op==qt)
+                    {
+                        quit();
+                        break;
+                    }
+                    else
+                    {
+                        errno = EDESTADDRREQ;
+                        perror("[FATAL] Abnormal termination");
+                        getchar();
+                        exit(errno);
+                    }
+                    break;
+                }
+                if(machine.stack_ptr - machine.machine_stack >= opcodes[*machine.program_ptr].sz )
+                    (opcodes[*machine.program_ptr].ptr)();
+                else
+                {
+                    perror("[FATAL] segmentation fault");
+                    errno =EILSEQ;
+                    getchar();
+                    exit(errno);
+                }
 
+                //bp();
+                machine.program_ptr++;
+            }
+}
 int main( int argc, char *argv[] )
 {
     char buffer[MAX_LEN];
@@ -58,62 +111,22 @@ int main( int argc, char *argv[] )
     {
         if(strcmp(argv[1],CLI_READ) == 0)
         {
-            machine_initialize(&machine);
-            machine_load(argv[2], &machine);
-            machine.mode = MACHINE_MODE_RUN;
-            DWORD *ptr = machine.program_ptr;
-            DWORD op;
-            DWORD qt = opcodes_find("QUIT");
-            while(TRUE)
-            {
-                op = *machine.program_ptr;
-                if(op>=qt || *ptr>=machine.memory_end)
-                {
-                    if(op==qt)
-                    {
-                        printf("[SUCCESS] program executed.\n");
-                        printf("Press any key to quit\n");
-                        getchar();
-                        exit(0);
-                    }
-                    else
-                    {
-                        errno = EDESTADDRREQ;
-                        perror("[FATAL] Abnormal termination");
-                        getchar();
-                        exit(errno);
-                    }
-                    break;
-                }
-                if(machine.stack_ptr - machine.machine_stack >= opcodes[*machine.program_ptr].sz )
-                    (opcodes[*machine.program_ptr].ptr)();
-                else
-                {
-                    perror("[FATAL] segmentation fault");
-                    errno =EILSEQ;
-                    getchar();
-                    exit(errno);
-                }
+          run_binary(argv[2]);
+        }
 
-                //bp();
-                machine.program_ptr++;
-            }
+        if(strcmp(argv[1],CLI_RUN) == 0)
+        {
+            char binary[256]= "binary.b";
+            compile_local(argv[2], binary);
+            run_binary(binary);
+
         }
     }
     if(argc == 4)
     {
         if(strcmp(argv[1],CLI_FLAG_COMPILE) == 0)
         {
-            machine.mode = MACHINE_MODE_COMPILER;
-            if(compile_all(argv[2], argv[3]))
-            {
-                printf("[SUCCESS] program compiled to %s\n", argv[3]);
-            }
-            else
-            {
-                errno = EINVAL;
-                printf("[FAIL] compilation of %s failed\n", argv[2]);
-            }
+            compile_local(argv[2], argv[3]);
         }
         else
         {

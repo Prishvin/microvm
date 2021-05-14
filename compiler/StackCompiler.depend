@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1621014621 source:/home/misha/source/VirtualMachine/common/opcodes.c
+1621017760 source:/home/misha/source/VirtualMachine/common/opcodes.c
 	"opcodes.h"
 
 1620992585 /home/misha/source/VirtualMachine/common/opcodes.h
@@ -81,7 +81,7 @@
 	"token.h"
 	"machine.h"
 
-1621014929 source:/home/misha/source/VirtualMachine/common/machine.c
+1621017978 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620933742 source:/home/misha/source/VirtualMachine/common/token.c
@@ -90,7 +90,7 @@
 1620822302 source:/home/misha/source/VirtualMachine/common/variable.c
 	"variable.h"
 
-1621015634 source:/home/misha/source/VirtualMachine/common/auxillary.c
+1621015732 source:/home/misha/source/VirtualMachine/common/auxillary.c
 	"auxillary.h"
 	<unistd.h>
 
@@ -108,7 +108,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1621015619 source:/home/misha/source/VirtualMachine/compiler/main.c
+1621019110 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -119,7 +119,7 @@
 	"src/cli.h"
 	"src/interpreter.h"
 
-1620936742 /home/misha/source/VirtualMachine/compiler/src/cli.h
+1621018835 /home/misha/source/VirtualMachine/compiler/src/cli.h
 
 1621001695 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
 	"compiler.h"

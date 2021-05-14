@@ -55,7 +55,7 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 44, .txt = "INPUT",.ptr    =  input,    .sz = 0};
     *p++= (Opcode){.opcode = 45, .txt = "QUIT",.ptr     =  quit,     .sz = 1};
 
-    machine.total_opcodes = 40;
+    machine.total_opcodes = 45;
 }
 
 DWORD opcodes_find(char* txt)

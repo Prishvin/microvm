@@ -663,6 +663,10 @@ void bnot()
 
 void asrt()
 {
+#ifdef TRACE_VM
+    printf("{ASSERT}\n");
+    bp();
+#endif
     cmp();
     if(!machine.flag_eq)
     {
@@ -683,7 +687,7 @@ void ptrto()
     machine.stack_ptr++;
 
 #ifdef TRACE_VM
-    printf("{FRMM}\n");
+    printf("{PTRTO}\n");
     bp();
 #endif
 }
@@ -697,7 +701,7 @@ void toptr()
     *((DWORD*)*(machine.program_ptr)) = *(machine.stack_ptr-1);
 
 #ifdef TRACE_VM
-    printf("{TOMM}\n");
+    printf("{TOPTR}\n");
     bp();
 #endif
 }
@@ -707,7 +711,7 @@ void clr()
 {
        machine.stack_ptr =  machine.stack_first;
        #ifdef TRACE_VM
-    printf("{TOMM}\n");
+    printf("{CLR}\n");
     bp();
 #endif
 }
@@ -716,7 +720,7 @@ void rst()
         machine.stack_ptr =  machine.stack_first;
         machine.program_ptr = machine.machine_memory;
 #ifdef TRACE_VM
-    printf("{TOMM}\n");
+    printf("{RST}\n");
     bp();
 #endif
 

@@ -155,9 +155,11 @@ Available commands are listed below. Length is give in opcode count including ar
 |&#9745; |    39 |  ASSERT   |   1     | asserts top two values on stack are equal.                         |
 |&#9745; |    40 |  PTRTO    |   2     | reads from host pointer to top stack                               |
 |&#9745; |    41 |  TOPTR    |   2     | writes top stack to host pointer                                   |
-|&#9745; |    42 |  QUIT     |   1     | finalize program                                                   |
-
-
+|&#9745; |    42 |  CLR      |   1     | clear stack                                                   |
+|&#9745; |    43 |  RST      |   1     | reset program                                                   |
+|&#9745; |    44 |  INPUT    |   1     | input number to console                                                   |
+|&#9745; |    45 |  QUIT     |   1     | finalize program                                                   |
+                                               
 Table. 1.
       
 example program is presented in simple|p
