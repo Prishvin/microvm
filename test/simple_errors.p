@@ -15,4 +15,6 @@ FRMM v4
 sub
 cmp
 jle label
+push 0
 quit
+

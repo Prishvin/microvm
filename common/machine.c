@@ -35,7 +35,7 @@ void machine_initialize(Machine *mac)
     mac->label_ptr = mac->progam_labels;
     mac->program_ptr = mac->machine_memory;
 
-    mac->stack_first = mac->machine_stack+1;
+    mac->stack_first = mac->machine_stack;
     mac->stack_end = mac->machine_stack + STACK_SIZE;
     mac->stack_ptr = mac->stack_first;
 
@@ -88,12 +88,11 @@ void increment_stack_cursor() //+
 }
 void decrement_stack_cursor() //+
 {
+#ifdef MEMORY_CHECKS_ENABLED
     if(machine.stack_ptr==machine.machine_stack)
         halt();
-    machine.stack_ptr--;
-#ifdef MEMORY_CHECKS_ENABLED
-
 #endif
+    machine.stack_ptr--;
 }
 
 void push()
@@ -470,8 +469,6 @@ void swap()
 
 void inc()
 {
-    if (machine.stack_ptr < machine.stack_first)
-        halt("cannot dec because stack is empty");
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1)  + 1;
 #ifdef TRACE_VM
     printf("{INC}\n");
@@ -481,8 +478,6 @@ void inc()
 
 void dec()
 {
-    if (machine.stack_ptr < machine.stack_first)
-        halt("cannot dec because stack is empty");
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1)  - 1;
 #ifdef TRACE_VM
     printf("{DEC}\n");
@@ -529,6 +524,19 @@ void succ_exit()
 }
 void  quit()
 {
+    DWORD value = *(machine.stack_ptr-1);
+    if(value)
+    {
+        errno = value;
+        perror("Abnormal termination");
+    }
+    else
+    {
+        errno = 0;
+        printf("[SUCCESS]");
+    }
+    getchar();
+    exit(value);
     succ_exit();
 }
 void aprint()

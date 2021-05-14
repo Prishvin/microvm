@@ -7,6 +7,7 @@ cmp
 je lb_exit
 jmp label
 :lb_exit
+push 0
 quit
 :label2
 dup

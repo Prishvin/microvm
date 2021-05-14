@@ -20,6 +20,8 @@ int main( int argc, char *argv[] )
     size_t len = 0;
     ssize_t read;
     initialize_opcodes();
+    errno = 0;
+
     if(argc == 2)
     {
         if(strcmp(argv[1],CLI_FLAG_HELP) == 0)
@@ -80,7 +82,16 @@ int main( int argc, char *argv[] )
                     }
                     break;
                 }
-                (opcodes[*machine.program_ptr].ptr)();
+                if(machine.stack_ptr - machine.machine_stack >= opcodes[*machine.program_ptr].sz )
+                    (opcodes[*machine.program_ptr].ptr)();
+                else
+                {
+                    perror("[FATAL] segmentation fault");
+                    errno =EILSEQ;
+                    getchar();
+                    exit(errno);
+                }
+
                 //bp();
                 machine.program_ptr++;
             }
@@ -97,16 +108,16 @@ int main( int argc, char *argv[] )
             }
             else
             {
-                 printf("[FAIL] compilation of %s failed\n", argv[2]);
+                errno = EINVAL;
+                printf("[FAIL] compilation of %s failed\n", argv[2]);
             }
         }
-
         else
         {
             errno = EINVAL;
             perror("Unknown command");
         }
-
-           getchar();
+        getchar();
     }
+    return (errno);
 }

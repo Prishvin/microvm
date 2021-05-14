@@ -1,3 +1,5 @@
+#simple test program
+#define, push, pop, var, TOMM, FRMM sub, cmp jle quit
 $define _maxbound 30
 push _maxbound
 pop
@@ -15,4 +17,5 @@ FRMM v4
 sub
 cmp
 jle label
+push 0
 quit

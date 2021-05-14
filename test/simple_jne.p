@@ -6,4 +6,5 @@ sub
 cmp
 jne label
 :lbex
+push 0
 quit

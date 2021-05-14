@@ -13,6 +13,7 @@ typedef void (* voidfunc)(void);
 
 typedef struct
 {
+    BYTE sz;
     DWORD opcode;
     voidfunc ptr;
     char txt[10];

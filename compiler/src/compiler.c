@@ -213,7 +213,7 @@ BOOL compile_line(char* line, Machine* mac)
                     if(ntokens == 2)
                     {
                         char* argument = *(tokens + i + 1);
-
+                        DWORD number;
                         if(is_numeric(argument, &number))
                         {
 #ifdef DEBUG_COMPILE
@@ -348,9 +348,13 @@ BOOL compile_all(char* input_file, char* ooutput_file)
     {
         if(*line == '$') //preprocessor
         {
-            preprocessor(line, &machine);
+
+            if(strlen(line)>1)
+                preprocessor(line, &machine);
         }
         else
+        {
+        if(strlen(line)>1)
         {
             if(!compile_line(line, &machine))
             {
@@ -358,8 +362,10 @@ BOOL compile_all(char* input_file, char* ooutput_file)
                 return FALSE;
                 break;
             }
+             line_number++;
+            }
         }
-        line_number++;
+
     }
     printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
     *machine.program_ptr++ = opcodes_find("QUIT");

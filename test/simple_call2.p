@@ -14,6 +14,7 @@ call func1
 sub
 cmp
 jle label
+push 0
 quit
 :func1
 pop
