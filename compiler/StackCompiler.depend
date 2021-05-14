@@ -34,7 +34,7 @@
 	"global.h"
 	<string.h>
 
-1620936634 /home/misha/source/VirtualMachine/common//machine.h
+1620973550 /home/misha/source/VirtualMachine/common//machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -68,7 +68,7 @@
 	"../common/token.h"
 	"../common/machine.h"
 
-1620936634 /home/misha/source/VirtualMachine/common/machine.h
+1620973550 /home/misha/source/VirtualMachine/common/machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -81,7 +81,7 @@
 	"token.h"
 	"machine.h"
 
-1620936580 source:/home/misha/source/VirtualMachine/common/machine.c
+1620977325 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620933742 source:/home/misha/source/VirtualMachine/common/token.c

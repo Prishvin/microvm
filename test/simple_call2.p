@@ -1,14 +1,13 @@
 push 1
-push 20
+push 5
 var dcr
 var v2
 var v3
 var v4
 push 2
 TOMM v4
+pop
 call label2
-pop
-pop
 :label
 FRMM v4
 call func1
