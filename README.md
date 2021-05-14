@@ -111,9 +111,9 @@ Block 2
 
 Available commands are listed below. Length is give in opcode count including arguments.
 
-| status  |opcode |  Mnemonics |Length|                           description                              |
-|----------|-------------|---------|--------------------------------------------------------------------|
-|- [x] |    0  |  NOP      |   1     | no operation 4 byte <BR>								            |
+|status|opcode |Mnemonics  |Length   |                           description                              |
+|------|-------|-----------|---------|--------------------------------------------------------------------|
+|- [x] |    0  |  NOP      |   1     | no operation 4 byte <BR>	                                          |
 |- [x] |    1  |  PUSH     |   2     | push to stack  <BR>                                                |
 |- [x] |    2  |  POP      |   1     | pop from stack                                                     |
 |- [x] |    3  |  ADD      |   1     | add two values on stack                                            |
@@ -143,7 +143,7 @@ Available commands are listed below. Length is give in opcode count including ar
 |- [x] |    27 |  BP       |   1     | breakpoint not implemented                                         |
 |- [x] |    28 |  CMP      |   1     | compare top two stack values| place result in flag_gr and flag_eq  |
 |- [x] |    29 |  PRINT    |   1     | prints top stack value                                             |
-|- [-]     30 |  DELAY    |   2     | delay in ms                                                        |
+|- [-] |    30 |  DELAY    |   2     | delay in ms                                                        |
 |- [x] |    31 |  STATE    |   1     | prints current state (depricated)                                  |
 |- [x] |    32 |  AND      |   1     | logical and                                                        |
 |- [x] |    33 |  OR       |   1     | logical or                                                         |
