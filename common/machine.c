@@ -62,6 +62,8 @@ void halt()
 {
     if(machine.mode != MACHINE_MODE_INTERPRETER)
     {
+        errno = EFAULT;
+        perror("Execution halted");
         getchar();
         exit(-1);
     }
@@ -171,7 +173,8 @@ void divide()
 void jmp() //+
 {
     increment_program_ptr(); //increment because argument byte
-    machine.program_ptr = *machine.program_ptr;
+    machine.program_ptr = machine.machine_memory +  *machine.program_ptr;
+    machine.program_ptr--;
 #ifdef TRACE_VM
     printf("{JMP}\n");
     bp();
@@ -218,6 +221,10 @@ void je() /// jump if equal, 8byte (skip one byte)
             halt("Segmentation fault after je");
 #endif // MEMORY_CHECKS_ENABLED
     }
+     else
+    {
+        machine.program_ptr++; //skip argument
+    }
 #ifdef TRACE_VM
     printf("{JE}\n");
     bp();
@@ -236,6 +243,10 @@ void jne() /// jump if not equal flag is set. 8 byte(skip one byte)
             halt("Segmentation fault after jne");
 #endif // MEMORY_CHECKS_ENABLED
     }
+     else
+    {
+        machine.program_ptr++; //skip argument
+    }
 #ifdef TRACE_VM
     printf("{JNE}\n");
     bp();
@@ -253,6 +264,10 @@ void jl()
             halt("Segmentation fault after jl");
 #endif // MEMORY_CHECKS_ENABLED
     }
+     else
+    {
+        machine.program_ptr++; //skip argument
+    }
 #ifdef TRACE_VM
     printf("{JL}\n");
     bp();
@@ -269,6 +284,10 @@ void jg()
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jg");
 #endif // MEMORY_CHECKS_ENABLED
+    }
+     else
+    {
+        machine.program_ptr++; //skip argument
     }
 #ifdef TRACE_VM
     printf("{JG}\n");
@@ -301,7 +320,7 @@ void jle()
 
 void jge()
 {
-    if (machine.flag_eq && machine.flag_gr)
+    if (machine.flag_eq || machine.flag_gr)
     {
         machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1);
         machine.program_ptr--;  //
@@ -309,6 +328,10 @@ void jge()
         if (machine.program_ptr >= machine.memory_end)
             halt("Segmentation fault after jle");
 #endif // MEMORY_CHECKS_ENABLED
+    }
+     else
+    {
+        machine.program_ptr++; //skip argument
     }
 #ifdef TRACE_VM
     printf("{JGE}\n");
