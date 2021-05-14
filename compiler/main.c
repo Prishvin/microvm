@@ -39,6 +39,9 @@ int main( int argc, char *argv[] )
             printf("Ready %c\n>",CLI_CMD_CHAR1);
             while ((read = getline(&line, &len, stdin) != -1))
             {
+
+                str_trim_all(line);
+
                 if(*line == CLI_CMD_CHAR1)
                 {
                     process_interpreter_command(line);

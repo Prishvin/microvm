@@ -46,11 +46,14 @@ void initialize_opcodes()
     *p++= (Opcode){.opcode = 35, .txt = "BAND",.ptr     =  band,     .sz = 2};
     *p++= (Opcode){.opcode = 36, .txt = "BOR",.ptr      =  bor,      .sz = 2};
     *p++= (Opcode){.opcode = 37, .txt = "BNOT",.ptr     =  bnot,     .sz = 1};
-    *p++= (Opcode){.opcode = 38, .txt = "BXOR",.ptr     = bxor ,     .sz = 2};
+    *p++= (Opcode){.opcode = 38, .txt = "BXOR",.ptr     =  bxor ,     .sz = 2};
     *p++= (Opcode){.opcode = 39, .txt = "ASSERT",.ptr   =  asrt,     .sz = 2};
     *p++= (Opcode){.opcode = 40, .txt = "PTRTO",.ptr    =  ptrto,    .sz = 0};
     *p++= (Opcode){.opcode = 41, .txt = "TOPTR",.ptr    =  toptr,    .sz = 1};
-    *p++= (Opcode){.opcode = 42, .txt = "QUIT",.ptr     =  quit,     .sz = 1};
+    *p++= (Opcode){.opcode = 42, .txt = "CLR",.ptr      =  clr,    .sz = 0};
+    *p++= (Opcode){.opcode = 43, .txt = "RST",.ptr      =  rst,    .sz = 0};
+    *p++= (Opcode){.opcode = 44, .txt = "INPUT",.ptr    =  input,    .sz = 0};
+    *p++= (Opcode){.opcode = 45, .txt = "QUIT",.ptr     =  quit,     .sz = 1};
 
     machine.total_opcodes = 40;
 }

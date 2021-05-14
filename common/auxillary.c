@@ -19,6 +19,12 @@ void node_init(node* ptr, node* l, node* r, DWORD i, DWORD arg)
 }
 
 
+void str_trim_all(char* str)
+{
+    str_trim(str, '\n');
+    str_trim(str, ' ');
+    str_trim(str, '\t');
+}
 
 
 char** str_split(BYTE* ntokens, char* a_str, const char a_delim)
@@ -113,7 +119,10 @@ char str_is_number(char *text)
     }
     return 1;
 }
-
+BOOL str_is_hex(char *text)
+{
+    return FALSE; //TODO
+}
 BOOL is_numeric(char* name, DWORD* number)
 {
 
@@ -122,6 +131,10 @@ BOOL is_numeric(char* name, DWORD* number)
     {
         *number = strtoul(name, 0,10 );
         return TRUE;
+    }
+    else if(str_is_hex(name))
+    {
+        return FALSE;
     }
     else
     {
@@ -141,7 +154,17 @@ void str_trim(char* str, char c)
             break;
          *(str + len - 1) = 0;
     }
-
+    while(TRUE)
+    {
+        len = strlen(str);
+        if(*str == c)
+        {
+            str_shift_left(str, strlen(str), 1);
+            *(str + len - 1) =0;
+        }
+        else
+            break;
+    }
 }
 void str_shift_left(char myarray[], int sz, int shiftBy)
 {

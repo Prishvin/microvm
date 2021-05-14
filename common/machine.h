@@ -87,6 +87,9 @@ void divide();
 void jmp(); //+;
 void cmp(); // lower is grater;
 
+void clr();
+void rst();
+void input();
 
 void je(); /// jump if equal, 8byte (skip one byte);
 

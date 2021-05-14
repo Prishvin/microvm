@@ -563,7 +563,7 @@ void adelay()
 }
 void astate()
 {
-    printf("Breakpoint reached at 0x%x\n", machine.program_ptr-machine.machine_memory);
+    printf("Breakpoint reached at [0x%x]\n", machine.program_ptr-machine.machine_memory);
     printf("Call stack depth: %i\n", machine.call_ptr-machine.call_first);
     printf("Stack depth: %i\n", machine.stack_ptr-machine.machine_stack);
     printf("Flags EQ: %d, GR %d\n", machine.flag_eq,machine.flag_gr);
@@ -571,7 +571,7 @@ void astate()
     printf("Program ptr = [%d]\n", machine.program_ptr - machine.machine_memory);
     printf("Stack   ptr = [%d]\n", machine.stack_ptr - machine.machine_stack);
     int i;
-    DWORD* ptr = machine.stack_first;
+    DWORD* ptr = machine.machine_stack;
     while(ptr<machine.stack_ptr)
     {
         printf("0x%02X ", *ptr);
@@ -703,3 +703,35 @@ void toptr()
 }
 
 
+void clr()
+{
+       machine.stack_ptr =  machine.stack_first;
+       #ifdef TRACE_VM
+    printf("{TOMM}\n");
+    bp();
+#endif
+}
+void rst()
+{
+        machine.stack_ptr =  machine.stack_first;
+        machine.program_ptr = machine.machine_memory;
+#ifdef TRACE_VM
+    printf("{TOMM}\n");
+    bp();
+#endif
+
+}
+void input()
+{
+    char buffer[32];
+    gets(buffer);
+    DWORD number = 0;
+    if(is_numeric(buffer, &number))
+    {
+        *machine.stack_ptr++ = number;
+    }
+    #ifdef TRACE_VM
+    printf("{TOMM}\n");
+    bp();
+#endif
+}

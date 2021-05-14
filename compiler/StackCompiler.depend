@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1620994459 source:/home/misha/source/VirtualMachine/common/opcodes.c
+1621014621 source:/home/misha/source/VirtualMachine/common/opcodes.c
 	"opcodes.h"
 
 1620992585 /home/misha/source/VirtualMachine/common/opcodes.h
@@ -21,7 +21,7 @@
 	"../common/token.h"
 	"../common//machine.h"
 
-1620396806 /home/misha/source/VirtualMachine/common/auxillary.h
+1621015616 /home/misha/source/VirtualMachine/common/auxillary.h
 	"global.h"
 	<stdio.h>
 	<stdlib.h>
@@ -34,7 +34,7 @@
 	"global.h"
 	<string.h>
 
-1620973550 /home/misha/source/VirtualMachine/common//machine.h
+1621014053 /home/misha/source/VirtualMachine/common//machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -68,7 +68,7 @@
 	"../common/token.h"
 	"../common/machine.h"
 
-1620973550 /home/misha/source/VirtualMachine/common/machine.h
+1621014053 /home/misha/source/VirtualMachine/common/machine.h
 	"global.h"
 	"variable.h"
 	"label.h"
@@ -81,7 +81,7 @@
 	"token.h"
 	"machine.h"
 
-1620999606 source:/home/misha/source/VirtualMachine/common/machine.c
+1621014929 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620933742 source:/home/misha/source/VirtualMachine/common/token.c
@@ -90,7 +90,7 @@
 1620822302 source:/home/misha/source/VirtualMachine/common/variable.c
 	"variable.h"
 
-1620846510 source:/home/misha/source/VirtualMachine/common/auxillary.c
+1621015634 source:/home/misha/source/VirtualMachine/common/auxillary.c
 	"auxillary.h"
 	<unistd.h>
 
@@ -108,7 +108,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1620999235 source:/home/misha/source/VirtualMachine/compiler/main.c
+1621015619 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
