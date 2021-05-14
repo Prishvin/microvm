@@ -122,12 +122,12 @@ Available commands are listed below. Length is give in opcode count including ar
 |&#9745; |    6  |  DIV      |   1     | divied two values|                                                 |
 |&#9745; |    7  |  BXOR     |   1     | last opcode                                                        |
 |&#9745; |    8  |  JMP      |   2     | unconditional jump to label                                        |
-|&#9744; |    9  |  JE       |   1     | jump if equal                                                      |
-|&#9744; |    10 |  JL       |   1     | jump if less                                                       |
-|&#9744; |    11 |  JG       |   1     | jump if greater                                                    |
-|&#9744; |    12 |  JNE      |   1     | jump if not eq                                                     |
-|&#9745; |    13 |  JLE      |   1     | jump if not less                                                   |
-|&#9744; |    14 |  JGE      |   1     | jump if not greter                                                 |
+|&#9744; |    9  |  JE       |   2     | jump if equal                                                      |
+|&#9744; |    10 |  JL       |   2     | jump if less                                                       |
+|&#9744; |    11 |  JG       |   2     | jump if greater                                                    |
+|&#9744; |    12 |  JNE      |   2     | jump if not eq                                                     |
+|&#9745; |    13 |  JLE      |   2     | jump if not less                                                   |
+|&#9744; |    14 |  JGE      |   2     | jump if not greter                                                 |
 |&#9745; |    15 |  FRMM     |   2     | from memory address to stack                                       |
 |&#9745; |    16 |  TOMM     |   2     | from stack to memory                                               |
 |&#9744; |    17 |  -----    |         | reserved                                                           |

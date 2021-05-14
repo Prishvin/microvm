@@ -318,14 +318,11 @@ void jge()
 
 void frmm() //8
 {
-
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
-
-
     *machine.stack_ptr = *(machine.variable_memory + *machine.program_ptr);
     increment_stack_cursor();
 #ifdef TRACE_VM
@@ -336,7 +333,6 @@ void frmm() //8
 
 void tomm() //8
 {
-
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -351,26 +347,20 @@ void tomm() //8
 
 void sfrommem() //8
 {
-
-
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after frommem");
 #endif // MEMORY_CHECKS_ENABLED
     machine.stack_ptr--;
     *machine.stack_ptr = *(machine.variable_memory + *(machine.stack_ptr) - 1);
-
 #ifdef TRACE_VM
     printf("{SFRMM}\n");
     bp();
 #endif
-
 }
 
 void stomem() //8
 {
-
-
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
         halt("Segmentation fault after tomem");
@@ -384,7 +374,6 @@ void stomem() //8
 
 void afrom() //8
 {
-
     increment_program_ptr();
     *(machine.stack_ptr -1 ) = *(machine.variable_memory + *(machine.stack_ptr -1 ) + *machine.program_ptr);
 #ifdef TRACE_VM
@@ -395,7 +384,6 @@ void afrom() //8
 
 void atom() //8
 {
-
     increment_program_ptr();
     *(machine.variable_memory + *(machine.stack_ptr - 1 ) + *machine.program_ptr) = *(machine.stack_ptr- 2);
 #ifdef TRACE_VM
@@ -407,11 +395,9 @@ void atom() //8
 
 void call()
 {
-
     DWORD tmp =  machine.program_ptr - machine.machine_memory;; //save ptr
     machine.program_ptr =machine.machine_memory + *(machine.program_ptr + 1); //now
     machine.program_ptr--;  //set to previos, since ptr will be incremented
-
     *machine.call_ptr = tmp+1;
     machine.call_ptr++;
     //TODO add checks
@@ -432,7 +418,6 @@ void ret()
 
 void duplicate()
 {
-
     *machine.stack_ptr = *(machine.stack_ptr - 1);
     *machine.stack_ptr++;
 #ifdef TRACE_VM
@@ -448,8 +433,6 @@ void randint()
 
 void swap()
 {
-
-
     DWORD temp = *(machine.stack_ptr-1);
     *(machine.stack_ptr-1) = *(machine.stack_ptr-2);
     *(machine.stack_ptr-2) = temp;
@@ -464,7 +447,6 @@ void swap()
 
 void inc()
 {
-
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1)  + 1;
@@ -473,9 +455,9 @@ void inc()
     bp();
 #endif
 }
+
 void dec()
 {
-
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1)  - 1;
@@ -487,7 +469,6 @@ void dec()
 
 void stinc()
 {
-
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     machine.stack_ptr = machine.stack_ptr  + 1;
@@ -498,7 +479,6 @@ void stinc()
 }
 void stdec()
 {
-
     if (machine.stack_ptr < machine.stack_first)
         halt("cannot dec because stack is empty");
     machine.stack_ptr = machine.stack_ptr  - 1;
@@ -543,8 +523,6 @@ void aprint()
 }
 void adelay()
 {
-
-    ;
     increment_program_ptr();
     usleep(*machine.program_ptr*1000000);
 #ifdef TRACE_VM
@@ -581,7 +559,6 @@ void bp()
 
 void land()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) && *machine.stack_ptr;
 #ifdef TRACE_VM
@@ -591,7 +568,6 @@ void land()
 }
 void lor()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) || *machine.stack_ptr;
 #ifdef TRACE_VM
@@ -601,7 +577,6 @@ void lor()
 }
 void lxor()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = (*(machine.stack_ptr-1) ^ *machine.stack_ptr)>0;
 #ifdef TRACE_VM
@@ -611,7 +586,6 @@ void lxor()
 }
 void lnot()
 {
-
     machine.stack_ptr;
     *(machine.stack_ptr-1) = !(*(machine.stack_ptr-1));
 #ifdef TRACE_VM
@@ -622,7 +596,6 @@ void lnot()
 
 void band()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) & *machine.stack_ptr;
 #ifdef TRACE_VM
@@ -632,7 +605,6 @@ void band()
 }
 void bor()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) | *machine.stack_ptr;
 #ifdef TRACE_VM
@@ -642,7 +614,6 @@ void bor()
 }
 void bxor()
 {
-
     machine.stack_ptr--;
     *(machine.stack_ptr-1) = *(machine.stack_ptr-1) ^ *machine.stack_ptr;
 #ifdef TRACE_VM
@@ -652,7 +623,6 @@ void bxor()
 }
 void bnot()
 {
-
     *(machine.stack_ptr-1) = ~(*(machine.stack_ptr-1));
 #ifdef TRACE_VM
     printf("{BNOT}\n");
@@ -672,7 +642,6 @@ void asrt()
 }
 void ptrto()
 {
-
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
@@ -689,7 +658,6 @@ void ptrto()
 }
 void toptr()
 {
-
     increment_program_ptr();
 #ifdef MEMORY_CHECKS_ENABLED
     if (machine.program_ptr >= machine.memory_end)
