@@ -12,9 +12,10 @@
 
 Machine machine;
 Machine backup_machine;
-void compile_local(char* source, char* destination)
+
+void compile_to_binary(char* source, char* destination)
 {
-      machine.mode = MACHINE_MODE_COMPILER;
+            machine.mode = MACHINE_MODE_COMPILER;
             if(compile_all(source, destination))
             {
                 printf("[SUCCESS] program compiled to %s\n", destination);
@@ -25,6 +26,7 @@ void compile_local(char* source, char* destination)
                 printf("[FAIL] compilation of %s failed\n", source);
             }
 }
+
 void run_binary(char* file)
 {
             machine_initialize(&machine);
@@ -61,8 +63,6 @@ void run_binary(char* file)
                     getchar();
                     exit(errno);
                 }
-
-                //bp();
                 machine.program_ptr++;
             }
 }
@@ -74,8 +74,7 @@ int main( int argc, char *argv[] )
     ssize_t read;
     initialize_opcodes();
     errno = 0;
-
-    if(argc == 2)
+    if(argc == 2) // -h help, -i interpreter,
     {
         if(strcmp(argv[1],CLI_FLAG_HELP) == 0)
         {
@@ -92,9 +91,7 @@ int main( int argc, char *argv[] )
             printf("Ready %c\n>",CLI_CMD_CHAR1);
             while ((read = getline(&line, &len, stdin) != -1))
             {
-
                 str_trim_all(line);
-
                 if(*line == CLI_CMD_CHAR1)
                 {
                     process_interpreter_command(line);
@@ -102,7 +99,6 @@ int main( int argc, char *argv[] )
                 else
                 {
                     process_interpeter_opcode(line);
-
                 }
             }
         }
@@ -117,16 +113,15 @@ int main( int argc, char *argv[] )
         if(strcmp(argv[1],CLI_RUN) == 0)
         {
             char binary[256]= "binary.b";
-            compile_local(argv[2], binary);
+            compile_to_binary(argv[2], binary);
             run_binary(binary);
-
         }
     }
     if(argc == 4)
     {
         if(strcmp(argv[1],CLI_FLAG_COMPILE) == 0)
         {
-            compile_local(argv[2], argv[3]);
+            compile_to_binary(argv[2], argv[3]);
         }
         else
         {
