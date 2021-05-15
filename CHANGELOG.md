@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 ## [0.2.3]
 -all conditional jumps tested. 
 -opcode order changed.
+-some tests added
+-input, rst, clr instruction added
 ## [0.2.2]
 -toptr, ptro commands added. These commands operate with RAM memory of host device.
 -assert added. Assert ensures top two values on stack are equal.
