@@ -1,5 +1,5 @@
 # microvm
-## version 0.2.5
+## Version 0.2.5
 The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. 
 Separate memory is used for program and variable space (Harvard architecture). An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
@@ -13,7 +13,7 @@ currently this code is distributed under **GNU AGPLv3.** or commercial license u
 
 https://user-images.githubusercontent.com/371566/117532644-894a5680-aff9-11eb-95a3-7eef6805b61d.mp4
 
-## example microvm code
+## Example microvm code
 ```asm
 $define _maxbound 30
 push _maxbound
@@ -35,14 +35,14 @@ jle label
 quit
 
 ```
-## microvm usage
+## Microvm usage
 
 -interpreter mode>    microvm **-i**              
 -compile source file> microvm **-c** source destination             
 -run script>          microvm **-r**  binary              
 -display help>        microvm **-h**                        
             
-## interpreter commands
+## Interpreter commands
 The interperter commands can be used in interactive mode to display or control vm state. A command should be preceded by a '$' sign.
 
 -**$stack**      - displays stack contents.     
@@ -52,13 +52,13 @@ The interperter commands can be used in interactive mode to display or control v
 -**$backup**     - creates a copy of vm memory.                         
 -**$restore**       - restores memory from a backup.   
 
-## preprocessor directives
+## Preprocessor directives
 
 -**$include** <source file> -recursive include specified file.      
 -**$define** _constant - defines a constant named _constant.        
 
 
-## interpreter loop
+## Interpreter loop
 The interpreter code snipped is presented on Block 1. The VM loops through the available opcodes until in reaches QUIT opcode or program memory bounds. A function corresponding to the opcode (see table 1), is called.
 ```C
             DWORD *ptr = machine.program_ptr;
@@ -109,8 +109,12 @@ An example implementation of such functions are shown in Block 2.
             }
 ```
 Block 2
+## Automated testing
+>**microvm** -t directory will compile all the .p files in the directory until the first fail and report progress.
 
-## opcodes
+![image](https://user-images.githubusercontent.com/371566/118403357-18e9a800-b67f-11eb-884c-d5b97a90e383.png)
+
+## Opcodes
 
 Available commands are listed below. Length is give in opcode count including arguments.
 
