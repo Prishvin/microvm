@@ -187,7 +187,11 @@ void str_shift_left(char myarray[], int sz, int shiftBy)
             //EXAMPLE shift by 3  for a c-string of 5
             temp = myarray[i];//temp = myarray[0]
             myarray[i] = myarray[i + shiftBy];//myarray[0] == myarray[2]
-            //myarray[i + shiftBy] = temp;//myarray[2] = temp(value previously at index i)
+           //myarray[i + shiftBy] = temp;//myarray[2] = temp(value previously at index i)
+        }
+        for(int i = 0; i < shiftBy; i++)
+        {
+            myarray[sz-i-1] = 0;
         }
 
     }

@@ -7,65 +7,16 @@
 #include "../common//machine.h"
 #include "src/cli.h"
 #include "src/interpreter.h"
+#include "src/test.h"
 
 #define MAX_LEN 256
 
 Machine machine;
 Machine backup_machine;
 
-void compile_to_binary(char* source, char* destination)
-{
-            machine.mode = MACHINE_MODE_COMPILER;
-            if(compile_vm_file(source, destination))
-            {
-                printf("[SUCCESS] program compiled to %s\n", destination);
-            }
-            else
-            {
-                errno = EINVAL;
-                printf("[FAIL] compilation of %s failed\n", source);
-            }
-}
 
-void run_binary(char* file)
-{
-            machine_initialize(&machine);
-            machine_load(file, &machine);
-            machine.mode = MACHINE_MODE_RUN;
-            DWORD *ptr = machine.program_ptr;
-            DWORD op;
-            DWORD qt = opcodes_find("QUIT");
-            while(TRUE)
-            {
-                op = *machine.program_ptr;
-                if(op>=qt || *ptr>=machine.memory_end)
-                {
-                    if(op==qt)
-                    {
-                        quit();
-                        break;
-                    }
-                    else
-                    {
-                        errno = EDESTADDRREQ;
-                        perror("[FATAL] Abnormal termination");
-                        getchar();
-                        exit(errno);
-                    }
-                    break;
-                }
-                if(machine.stack_ptr - machine.machine_stack >= opcodes[*machine.program_ptr].sz )
-                    (opcodes[*machine.program_ptr].ptr)();
-                else
-                {
-                    perror("[FATAL] segmentation fault");
-                    errno =EILSEQ;
-                    getchar();
-                    exit(errno);
-                }
-                machine.program_ptr++;
-            }
-}
+
+
 int main( int argc, char *argv[] )
 {
     char buffer[MAX_LEN];
@@ -105,16 +56,21 @@ int main( int argc, char *argv[] )
     }
     if(argc == 3)
     {
+
+        if(strcmp(argv[1],CLI_TEST) == 0)
+        {
+          run_test(argv[2]);
+        }
         if(strcmp(argv[1],CLI_READ) == 0)
         {
-          run_binary(argv[2]);
+          run_binary(argv[2], TRUE);
         }
 
         if(strcmp(argv[1],CLI_RUN) == 0)
         {
             char binary[256]= "binary.b";
-            compile_to_binary(argv[2], binary);
-            run_binary(binary);
+            if(compile_to_binary(argv[2], binary) == RESULT_OK)
+                run_binary(binary, TRUE);
         }
     }
     if(argc == 4)

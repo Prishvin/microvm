@@ -8,7 +8,7 @@
 	<string.h>
 	"token.h"
 
-1621149394 /home/misha/source/VirtualMachine/common/global.h
+1621176673 /home/misha/source/VirtualMachine/common/global.h
 	<string.h>
 	<ctype.h>
 
@@ -43,7 +43,7 @@
 	<unistd.h>
 	<errno.h>
 
-1621149394 /home/misha/source/VirtualMachine/common//global.h
+1621176673 /home/misha/source/VirtualMachine/common//global.h
 	<string.h>
 	<ctype.h>
 
@@ -81,7 +81,7 @@
 	"token.h"
 	"machine.h"
 
-1621017978 source:/home/misha/source/VirtualMachine/common/machine.c
+1621161998 source:/home/misha/source/VirtualMachine/common/machine.c
 	"machine.h"
 
 1620933742 source:/home/misha/source/VirtualMachine/common/token.c
@@ -90,7 +90,7 @@
 1620822302 source:/home/misha/source/VirtualMachine/common/variable.c
 	"variable.h"
 
-1621015732 source:/home/misha/source/VirtualMachine/common/auxillary.c
+1621176415 source:/home/misha/source/VirtualMachine/common/auxillary.c
 	"auxillary.h"
 	<unistd.h>
 
@@ -108,7 +108,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1621150611 source:/home/misha/source/VirtualMachine/compiler/main.c
+1621159988 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -118,15 +118,16 @@
 	"../common//machine.h"
 	"src/cli.h"
 	"src/interpreter.h"
+	"src/test.h"
 
-1621018835 /home/misha/source/VirtualMachine/compiler/src/cli.h
+1621157840 /home/misha/source/VirtualMachine/compiler/src/cli.h
 
-1621151887 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
+1621176727 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
 	"compiler.h"
 	<stdio.h>
 	<stdlib.h>
 
-1621150611 /home/misha/source/VirtualMachine/compiler/src/compiler.h
+1621157507 /home/misha/source/VirtualMachine/compiler/src/compiler.h
 	<stdio.h>
 	<stdlib.h>
 	"../../common/global.h"
@@ -135,7 +136,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1620808379 /home/misha/source/VirtualMachine/compiler/src/interpreter.h
+1621158887 /home/misha/source/VirtualMachine/compiler/src/interpreter.h
 	<stdio.h>
 	<stdlib.h>
 	"../../common/global.h"
@@ -145,6 +146,17 @@
 	"../../common//machine.h"
 	"cli.h"
 
-1620935138 source:/home/misha/source/VirtualMachine/compiler/src/interpeter.c
+1621158953 source:/home/misha/source/VirtualMachine/compiler/src/interpeter.c
 	"interpreter.h"
+
+1621159700 /home/misha/source/VirtualMachine/compiler/src/test.h
+	"../../common/global.h"
+	"../../common/auxillary.h"
+	"compiler.h"
+	<dirent.h>
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	"compiler.h"
+	"../../common/global.h"
 

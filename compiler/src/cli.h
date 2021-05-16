@@ -13,6 +13,7 @@
 #define CLI_VAR "var"
 #define CLI_LABELS  "labels"
 #define CLI_READ "-r"
+#define CLI_TEST "-t"
 #define CLI_RUN "-R"
 
 #define CLI_FLAG_COMPILE "-c"

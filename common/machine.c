@@ -30,6 +30,7 @@ void machine_load(char* filename, Machine* mac)
 }
 void machine_initialize(Machine *mac)
 {
+    memset(mac, 0, sizeof(Machine));
     mac->program_ptr = mac->machine_memory; //now pointer is at first instruction
     mac->variable_ptr = mac->variables;
     mac->label_ptr = mac->progam_labels;
@@ -52,6 +53,7 @@ void machine_initialize(Machine *mac)
     mac->section_str = mac->program_ptr;
 
     mac->variable_memory_ptr =mac->variable_memory;
+
 }
 
 void read_inputs();

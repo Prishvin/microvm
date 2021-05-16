@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H_INCLUDED
 #define GLOBAL_H_INCLUDED
 
-#define VERSION "v0.2.4"
+#define VERSION "v0.2.5"
 
 #define COMPILE_BUFFER_LEN 10000000
 
@@ -15,18 +15,22 @@ typedef  unsigned int DWORD;
 typedef unsigned long long QWORD;
 typedef unsigned char BOOL;
 
+#define RESULT_OK 0
+#define RESULT_ERR 255
+
 #define NULL 0
 
 #define VARIABLE_NOT_FOUND 0xFFFF
 #define VARIABLE_MEMORY_SIZE 512
 #define MAX_VARIABLE_LINKS 128
 #define MAX_LABEL_JUMPS 128
-#define MAX_LABEL_LENGTH 10
+#define MAX_LABEL_LENGTH 32
 #define MAX_LABELS 128
 #define MAX_LABEL_TRANSITIONS 128
 
 #define HARVARD
-#define TRACE_VM
+
+#define TRACE_VM_NO
 
 #define MIN_INPUT_LENGTH 1
 

@@ -1,6 +1,53 @@
 #include "interpreter.h"
 
-
+BOOL run_binary(char* file, BOOL canexit)
+{
+            BOOL result = RESULT_OK;
+            machine_initialize(&machine);
+            machine_load(file, &machine);
+            machine.mode = MACHINE_MODE_RUN;
+            DWORD *ptr = machine.program_ptr;
+            DWORD op;
+            DWORD qt = opcodes_find("QUIT");
+            while(TRUE)
+            {
+                op = *machine.program_ptr;
+                if(op>=qt || *ptr>=machine.memory_end)
+                {
+                    if(op==qt)
+                    {
+                      if(canexit)
+                        quit();
+                        break;
+                    }
+                    else
+                    {
+                        errno = EDESTADDRREQ;
+                        perror("[FATAL] Abnormal termination");
+                        if(canexit)
+                        {
+                            getchar();
+                            exit(errno);
+                        }
+                    }
+                    break;
+                }
+                if(machine.stack_ptr - machine.machine_stack >= opcodes[*machine.program_ptr].sz )
+                    (opcodes[*machine.program_ptr].ptr)();
+                else
+                {
+                    perror("[FATAL] segmentation fault");
+                    errno =EILSEQ;
+                    if(canexit)
+                        {
+                            getchar();
+                            exit(errno);
+                        }
+                }
+                machine.program_ptr++;
+            }
+            return result;
+}
 
 void process_interpreter_command(char* line)
 {

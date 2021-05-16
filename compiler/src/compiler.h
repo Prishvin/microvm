@@ -38,4 +38,7 @@ BOOL compile_iline(char* line, Machine* mac);
 constant* constant_find(char* name, int* index);
 void write_binary(char* filename, Machine* machine);
 
+BOOL compile_to_binary(char* source, char* destination);
+
+
 #endif // COMPILER_H_INCLUDED

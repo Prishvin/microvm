@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [status - unreleased]
+
+## [0.2.5]
+-t option added for automated testing
+-str_shift_left fix
 ## [0.2.4]
 -$include added for compiling several files. Usage: $include <full path>
 ## [0.2.3]

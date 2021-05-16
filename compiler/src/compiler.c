@@ -261,7 +261,6 @@ BOOL compile_line(char* line, Machine* mac)
                         *mac->program_ptr++ = 1;
                     }
                 }
-
                 else if(token_is_dup(token))
                 {
                     if(ntokens == 1)
@@ -282,7 +281,7 @@ BOOL compile_line(char* line, Machine* mac)
             }
             free(token);
         }
-        printf("\n");
+        //printf("\n");
         free(tokens);
     }
     return result;
@@ -335,7 +334,7 @@ constant* constant_find(char* name, int* index)
 }
 BOOL compile_vm_file(char* input_file, char* ooutput_file)
 {
-    BOOL result = TRUE;
+    BOOL result = RESULT_OK;
 
     FILE* fp;
     str_trim_all(input_file);
@@ -368,7 +367,7 @@ BOOL compile_vm_file(char* input_file, char* ooutput_file)
             if(!compile_line(line, &machine))
             {
                 printf("[ERROR] at [line %d] > %s\n",line_number, line );
-                return FALSE;
+                result = RESULT_ERR;
                 break;
             }
              line_number++;
@@ -398,4 +397,21 @@ BOOL compile_vm_file(char* input_file, char* ooutput_file)
         write_binary(ooutput_file, &machine);
 
     return result;
+}
+
+BOOL compile_to_binary(char* source, char* destination)
+{
+        BOOL result = RESULT_OK;
+            machine.mode = MACHINE_MODE_COMPILER;
+            if(compile_vm_file(source, destination) == RESULT_OK)
+            {
+                printf("[SUCCESS] program compiled to %s\n", destination);
+            }
+            else
+            {
+                errno = EINVAL;
+                result = EINVAL;
+                printf("[FAIL] compilation of %s failed\n", source);
+            }
+            return result;
 }

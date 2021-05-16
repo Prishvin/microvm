@@ -1,5 +1,5 @@
 # microvm
-## version 0.2.4
+## version 0.2.5
 The aim of this project is to create a stack based language and virtual machine for microcontrollers. A mix of approaches is used. 
 Separate memory is used for program and variable space (Harvard architecture). An interpreter, virtual machine and compiler are available. A demostration of the interpreter in action is presented below.
 
@@ -54,8 +54,8 @@ The interperter commands can be used in interactive mode to display or control v
 
 ## preprocessor directives
 
--**$include** <source file> -recursive include specified file. 
--**$define** _constant - defines a constant named _constant. 
+-**$include** <source file> -recursive include specified file.      
+-**$define** _constant - defines a constant named _constant.        
 
 
 ## interpreter loop

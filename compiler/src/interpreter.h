@@ -15,4 +15,5 @@ void process_interpreter_command(char* line);
 
 void process_interpeter_opcode(char* line);
 
+BOOL run_binary(char* file, BOOL canexit);
 #endif // INTERPRETER_H_INCLUDED
