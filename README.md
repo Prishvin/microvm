@@ -50,7 +50,12 @@ The interperter commands can be used in interactive mode to display or control v
 -**$clear**      - clears screen    
 -**$reset**      - resets vm        
 -**$backup**     - creates a copy of vm memory.                         
--**$restore**       - restores memory from a backup.           
+-**$restore**       - restores memory from a backup.   
+
+## preprocessor directives
+
+-**include** <source file> -recursive include specified file
+-**define** _constant - defines a constant named _constant
 
 
 ## interpreter loop
