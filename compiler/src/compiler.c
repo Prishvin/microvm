@@ -308,6 +308,11 @@ BOOL preprocessor(char* line, Machine* mac)
         strcpy(c->destination, *(tokens+2));
 
     }
+    if(ntokens>1 && strcmp(tokens[0], PRE_INCLUDE) == 0)
+    {
+        printf("$include %s", *(tokens+1));
+        compile_vm_file(*(tokens+1), NULL);
+    }
     free(tokens);
 
     return result;
@@ -328,11 +333,12 @@ constant* constant_find(char* name, int* index)
 
     return NULL;
 }
-BOOL compile_all(char* input_file, char* ooutput_file)
+BOOL compile_vm_file(char* input_file, char* ooutput_file)
 {
     BOOL result = TRUE;
 
     FILE* fp;
+    str_trim_all(input_file);
     fp = fopen(input_file, "r");
     if (fp == NULL)
     {
@@ -342,8 +348,11 @@ BOOL compile_all(char* input_file, char* ooutput_file)
     }
     char line[MAX_LEN];
     // -1 to allow room for NULL terminator for really long string
-    machine_initialize(&machine);
+
+    if(ooutput_file != NULL) // initialize machine if this is top file
+        machine_initialize(&machine);
     DWORD line_number = 1;
+
     while (fgets(line, MAX_LEN - 1, fp))
     {
         if(*line == '$') //preprocessor
@@ -367,8 +376,7 @@ BOOL compile_all(char* input_file, char* ooutput_file)
         }
 
     }
-    printf("QUIT ptr =%d\n",  machine.program_ptr - machine.machine_memory);
-    *machine.program_ptr++ = opcodes_find("QUIT");
+
     BYTE i;
     for(i = 0; i < machine.lablel_number; i++)
         label_set_jumps(&machine.progam_labels[i]);
@@ -386,7 +394,8 @@ BOOL compile_all(char* input_file, char* ooutput_file)
 #endif
 
     fclose(fp);
+    if(ooutput_file != NULL)
+        write_binary(ooutput_file, &machine);
 
-    write_binary(ooutput_file, &machine);
     return result;
 }

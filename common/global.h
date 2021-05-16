@@ -1,6 +1,10 @@
 #ifndef GLOBAL_H_INCLUDED
 #define GLOBAL_H_INCLUDED
 
+#define VERSION "v0.2.4"
+
+#define COMPILE_BUFFER_LEN 10000000
+
 #define MAX_REFERENCES 64
 #define MAX_OPCODE_STR_LENGTH 10
 #include <string.h>

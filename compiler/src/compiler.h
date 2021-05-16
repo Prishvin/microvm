@@ -28,7 +28,7 @@ typedef struct {
 constant constants[MAX_CONSTANTS];
 
 int nconstants;
-BOOL compile_all(char* input_file, char* ooutput_file);
+BOOL compile_vm_file(char* input_file, char* ooutput_file);
 void compile_file(char* input_file, char* output_file);
 BOOL compile_line(char* line, Machine* mac);
 BOOL preprocessor(char* line, Machine* mac);

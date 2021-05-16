@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [status - unreleased]
-
+## [0.2.4]
+-$include added for compiling several files. Usage: $include <full path>
 ## [0.2.3]
 -all conditional jumps tested. 
 -opcode order changed.

@@ -8,7 +8,7 @@
 	<string.h>
 	"token.h"
 
-1620935738 /home/misha/source/VirtualMachine/common/global.h
+1621149394 /home/misha/source/VirtualMachine/common/global.h
 	<string.h>
 	<ctype.h>
 
@@ -43,7 +43,7 @@
 	<unistd.h>
 	<errno.h>
 
-1620935738 /home/misha/source/VirtualMachine/common//global.h
+1621149394 /home/misha/source/VirtualMachine/common//global.h
 	<string.h>
 	<ctype.h>
 
@@ -108,7 +108,7 @@
 	"../../common/token.h"
 	"../../common//machine.h"
 
-1621019110 source:/home/misha/source/VirtualMachine/compiler/main.c
+1621150611 source:/home/misha/source/VirtualMachine/compiler/main.c
 	<stdio.h>
 	<stdlib.h>
 	"../common/global.h"
@@ -121,12 +121,12 @@
 
 1621018835 /home/misha/source/VirtualMachine/compiler/src/cli.h
 
-1621001695 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
+1621151887 source:/home/misha/source/VirtualMachine/compiler/src/compiler.c
 	"compiler.h"
 	<stdio.h>
 	<stdlib.h>
 
-1620810701 /home/misha/source/VirtualMachine/compiler/src/compiler.h
+1621150611 /home/misha/source/VirtualMachine/compiler/src/compiler.h
 	<stdio.h>
 	<stdlib.h>
 	"../../common/global.h"

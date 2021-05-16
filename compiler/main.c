@@ -16,7 +16,7 @@ Machine backup_machine;
 void compile_to_binary(char* source, char* destination)
 {
             machine.mode = MACHINE_MODE_COMPILER;
-            if(compile_all(source, destination))
+            if(compile_vm_file(source, destination))
             {
                 printf("[SUCCESS] program compiled to %s\n", destination);
             }
@@ -83,7 +83,7 @@ int main( int argc, char *argv[] )
         }
         if(strcmp(argv[1],CLI_FLAG_INTERPRETER) == 0)
         {
-            printf("StackVM v0.2.3: welcome.\n");
+            printf("StackVM %s: welcome.\n", VERSION);
             printf("Data width: %d.\n", sizeof(DWORD));
             machine_initialize(&machine);
             machine.mode = MACHINE_MODE_INTERPRETER;
