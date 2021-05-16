@@ -402,7 +402,7 @@ BOOL compile_vm_file(char* input_file, char* ooutput_file)
 
 BOOL compile_to_binary(char* source, char* destination)
 {
-        BOOL result = RESULT_OK;
+            BOOL result = RESULT_OK;
             machine.mode = MACHINE_MODE_COMPILER;
             if(compile_vm_file(source, destination) == RESULT_OK)
             {
