@@ -53,6 +53,7 @@ BOOL compile_line(char* line, Machine* mac)
 #endif
     char** tokens;
     BYTE ntokens;
+    str_trim_all(line);
     tokens = str_split(&ntokens, line, ' ');
     DWORD number;
     if (tokens)

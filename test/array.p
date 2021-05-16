@@ -17,11 +17,11 @@ push 2
 atom arr
 pop
 pop
-push 1 
+push 1
 tomm v1
 pop
 push 0
-afrom arr 
+afrom arr
 frmm v1
 sub
 push 2

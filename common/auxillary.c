@@ -8,6 +8,7 @@ void clrscr()
     write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
     printf("\n>");
 }
+
 void node_init(node* ptr, node* l, node* r, DWORD i, DWORD arg)
 {
     ptr->nchilds = 0;
@@ -15,7 +16,6 @@ void node_init(node* ptr, node* l, node* r, DWORD i, DWORD arg)
     ptr->right = r;
     ptr->index = i;
     ptr->argument = arg;
-
 }
 
 
@@ -25,7 +25,6 @@ void str_trim_all(char* str)
     str_trim(str, ' ');
     str_trim(str, '\t');
 }
-
 
 char** str_split(BYTE* ntokens, char* a_str, const char a_delim)
 {
@@ -37,7 +36,7 @@ char** str_split(BYTE* ntokens, char* a_str, const char a_delim)
     delim[0] = a_delim;
     delim[1] = 0;
     char len = strlen(a_str);
-    *(a_str + len - 1) = 0;
+    //*(a_str + len - 1) = 0;
     /* Count how many elements will be extracted. */
     while (*tmp)
     {
@@ -51,21 +50,17 @@ char** str_split(BYTE* ntokens, char* a_str, const char a_delim)
 
     /* Add space for trailing token. */
     count += last_comma < (a_str + strlen(a_str) - 1);
-
     /* Add space for terminating null string so caller
        knows where the list of returned strings ends. */
     count++;
-
     result = malloc(sizeof(char*) * count);
-
     if (result)
     {
         size_t idx  = 0;
         char* token = strtok(a_str, delim);
-
         while (token)
         {
-            //assert(idx < count);
+            str_trim_all(token);
             *(result + idx++) = strdup(token);
             token = strtok(0, delim);
         }
@@ -94,16 +89,14 @@ void str_to_upper(char* temp)
 
     char * name;
     name = strtok(temp,":");
-
     // Convert to upper case
     char *s = name;
-     while (*s)
+    while (*s)
         {
             *s = toupper((unsigned char) *s);
             s++;
         }
     }
-
 }
 
 char str_is_number(char *text)
@@ -114,19 +107,18 @@ char str_is_number(char *text)
     {
         if(text[j] >= '0' && text[j] <= '9')
             continue;
-
         return 0;
     }
     return 1;
 }
+
 BOOL str_is_hex(char *text)
 {
     return FALSE; //TODO
 }
+
 BOOL is_numeric(char* name, DWORD* number)
 {
-
-
     if(name != 0 && str_is_number(name))
     {
         *number = strtoul(name, 0,10 );
@@ -140,8 +132,6 @@ BOOL is_numeric(char* name, DWORD* number)
     {
         return FALSE;
     }
-
-
 }
 void str_trim(char* str, char c)
 {
@@ -166,6 +156,7 @@ void str_trim(char* str, char c)
             break;
     }
 }
+
 void str_shift_left(char myarray[], int sz, int shiftBy)
 {
     if(shiftBy > sz)
@@ -178,7 +169,6 @@ void str_shift_left(char myarray[], int sz, int shiftBy)
         //do nothing
     }
     else
-
     {
         char temp;
         //for loop to print the array with indexes moved up (to the left) <-- by 2
@@ -193,6 +183,5 @@ void str_shift_left(char myarray[], int sz, int shiftBy)
         {
             myarray[sz-i-1] = 0;
         }
-
     }
 }

@@ -30,7 +30,7 @@ typedef unsigned char BOOL;
 
 #define HARVARD
 
-#define TRACE_VM_NO
+#define TRACE_VM_
 
 #define MIN_INPUT_LENGTH 1
 
