@@ -410,7 +410,7 @@ BOOL compile_to_binary(char* source, char* destination)
             }
             else
             {
-                errno = EINVAL;
+                errno = EILSEQ;
                 result = EINVAL;
                 printf("[FAIL] compilation of %s failed\n", source);
             }

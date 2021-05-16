@@ -12,7 +12,7 @@ void machine_load(char* filename, Machine* mac)
     fileptr = fopen(filename, "rb");  // Open the file in binary mode
     if(fileptr == NULL)
     {
-        errno = ENOENT;
+        errno = EIO;
         perror("FATAL: reading binary file");
         return;
     }
@@ -672,7 +672,7 @@ void asrt()
     cmp();
     if(!machine.flag_eq)
     {
-        errno = EINPROGRESS;
+        errno = EL2HLT ;
         perror("[FAIL] assertation");
         halt();
     }
