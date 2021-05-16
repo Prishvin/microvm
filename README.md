@@ -110,7 +110,7 @@ An example implementation of such functions are shown in Block 2.
 ```
 Block 2
 ##automated testing
->microvm -t <directory> will run and report until first fail.
+>**microvm** -t <directory> will run and report until first fail.
 
 ![image](https://user-images.githubusercontent.com/371566/118403357-18e9a800-b67f-11eb-884c-d5b97a90e383.png)
 
